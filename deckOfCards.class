@@ -47,4 +47,42 @@ class Card
       }
    }
 
+   //Accessor getSuit returns suit.
+   public Suit getSuit()
+   {
+      return this.suit;
+   }
+
+   //Accessor getValue returns value.
+   public char getValue()
+   {
+      return this.value;
+   }
+
+   //Accessor geterrorFlag returns a boolean value stored in errorFlag.
+   public boolean geterrorFlag()
+   {
+      return this.errorFlag;
+   }
+
+   //equals returns true if all the fields are identical to parameter object card, or it returns
+   //false if they are not identical.
+   public boolean equals(Card card)
+   {
+      if(this.suit == card.suit & this.value == card.value)
+      {
+         if(this.errorFlag == card.errorFlag)
+         {
+            return true;
+         }
+         else
+         {
+            return false;
+         }
+      }
+      else
+      {
+         return false;
+      }
+   }
 }
