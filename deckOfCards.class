@@ -1,0 +1,50 @@
+
+//CST338 - Module 3 Deck of Cards
+//11/13/2021
+
+public class deckOfCards
+{
+   public static void main(String[] args)
+   {
+
+   }
+}
+
+class Card
+{
+   public enum Suit
+   {
+      clubs, diamonds, hearts, spades
+   }
+   //Member Data
+   private char value;
+   private Suit suit;
+   private boolean errorFlag;
+
+
+   //stringizer
+   public String toString()
+   {
+
+      if (errorFlag) return "Invalid";
+      return value + " of " + suit;
+   }
+
+   public boolean set(char value, Suit suit)
+   {
+
+      if (isValid(value, suit))
+      {
+         this.value = value;
+         errorFlag = false;
+         this.suit = suit;
+         return true;
+      }
+      else
+      {
+         errorFlag = true;
+         return false;
+      }
+   }
+
+}
