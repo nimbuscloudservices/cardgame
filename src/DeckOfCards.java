@@ -5,7 +5,7 @@
  * @version 11-13-2021
  */
 
-public class deckOfCards
+public class DeckOfCards
 {
    public static void main(String[] args)
    {
