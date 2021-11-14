@@ -259,7 +259,22 @@ class Hand
     */
    public Card playCard()
    {
-      return null;
+     Card topCard = myCards[1];
+
+     Card [] updatedCard = new Card [numCards-1];
+
+     numCards--;
+
+     for(int i=0; i< numCards; i++)
+     {
+
+        updatedCard[i] = myCards[i];
+     }
+
+     myCards = updatedCard;
+     numCards--;
+
+     return topCard;
    }
 
    /**
@@ -269,11 +284,16 @@ class Hand
     */
    public String toString()
    {
-      String handString = "";
-      for (int i = 0; i < numCards; i++) {
-         handString = handString.concat(myCards[i].toString());
-      }
-      return handString;
+     String displayHand = "";
+
+     displayHand += myCards[0];
+
+     for(int i=1; i < myCards.length; i++)
+     {
+        displayHand += " , ";
+        displayHand += myCards[i];
+     }
+     return displayHand;
    }
 
    /**
