@@ -1,6 +1,9 @@
-
-//CST338 - Module 3 Deck of Cards
-//11/13/2021
+/**
+ * Module 3 Deck of Cards
+ *
+ * @author
+ * @version 11-13-2021
+ */
 
 public class deckOfCards
 {
@@ -10,17 +13,22 @@ public class deckOfCards
    }
 }
 
+/**
+ * A class to model playing cards
+ */
 class Card
 {
+   // enum of suits of cards
    public enum Suit
    {
-      clubs, diamonds, hearts, spades
+      Clubs, Diamonds, Hearts, Spades
    }
    //Member Data
    private char value;
    private Suit suit;
    private boolean errorFlag;
-    /**
+
+   /**
     * constructor for Card object
     *
     * @param value of the card
@@ -53,15 +61,13 @@ class Card
       this.suit = origCard.getSuit();
    }
 
-
-   //stringizer
-   public String toString()
-   {
-
-      if (errorFlag) return "Invalid";
-      return value + " of " + suit;
-   }
-
+   /**
+    * changes value and suit to user specified values
+    *
+    * @param value of this card
+    * @param suit  of this card
+    * @return true if successfully changes without error, false if error
+    */
    public boolean set(char value, Suit suit)
    {
 
@@ -79,31 +85,82 @@ class Card
       }
    }
 
-   //Accessor getSuit returns suit.
+   /**
+    * helper method that determines if passed values are valid
+    *
+    * @param value of card
+    * @param suit  of card
+    * @return true if passed values are valid, false if invalid
+    */
+   private boolean isValid(char value, Suit suit)
+   {
+      boolean validValue = false;
+      boolean validSuit = false;
+      char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
+            'J', 'Q', 'K' };
+      for (char i : cardValues)
+      {
+         if (i == value)
+         {
+            validValue = true;
+            break;
+         }
+      }
+      for (Suit value1 : Suit.values())
+      {
+         if (value1 == suit)
+         {
+            validSuit = true;
+            break;
+         }
+
+      }
+      return validValue && validSuit;
+
+   }
+
+   /**
+    * gets the suit of this card
+    *
+    * @return suit of this card
+    */
    public Suit getSuit()
    {
       return this.suit;
    }
 
-   //Accessor getValue returns value.
+   /**
+    * gets the value of this card
+    *
+    * @return value of this card
+    */
    public char getValue()
    {
       return this.value;
    }
 
-   //Accessor geterrorFlag returns a boolean value stored in errorFlag.
+   /**
+    * gets the state of the errorFlag
+    *
+    * @return state of errorFlag
+    */
    public boolean geterrorFlag()
    {
       return this.errorFlag;
    }
 
-   //equals returns true if all the fields are identical to parameter object card, or it returns
-   //false if they are not identical.
+   /**
+    * compares this card to another card and checks if cards are identical
+    *
+    * @param card that is being compared to.
+    * @return returns true if all the fields are identical to parameter
+    * object card, or it returns false if they are not identical.
+    */
    public boolean equals(Card card)
    {
-      if(this.suit == card.suit & this.value == card.value)
+      if (this.suit == card.suit & this.value == card.value)
       {
-         if(this.errorFlag == card.errorFlag)
+         if (this.errorFlag == card.errorFlag)
          {
             return true;
          }
@@ -116,5 +173,18 @@ class Card
       {
          return false;
       }
+   }
+
+   /**
+    * returns a string stating the full card name
+    *
+    * @return "Invalid" if errorFlag is true or full card name
+    */
+   public String toString()
+   {
+
+      if (errorFlag)
+         return "Invalid";
+      return value + " of " + suit;
    }
 }
