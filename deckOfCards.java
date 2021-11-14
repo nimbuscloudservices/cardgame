@@ -78,7 +78,7 @@ class Card
    public Card(Card origCard)
    {
       set(origCard.getValue(), origCard.getSuit());
-      errorFlag = origCard.geterrorFlag();
+      errorFlag = origCard.getErrorFlag();
    }
 
    /**
@@ -164,7 +164,7 @@ class Card
     *
     * @return state of errorFlag
     */
-   public boolean geterrorFlag()
+   public boolean getErrorFlag()
    {
       return this.errorFlag;
    }
@@ -180,14 +180,7 @@ class Card
    {
       if (this.suit == card.suit & this.value == card.value)
       {
-         if (this.errorFlag == card.errorFlag)
-         {
-            return true;
-         }
-         else
-         {
-            return false;
-         }
+         return this.errorFlag == card.errorFlag;
       }
       else
       {
@@ -329,7 +322,7 @@ class Deck
 
    /**
     * returns and removes the card in the top occupied position of cards[]
-    * @return card being delt
+    * @return card being dealt
     */
    public Card dealCard()
    {
