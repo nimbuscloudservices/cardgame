@@ -260,14 +260,12 @@ class Hand
    public Card playCard()
    {
      Card topCard = myCards[1];
-
      Card [] updatedCard = new Card [numCards-1];
 
      numCards--;
 
      for(int i=0; i< numCards; i++)
      {
-
         updatedCard[i] = myCards[i];
      }
 
