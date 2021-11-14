@@ -1,7 +1,7 @@
 /**
  * Module 3 Deck of Cards
  *
- * @author
+ * @author Blake, Layla, Saul, Yavik
  * @version 11-13-2021
  */
 
@@ -10,21 +10,28 @@ public class DeckOfCards
    public static void main(String[] args)
    {
       //Phase 1 Test
-      Card cardOne = new Card('A', Card.Suit.clubs);
+      Card cardOne = new Card('T', Card.Suit.clubs);
       //illegal card
       Card cardTwo = new Card('d', Card.Suit.hearts);
-      Card cardThree = new Card('4', Card.Suit.spades);
-      System.out.println(cardOne.toString());
-      System.out.println(cardTwo.toString());
-      System.out.println(cardThree.toString());
+      Card cardThree = new Card('4', Card.Suit.diamonds);
+      Card cardFour = new Card();
+      Card cardFive = new Card(cardThree);
+
+      System.out.println(cardOne);
+      System.out.println(cardTwo);
+      System.out.println(cardThree);
+      System.out.println(cardFour);
+      System.out.println(cardFive);
 
       //Good gone bad card
       cardOne.set('U', Card.Suit.clubs);
       //illegal card turned good
       cardTwo.set('K', Card.Suit.hearts);
-      System.out.println(cardOne.toString());
-      System.out.println(cardTwo.toString());
-      System.out.println(cardThree.toString());
+      System.out.println(cardOne);
+      System.out.println(cardTwo);
+      System.out.println(cardThree);
+      System.out.println(cardFour);
+      System.out.println(cardFive);
    }
 }
 
@@ -71,7 +78,7 @@ class Card
    public Card(Card origCard)
    {
       set(origCard.getValue(), origCard.getSuit());
-      errorFlag = origCard.geterrorFlag();
+      errorFlag = origCard.getErrorFlag();
    }
 
    /**
@@ -157,7 +164,7 @@ class Card
     *
     * @return state of errorFlag
     */
-   public boolean geterrorFlag()
+   public boolean getErrorFlag()
    {
       return this.errorFlag;
    }
@@ -173,14 +180,7 @@ class Card
    {
       if (this.suit == card.suit & this.value == card.value)
       {
-         if (this.errorFlag == card.errorFlag)
-         {
-            return true;
-         }
-         else
-         {
-            return false;
-         }
+         return this.errorFlag == card.errorFlag;
       }
       else
       {
@@ -206,7 +206,7 @@ class Card
  */
 class Hand
 {
-   public static final int MAX_CARDS = 50;
+   public final int MAX_CARDS = 50;
    Card[] myCards;
    int numCards;
 
@@ -268,7 +268,7 @@ class Hand
    }
 
    /**
-    * Accessor for an individualy card
+    * Accessor for an individual card
     *
     * @param k index of a card
     * @return a card with errorFlag = true if k is bad
@@ -277,5 +277,85 @@ class Hand
    {
       return null;
    }
+
+}
+class Deck
+{
+   public static final int MAX_CARDS = 312;
+   private static Card[] masterPack;
+   private Card[] cards;
+   int topCard;
+
+   /**
+    * constructor for Deck
+    * @param numPacks number of packs of playing cards
+    */
+   public Deck (int numPacks)
+   {
+
+   }
+
+   /**
+    * Constructor with default of one pack of playing cards
+    */
+   public Deck()
+   {
+
+   }
+
+   /**
+    * repopulates cards[] with the standard 52 x numPacks
+    * @param numPacks number of playing card packs used
+    */
+   public void init(int numPacks)
+   {
+
+   }
+
+   /**
+    * Mixes up the cards with the help of the standard random number generator
+    */
+   public void shuffle()
+   {
+
+   }
+
+   /**
+    * returns and removes the card in the top occupied position of cards[]
+    * @return card being dealt
+    */
+   public Card dealCard()
+   {
+      return null;
+   }
+
+   /**
+    * gets value of topCard field
+    * @return value of topCard field
+    */
+   public int getTopCard()
+   {
+      return this.topCard;
+   }
+
+   /**
+    * Accessor for an individual card.
+    * Returns a card with errorFlag = true if k is bad
+    * @param k index of card being checked
+    * @return returns an object copy of card with errorFlag = true
+    */
+   public Card inspectCard(int k)
+   {
+      return null;
+   }
+
+   /**
+    * Used for initializing masterPack, can not be run more that once.
+    */
+   private static void allocateMasterPack()
+   {
+
+   }
+
 
 }
