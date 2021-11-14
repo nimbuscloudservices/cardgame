@@ -5,18 +5,19 @@
  * @version 11-13-2021
  */
 
-public class deckOfCards
+public class DeckOfCards
 {
    public static void main(String[] args)
    {
       //Phase 1 Test
-      Card cardOne = new Card('d', Card.Suit.clubs);
+      Card cardOne = new Card('A', Card.Suit.clubs);
       //illegal card
-      Card cardTwo = new Card('J', Card.Suit.hearts);
+      Card cardTwo = new Card('d', Card.Suit.hearts);
       Card cardThree = new Card('4', Card.Suit.spades);
       System.out.println(cardOne.toString());
       System.out.println(cardTwo.toString());
       System.out.println(cardThree.toString());
+
       //Good gone bad card
       cardOne.set('U', Card.Suit.clubs);
       //illegal card turned good
@@ -50,8 +51,7 @@ class Card
     */
    public Card(char value, Suit suit)
    {
-      set(value,suit);
-
+      set(value, suit);
    }
 
    /**
@@ -59,7 +59,7 @@ class Card
     */
    public Card()
    {
-      set('A',Suit.spades);
+      set('A', Suit.spades);
    }
 
    /**
@@ -70,7 +70,7 @@ class Card
     */
    public Card(Card origCard)
    {
-      set(origCard.getValue(),origCard.getSuit());
+      set(origCard.getValue(), origCard.getSuit());
       errorFlag = origCard.geterrorFlag();
    }
 
@@ -199,7 +199,6 @@ class Card
          return "Invalid";
       return value + " of " + suit;
    }
-
 }
 
 /**
@@ -207,5 +206,76 @@ class Card
  */
 class Hand
 {
+   public static final int MAX_CARDS = 50;
+   Card[] myCards;
+   int numCards;
+
+   /**
+    * Constructor for hand object
+    */
+   public Hand()
+   {
+
+   }
+
+   /**
+    * Clears hand of all card objects
+    */
+   public void resetHand()
+   {
+
+   }
+
+   /**
+    * Adds a card to next available position in myCards array
+    *
+    * @param card that is being added to the array
+    * @return true if successfully added, false is not
+    */
+   public boolean takeCard(Card card)
+   {
+      return false;
+   }
+
+   /**
+    * returns and remove the card in the top occupied position of the array
+    *
+    * @return card that is being removed from top position in the array
+    */
+   public Card playCard()
+   {
+      return null;
+   }
+
+   /**
+    * a stringizer that the client can use to display the entire hand
+    *
+    * @return the entire hand array as a string
+    */
+   public String toString()
+   {
+      return null;
+   }
+
+   /**
+    * gets value of num of cards in hand
+    *
+    * @return number of cards in hand array
+    */
+   public int getNumCards()
+   {
+      return this.numCards;
+   }
+
+   /**
+    * Accessor for an individualy card
+    *
+    * @param k index of a card
+    * @return a card with errorFlag = true if k is bad
+    */
+   public Card inspectCard(int k)
+   {
+      return null;
+   }
 
 }
