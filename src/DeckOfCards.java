@@ -5,7 +5,7 @@
  * @version 11-13-2021
  */
 
-public class cst338
+public class DeckOfCards
 {
    public static void main(String[] args)
    {
