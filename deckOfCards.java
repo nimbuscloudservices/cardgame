@@ -10,17 +10,17 @@ public class deckOfCards
    public static void main(String[] args)
    {
       //Phase 1 Test
-      Card cardOne = new Card('9', Card.Suit.Clubs);
+      Card cardOne = new Card('d', Card.Suit.clubs);
       //illegal card
-      Card cardTwo = new Card('p', Card.Suit.Hearts);
-      Card cardThree = new Card('4', Card.Suit.Spades);
+      Card cardTwo = new Card('J', Card.Suit.hearts);
+      Card cardThree = new Card('4', Card.Suit.spades);
       System.out.println(cardOne.toString());
       System.out.println(cardTwo.toString());
       System.out.println(cardThree.toString());
       //Good gone bad card
-      cardOne.set('U', Card.Suit.Clubs);
+      cardOne.set('U', Card.Suit.clubs);
       //illegal card turned good
-      cardTwo.set('K', Card.Suit.Hearts);
+      cardTwo.set('K', Card.Suit.hearts);
       System.out.println(cardOne.toString());
       System.out.println(cardTwo.toString());
       System.out.println(cardThree.toString());
@@ -50,8 +50,8 @@ class Card
     */
    public Card(char value, Suit suit)
    {
-      this.set(value,suit);
-      errorFlag = this.set(value, suit);
+      set(value,suit);
+
    }
 
    /**
@@ -59,8 +59,7 @@ class Card
     */
    public Card()
    {
-      this.set('A',Suit.spades);
-      errorFlag = set('A',Suit.spades);
+      set('A',Suit.spades);
    }
 
    /**
@@ -71,8 +70,8 @@ class Card
     */
    public Card(Card origCard)
    {
-      this.set(origCard.getValue(),origCard.getSuit());
-      this.errorFlag = origCard.geterrorFlag();
+      set(origCard.getValue(),origCard.getSuit());
+      errorFlag = origCard.geterrorFlag();
    }
 
    /**
