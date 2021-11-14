@@ -32,6 +32,14 @@ public class DeckOfCards
       System.out.println(cardThree);
       System.out.println(cardFour);
       System.out.println(cardFive);
+
+      //Phase 2 Test
+      Hand hand = new Hand();
+      hand.takeCard(cardTwo);
+      hand.takeCard(cardThree);
+      System.out.println(hand);
+      hand.resetHand();
+      System.out.println(hand);
    }
 }
 
@@ -215,7 +223,7 @@ class Hand
     */
    public Hand()
    {
-
+      resetHand();
    }
 
    /**
@@ -223,7 +231,8 @@ class Hand
     */
    public void resetHand()
    {
-
+      myCards = new Card[MAX_CARDS];
+      numCards = 0;
    }
 
    /**
@@ -234,7 +243,13 @@ class Hand
     */
    public boolean takeCard(Card card)
    {
-      return false;
+      if (numCards < MAX_CARDS) {
+         myCards[numCards] = new Card(card);
+         numCards++;
+         return true;
+      } else {
+         return false;
+      }
    }
 
    /**
@@ -254,7 +269,11 @@ class Hand
     */
    public String toString()
    {
-      return null;
+      String handString = "";
+      for (int i = 0; i < numCards; i++) {
+         handString = handString.concat(myCards[i].toString());
+      }
+      return handString;
    }
 
    /**
