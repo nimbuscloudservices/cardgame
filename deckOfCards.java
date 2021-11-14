@@ -35,7 +35,7 @@ class Card
    // enum of suits of cards
    public enum Suit
    {
-      Clubs, Diamonds, Hearts, Spades
+      clubs, diamonds, hearts, spades
    }
    //Member Data
    private char value;
@@ -50,8 +50,8 @@ class Card
     */
    public Card(char value, Suit suit)
    {
-      this.value = value;
-      this.suit = suit;
+      this.set(value,suit);
+      errorFlag = this.set(value, suit);
    }
 
    /**
@@ -59,8 +59,8 @@ class Card
     */
    public Card()
    {
-      this.value = 'A';
-      this.suit = Suit.Spades;
+      this.set('A',Suit.spades);
+      errorFlag = set('A',Suit.spades);
    }
 
    /**
@@ -71,8 +71,8 @@ class Card
     */
    public Card(Card origCard)
    {
-      this.value = origCard.getValue();
-      this.suit = origCard.getSuit();
+      this.set(origCard.getValue(),origCard.getSuit());
+      this.errorFlag = origCard.geterrorFlag();
    }
 
    /**
@@ -203,3 +203,10 @@ class Card
 
 }
 
+/**
+ * A class to model a hand of playing cards
+ */
+class Hand
+{
+
+}
