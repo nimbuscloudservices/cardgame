@@ -125,7 +125,7 @@ class Card
       boolean validValue = false;
       boolean validSuit = false;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+              'J', 'Q', 'K' };
       for (char i : cardValues)
       {
          if (i == value)
@@ -259,20 +259,20 @@ class Hand
     */
    public Card playCard()
    {
-     Card topCard = myCards[1];
-     Card [] updatedCard = new Card [numCards-1];
+      Card topCard = myCards[1];
+      Card [] updatedCard = new Card [numCards-1];
 
-     numCards--;
+      numCards--;
 
-     for(int i=0; i< numCards; i++)
-     {
-        updatedCard[i] = myCards[i];
-     }
+      for(int i=0; i< numCards; i++)
+      {
+         updatedCard[i] = myCards[i];
+      }
 
-     myCards = updatedCard;
-     numCards--;
+      myCards = updatedCard;
+      numCards--;
 
-     return topCard;
+      return topCard;
    }
 
    /**
@@ -282,16 +282,16 @@ class Hand
     */
    public String toString()
    {
-     String displayHand = "";
+      String displayHand = "";
 
-     displayHand += myCards[0];
+      displayHand += myCards[0];
 
-     for(int i=1; i < myCards.length; i++)
-     {
-        displayHand += " , ";
-        displayHand += myCards[i];
-     }
-     return displayHand;
+      for(int i=1; i < myCards.length; i++)
+      {
+         displayHand += " , ";
+         displayHand += myCards[i];
+      }
+      return displayHand;
    }
 
    /**
@@ -312,7 +312,12 @@ class Hand
     */
    public Card inspectCard(int k)
    {
-      return null;
+      if (k >= numCards && k > 0)
+      {
+         return myCards[k];
+      }
+
+      return new Card(' ', Card.Suit.spades);
    }
 
 }
