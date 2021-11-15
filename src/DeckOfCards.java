@@ -1,3 +1,5 @@
+import java.util.Random;
+
 /**
  * Module 3 Deck of Cards
  *
@@ -40,6 +42,11 @@ public class DeckOfCards
       System.out.println(hand);
       hand.resetHand();
       System.out.println(hand);
+
+      System.out.println("-----------");
+      System.out.println(hand.inspectCard(0));
+      System.out.println(hand.inspectCard(1));
+
    }
 }
 
@@ -312,9 +319,9 @@ class Hand
     */
    public Card inspectCard(int k)
    {
-      if (k >= numCards && k > 0)
+      if (k > numCards || k > 0)
       {
-         return myCards[k];
+         return new Card(myCards[k]);
       }
 
       return new Card(' ', Card.Suit.spades);
@@ -324,6 +331,7 @@ class Hand
 class Deck
 {
    public static final int MAX_CARDS = 312;
+   public static final int PACK = 52;
    private static Card[] masterPack;
    private Card[] cards;
    int topCard;
@@ -359,7 +367,12 @@ class Deck
     */
    public void shuffle()
    {
-
+      Random shuffle = new Random();
+      for (int i = 0; i < cards.length; i++)
+      {
+         int randomCard = shuffle.nextInt(PACK);
+         cards[randomCard] = cards[i];
+      }
    }
 
    /**
@@ -368,6 +381,15 @@ class Deck
     */
    public Card dealCard()
    {
+      Card dealCard;
+      if (topCard > 0)
+      {
+         dealCard = cards[getTopCard() - 1];
+         cards[getTopCard() - 1] = null;
+
+         topCard--;
+         return dealCard;
+      }
       return null;
    }
 
@@ -388,7 +410,11 @@ class Deck
     */
    public Card inspectCard(int k)
    {
-      return null;
+      if (k >= topCard && k >= 0)
+      {
+         return new Card(' ', Card.Suit.spades);
+      }
+      return cards[k];
    }
 
    /**
