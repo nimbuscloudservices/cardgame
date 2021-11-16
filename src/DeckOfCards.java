@@ -259,6 +259,7 @@ class Hand
     */
    public Card playCard()
    {
+     
      Card topCard = myCards[1];
      Card [] updatedCard = new Card [numCards-1];
 
