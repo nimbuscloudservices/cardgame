@@ -40,15 +40,13 @@ public class DeckOfCards
     */
    private static void dealDeck(Deck deck, Hand[] hands)
    {
-      int deckIndex = 0;
       int handIndex = 0;
-      Card nextCard = deck.inspectCard(deckIndex);
+      Card nextCard = deck.dealCard();
       Hand nextHand = hands[handIndex];
-      while (!nextCard.getErrorFlag())
+      while (nextCard != null)
       {
-         nextHand.takeCard(deck.dealCard());
-         deckIndex++;
-         nextCard = deck.inspectCard(deckIndex);
+         nextHand.takeCard(nextCard);
+         nextCard = deck.dealCard();
 
          if (handIndex >= hands.length - 1)
          {
@@ -58,6 +56,7 @@ public class DeckOfCards
          {
             handIndex++;
          }
+         nextHand = hands[handIndex];
       }
    }
 
@@ -104,29 +103,47 @@ public class DeckOfCards
       // Phase 3:
       // Tests for deck with 2 packs
       Deck doubleDeck = new Deck(2);
-      for (int i = 0; i < (52 * 2); i++)
+      System.out.println("Double deck, unshuffled:");
+      System.out.print(doubleDeck.dealCard());
+      for (int i = 1; i < (52 * 2); i++)
       {
-         System.out.println(doubleDeck.dealCard());
+         System.out.print(", ");
+         System.out.print(doubleDeck.dealCard());
       }
+      System.out.println();
+
       doubleDeck.init(2);
       doubleDeck.shuffle();
-      for (int i = 0; i < (52 * 2); i++)
+      System.out.println("Double deck, shuffled:");
+      System.out.print(doubleDeck.dealCard());
+      for (int i = 1; i < (52 * 2); i++)
       {
-         System.out.println(doubleDeck.dealCard());
+         System.out.print(", ");
+         System.out.print(doubleDeck.dealCard());
       }
+      System.out.println();
 
       // Tests for deck with 1 pack
       Deck singleDeck = new Deck(1);
-      for (int i = 0; i < 52; i++)
+      System.out.println("Single deck, unshuffled:");
+      System.out.print(singleDeck.dealCard());
+      for (int i = 1; i < 52; i++)
       {
-         System.out.println(singleDeck.dealCard());
+         System.out.print(", ");
+         System.out.print(singleDeck.dealCard());
       }
+      System.out.println();
+
       singleDeck.init(1);
       singleDeck.shuffle();
-      for (int i = 0; i < 52; i++)
+      System.out.println("Single deck, shuffled:");
+      System.out.print(singleDeck.dealCard());
+      for (int i = 1; i < 52; i++)
       {
-         System.out.println(singleDeck.dealCard());
+         System.out.print(", ");
+         System.out.print(singleDeck.dealCard());
       }
+      System.out.println();
 
       // Phase 4:
       // Get the number of players from user input
@@ -413,7 +430,7 @@ class Hand
 
       displayHand += myCards[0];
 
-      for (int i = 1; i < myCards.length; i++)
+      for (int i = 1; i < numCards; i++)
       {
          displayHand += " , ";
          displayHand += myCards[i];
