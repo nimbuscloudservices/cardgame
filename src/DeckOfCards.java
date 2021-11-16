@@ -1,3 +1,6 @@
+import java.util.Random;
+import java.util.Scanner;
+
 /**
  * Module 3 Deck of Cards
  *
@@ -7,6 +10,49 @@
 
 public class DeckOfCards
 {
+   /**
+    * Gets a number of players between 1-10 from user input
+    *
+    * @return an int between 1-10 (inclusive)
+    */
+   private static int getNumPlayers() {
+      Scanner scanner = new Scanner(System.in);
+
+      System.out.print("Select the number of players (1-10): ");
+      int numPlayers = scanner.nextInt();
+      // Validate a legal number of players
+      if (numPlayers < 1 || numPlayers > 10) {
+         System.out.println("Invalid input. You must choose a number between 1 and 10.");
+         return getNumPlayers();
+      }
+
+      return numPlayers;
+   }
+
+   /**
+    * Deals a deck of cards evenly between any number of hands
+    *
+    * @param deck the deck to deal
+    * @param hands an array of Hands to deal cards to
+    */
+   private static void dealDeck(Deck deck, Hand[] hands) {
+      int deckIndex = 0;
+      int handIndex = 0;
+      Card nextCard = deck.inspectCard(deckIndex);
+      Hand nextHand = hands[handIndex];
+      while (!nextCard.getErrorFlag()) {
+         nextHand.takeCard(deck.dealCard());
+         deckIndex++;
+         nextCard = deck.inspectCard(deckIndex);
+
+         if (handIndex >= hands.length - 1) {
+            handIndex = 0;
+         } else {
+            handIndex++;
+         }
+      }
+   }
+
    public static void main(String[] args)
    {
       //Phase 1 Test
@@ -40,6 +86,68 @@ public class DeckOfCards
       System.out.println(hand);
       hand.resetHand();
       System.out.println(hand);
+
+      System.out.println("-----------");
+      hand.takeCard(cardTwo);
+      hand.takeCard(cardThree);
+      System.out.println(hand.inspectCard(0));
+      System.out.println(hand.inspectCard(1));
+
+      // Phase 3:
+      // Tests for deck with 2 packs
+      Deck doubleDeck = new Deck(2);
+      for (int i = 0; i < (52 * 2); i++) {
+         System.out.println(doubleDeck.dealCard());
+      }
+      doubleDeck.init(2);
+      doubleDeck.shuffle();
+      for (int i = 0; i < (52 * 2); i++) {
+         System.out.println(doubleDeck.dealCard());
+      }
+
+      // Tests for deck with 1 pack
+      Deck singleDeck = new Deck(1);
+      for (int i = 0; i < 52; i++) {
+         System.out.println(singleDeck.dealCard());
+      }
+      singleDeck.init(1);
+      singleDeck.shuffle();
+      for (int i = 0; i < 52; i++) {
+         System.out.println(singleDeck.dealCard());
+      }
+
+      // Phase 4:
+      // Get the number of players from user input
+      int numPlayers = getNumPlayers();
+
+      Deck deck = new Deck();
+
+      // Instantiate a hand for each player
+      Hand[] hands = new Hand[numPlayers];
+      for (int i = 0; i < numPlayers; i++) {
+         hands[i] = new Hand();
+      }
+
+      // Deal the entire deck, unshuffled
+      dealDeck(deck, hands);
+
+      System.out.println("All hands, unshuffled: ");
+      for (int i = 0; i < hands.length; i++) {
+         System.out.println(hands[i]);
+      }
+
+      // Shuffle, reset hands, and deal again
+      deck.init(1);
+      deck.shuffle();
+      for (int i = 0; i < hands.length; i++) {
+         hands[i].resetHand();
+      }
+      dealDeck(deck, hands);
+
+      System.out.println("All hands, shuffled: ");
+      for (int i = 0; i < hands.length; i++) {
+         System.out.println(hands[i]);
+      }
    }
 }
 
@@ -125,7 +233,7 @@ class Card
       boolean validValue = false;
       boolean validSuit = false;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+              'J', 'Q', 'K' };
       for (char i : cardValues)
       {
          if (i == value)
@@ -259,7 +367,7 @@ class Hand
     */
    public Card playCard()
    {
-     
+
      Card topCard = myCards[1];
      Card [] updatedCard = new Card [numCards-1];
 
@@ -268,10 +376,10 @@ class Hand
         updatedCard[i] = myCards[i];
      }
 
-     myCards = updatedCard;
-     numCards--;
+      myCards = updatedCard;
+      numCards--;
 
-     return topCard;
+      return topCard;
    }
 
    /**
@@ -281,16 +389,16 @@ class Hand
     */
    public String toString()
    {
-     String displayHand = "";
+      String displayHand = "";
 
-     displayHand += myCards[0];
+      displayHand += myCards[0];
 
-     for(int i=1; i < myCards.length; i++)
-     {
-        displayHand += " , ";
-        displayHand += myCards[i];
-     }
-     return displayHand;
+      for(int i=1; i < myCards.length; i++)
+      {
+         displayHand += " , ";
+         displayHand += myCards[i];
+      }
+      return displayHand;
    }
 
    /**
@@ -311,13 +419,19 @@ class Hand
     */
    public Card inspectCard(int k)
    {
-      return null;
+      if (k > numCards || k > 0)
+      {
+         return new Card(myCards[k]);
+      }
+
+      return new Card(' ', Card.Suit.spades);
    }
 
 }
 class Deck
 {
    public static final int MAX_CARDS = 312;
+   public static final int PACK = 52;
    private static Card[] masterPack;
    private Card[] cards;
    int topCard;
@@ -353,7 +467,12 @@ class Deck
     */
    public void shuffle()
    {
-
+      Random shuffle = new Random();
+      for (int i = 0; i < cards.length; i++)
+      {
+         int randomCard = shuffle.nextInt(PACK);
+         cards[randomCard] = cards[i];
+      }
    }
 
    /**
@@ -362,6 +481,15 @@ class Deck
     */
    public Card dealCard()
    {
+      Card dealCard;
+      if (topCard > 0)
+      {
+         dealCard = cards[getTopCard() - 1];
+         cards[getTopCard() - 1] = null;
+
+         topCard--;
+         return dealCard;
+      }
       return null;
    }
 
@@ -382,7 +510,11 @@ class Deck
     */
    public Card inspectCard(int k)
    {
-      return null;
+      if (k >= topCard && k >= 0)
+      {
+         return new Card(' ', Card.Suit.spades);
+      }
+      return cards[k];
    }
 
    /**
