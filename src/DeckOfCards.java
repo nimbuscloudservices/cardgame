@@ -15,14 +15,17 @@ public class DeckOfCards
     *
     * @return an int between 1-10 (inclusive)
     */
-   private static int getNumPlayers() {
+   private static int getNumPlayers()
+   {
       Scanner scanner = new Scanner(System.in);
 
       System.out.print("Select the number of players (1-10): ");
       int numPlayers = scanner.nextInt();
       // Validate a legal number of players
-      if (numPlayers < 1 || numPlayers > 10) {
-         System.out.println("Invalid input. You must choose a number between 1 and 10.");
+      if (numPlayers < 1 || numPlayers > 10)
+      {
+         System.out.println(
+               "Invalid input. You must choose a number between 1 and 10.");
          return getNumPlayers();
       }
 
@@ -32,22 +35,27 @@ public class DeckOfCards
    /**
     * Deals a deck of cards evenly between any number of hands
     *
-    * @param deck the deck to deal
+    * @param deck  the deck to deal
     * @param hands an array of Hands to deal cards to
     */
-   private static void dealDeck(Deck deck, Hand[] hands) {
+   private static void dealDeck(Deck deck, Hand[] hands)
+   {
       int deckIndex = 0;
       int handIndex = 0;
       Card nextCard = deck.inspectCard(deckIndex);
       Hand nextHand = hands[handIndex];
-      while (!nextCard.getErrorFlag()) {
+      while (!nextCard.getErrorFlag())
+      {
          nextHand.takeCard(deck.dealCard());
          deckIndex++;
          nextCard = deck.inspectCard(deckIndex);
 
-         if (handIndex >= hands.length - 1) {
+         if (handIndex >= hands.length - 1)
+         {
             handIndex = 0;
-         } else {
+         }
+         else
+         {
             handIndex++;
          }
       }
@@ -96,23 +104,27 @@ public class DeckOfCards
       // Phase 3:
       // Tests for deck with 2 packs
       Deck doubleDeck = new Deck(2);
-      for (int i = 0; i < (52 * 2); i++) {
+      for (int i = 0; i < (52 * 2); i++)
+      {
          System.out.println(doubleDeck.dealCard());
       }
       doubleDeck.init(2);
       doubleDeck.shuffle();
-      for (int i = 0; i < (52 * 2); i++) {
+      for (int i = 0; i < (52 * 2); i++)
+      {
          System.out.println(doubleDeck.dealCard());
       }
 
       // Tests for deck with 1 pack
       Deck singleDeck = new Deck(1);
-      for (int i = 0; i < 52; i++) {
+      for (int i = 0; i < 52; i++)
+      {
          System.out.println(singleDeck.dealCard());
       }
       singleDeck.init(1);
       singleDeck.shuffle();
-      for (int i = 0; i < 52; i++) {
+      for (int i = 0; i < 52; i++)
+      {
          System.out.println(singleDeck.dealCard());
       }
 
@@ -124,7 +136,8 @@ public class DeckOfCards
 
       // Instantiate a hand for each player
       Hand[] hands = new Hand[numPlayers];
-      for (int i = 0; i < numPlayers; i++) {
+      for (int i = 0; i < numPlayers; i++)
+      {
          hands[i] = new Hand();
       }
 
@@ -132,20 +145,23 @@ public class DeckOfCards
       dealDeck(deck, hands);
 
       System.out.println("All hands, unshuffled: ");
-      for (int i = 0; i < hands.length; i++) {
+      for (int i = 0; i < hands.length; i++)
+      {
          System.out.println(hands[i]);
       }
 
       // Shuffle, reset hands, and deal again
       deck.init(1);
       deck.shuffle();
-      for (int i = 0; i < hands.length; i++) {
+      for (int i = 0; i < hands.length; i++)
+      {
          hands[i].resetHand();
       }
       dealDeck(deck, hands);
 
       System.out.println("All hands, shuffled: ");
-      for (int i = 0; i < hands.length; i++) {
+      for (int i = 0; i < hands.length; i++)
+      {
          System.out.println(hands[i]);
       }
    }
@@ -156,11 +172,6 @@ public class DeckOfCards
  */
 class Card
 {
-   // enum of suits of cards
-   public enum Suit
-   {
-      clubs, diamonds, hearts, spades
-   }
    //Member Data
    private char value;
    private Suit suit;
@@ -233,7 +244,7 @@ class Card
       boolean validValue = false;
       boolean validSuit = false;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-              'J', 'Q', 'K' };
+            'J', 'Q', 'K' };
       for (char i : cardValues)
       {
          if (i == value)
@@ -315,6 +326,12 @@ class Card
          return "Invalid";
       return value + " of " + suit;
    }
+
+   // enum of suits of cards
+   public enum Suit
+   {
+      clubs, diamonds, hearts, spades
+   }
 }
 
 /**
@@ -351,11 +368,14 @@ class Hand
     */
    public boolean takeCard(Card card)
    {
-      if (numCards < MAX_CARDS) {
+      if (numCards < MAX_CARDS)
+      {
          myCards[numCards] = new Card(card);
          numCards++;
          return true;
-      } else {
+      }
+      else
+      {
          return false;
       }
    }
@@ -368,13 +388,13 @@ class Hand
    public Card playCard()
    {
 
-     Card topCard = myCards[1];
-     Card [] updatedCard = new Card [numCards-1];
+      Card topCard = myCards[1];
+      Card[] updatedCard = new Card[numCards - 1];
 
-     for(int i=0; i < numCards-1; i++)
-     {
-        updatedCard[i] = myCards[i];
-     }
+      for (int i = 0; i < numCards - 1; i++)
+      {
+         updatedCard[i] = myCards[i];
+      }
 
       myCards = updatedCard;
       numCards--;
@@ -393,7 +413,7 @@ class Hand
 
       displayHand += myCards[0];
 
-      for(int i=1; i < myCards.length; i++)
+      for (int i = 1; i < myCards.length; i++)
       {
          displayHand += " , ";
          displayHand += myCards[i];
@@ -428,20 +448,29 @@ class Hand
    }
 
 }
+
 class Deck
 {
-   public static final int MAX_CARDS = 312;
    public static final int PACK = 52;
+   public static final int MAX_NUMBER_PACK = 6;
+   public static final int MAX_CARDS = PACK * MAX_NUMBER_PACK;
+   static boolean allocated = false;
    private static Card[] masterPack;
-   private Card[] cards;
+   private int numPacks;
+
    int topCard;
+   private Card[] cards;
 
    /**
     * constructor for Deck
+    *
     * @param numPacks number of packs of playing cards
     */
-   public Deck (int numPacks)
+   public Deck(int numPacks)
    {
+      allocateMasterPack();
+      cards = new Card[numPacks*PACK];
+      init(numPacks);
 
    }
 
@@ -450,15 +479,52 @@ class Deck
     */
    public Deck()
    {
+      this(1);
+   }
 
+   /**
+    * Used for initializing masterPack, can not be run more that once.
+    */
+   private static void allocateMasterPack()
+   {
+      int i = 0;
+      char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
+            'J', 'Q', 'K' };
+      if (!allocated)
+      {
+         allocated = true;
+         masterPack = new Card[PACK];
+         while (i < PACK)
+         {
+            for (int j = 0; j < Card.Suit.values().length; j++)
+            {
+               for (int k = 0; k < cardValues.length; k++)
+               {
+                  masterPack[i] = new Card(cardValues[k],
+                        Card.Suit.values()[j]);
+                  i++;
+               }
+            }
+         }
+      }
    }
 
    /**
     * repopulates cards[] with the standard 52 x numPacks
+    *
     * @param numPacks number of playing card packs used
     */
    public void init(int numPacks)
    {
+      cards = new Card[numPacks * PACK];
+      topCard = numPacks * PACK;
+      for (int packNum = 0; packNum < numPacks; packNum++)
+      {
+         for (int card = 0; card < PACK; card++)
+         {
+            cards[packNum * PACK + card] = new Card(masterPack[card]);
+         }
+      }
 
    }
 
@@ -477,6 +543,7 @@ class Deck
 
    /**
     * returns and removes the card in the top occupied position of cards[]
+    *
     * @return card being dealt
     */
    public Card dealCard()
@@ -495,6 +562,7 @@ class Deck
 
    /**
     * gets value of topCard field
+    *
     * @return value of topCard field
     */
    public int getTopCard()
@@ -505,6 +573,7 @@ class Deck
    /**
     * Accessor for an individual card.
     * Returns a card with errorFlag = true if k is bad
+    *
     * @param k index of card being checked
     * @return returns an object copy of card with errorFlag = true
     */
@@ -516,14 +585,5 @@ class Deck
       }
       return cards[k];
    }
-
-   /**
-    * Used for initializing masterPack, can not be run more that once.
-    */
-   private static void allocateMasterPack()
-   {
-
-   }
-
 
 }
