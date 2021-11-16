@@ -262,9 +262,7 @@ class Hand
      Card topCard = myCards[1];
      Card [] updatedCard = new Card [numCards-1];
 
-     numCards--;
-
-     for(int i=0; i< numCards; i++)
+     for(int i=0; i < numCards-1; i++)
      {
         updatedCard[i] = myCards[i];
      }
