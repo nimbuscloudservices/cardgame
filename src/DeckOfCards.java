@@ -98,7 +98,7 @@ public class DeckOfCards
       System.out.println("-----------");
       hand.takeCard(cardTwo);
       hand.takeCard(cardThree);
-      System.out.println(hand.inspectCard(0));
+      System.out.println(hand.inspectCard(1000));
       System.out.println(hand.inspectCard(1));
 
       // Phase 3:
@@ -439,7 +439,7 @@ class Hand
     */
    public Card inspectCard(int k)
    {
-      if (k > numCards || k > 0)
+      if (k < numCards && k >= 0)
       {
          return new Card(myCards[k]);
       }
