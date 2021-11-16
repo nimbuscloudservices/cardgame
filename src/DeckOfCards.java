@@ -64,18 +64,17 @@ public class DeckOfCards
    public static void main(String[] args)
    {
       //Phase 1 Test
+      System.out.println("------------Phase One------------");
       Card cardOne = new Card('T', Card.Suit.clubs);
       //illegal card
       Card cardTwo = new Card('d', Card.Suit.hearts);
       Card cardThree = new Card('4', Card.Suit.diamonds);
-      Card cardFour = new Card();
-      Card cardFive = new Card(cardThree);
+
 
       System.out.println(cardOne);
       System.out.println(cardTwo);
       System.out.println(cardThree);
-      System.out.println(cardFour);
-      System.out.println(cardFive);
+      System.out.println();
 
       //Good gone bad card
       cardOne.set('U', Card.Suit.clubs);
@@ -84,10 +83,10 @@ public class DeckOfCards
       System.out.println(cardOne);
       System.out.println(cardTwo);
       System.out.println(cardThree);
-      System.out.println(cardFour);
-      System.out.println(cardFive);
+
 
       //Phase 2 Test
+      System.out.println("------------Phase Two------------");
       Hand hand = new Hand();
       hand.takeCard(cardTwo);
       hand.takeCard(cardThree);
@@ -102,33 +101,37 @@ public class DeckOfCards
       System.out.println(hand.inspectCard(1));
 
       // Phase 3:
+      System.out.println("-----------Phase Three-----------");
       // Tests for deck with 2 packs
       Deck doubleDeck = new Deck(2);
       for (int i = 0; i < (52 * 2); i++)
       {
-         System.out.println(doubleDeck.dealCard());
+         System.out.print(doubleDeck.dealCard() + " / ");
       }
       doubleDeck.init(2);
       doubleDeck.shuffle();
       for (int i = 0; i < (52 * 2); i++)
       {
-         System.out.println(doubleDeck.dealCard());
+         System.out.print(doubleDeck.dealCard() + " / ");
       }
 
       // Tests for deck with 1 pack
       Deck singleDeck = new Deck(1);
+      System.out.println();
       for (int i = 0; i < 52; i++)
       {
-         System.out.println(singleDeck.dealCard());
+         System.out.print(singleDeck.dealCard() + " / ");
       }
       singleDeck.init(1);
       singleDeck.shuffle();
       for (int i = 0; i < 52; i++)
       {
-         System.out.println(singleDeck.dealCard());
+         System.out.print(singleDeck.dealCard() + " / ");
       }
+      System.out.println();
 
       // Phase 4:
+      System.out.println("------------Phase Four------------");
       // Get the number of players from user input
       int numPlayers = getNumPlayers();
 
@@ -323,7 +326,7 @@ class Card
    public String toString()
    {
       if (errorFlag)
-         return "Invalid";
+         return "**illegal**";
       return value + " of " + suit;
    }
 
@@ -370,8 +373,11 @@ class Hand
    {
       if (numCards < MAX_CARDS)
       {
-         myCards[numCards] = new Card(card);
-         numCards++;
+         if(myCards[numCards] == null)
+         {
+            myCards[numCards] = new Card();
+         }
+         myCards[numCards++].set(card.getValue(),card.getSuit());
          return true;
       }
       else
@@ -415,8 +421,11 @@ class Hand
 
       for (int i = 1; i < myCards.length; i++)
       {
-         displayHand += " , ";
-         displayHand += myCards[i];
+         if(myCards[i] != null)
+         {
+            displayHand += " , ";
+            displayHand += myCards[i];
+         }
       }
       return displayHand;
    }
@@ -587,3 +596,13 @@ class Deck
    }
 
 }
+/**
+ * ------------Phase One------------
+ * T of clubs
+ * **illegal**
+ * 4 of diamonds
+ *
+ * **illegal**
+ * K of hearts
+ * 4 of diamonds
+ */
