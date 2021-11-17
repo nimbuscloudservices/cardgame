@@ -243,28 +243,36 @@ class Card
 
    }
 
-   //Accessor getSuit returns suit member from card object.
+   /**
+    * Accessor getSuit returns suit member from card object.
+    */
    public Suit getSuit()
    {
       return this.suit;
    }
 
-   //Accessor getValue returns value member from card object.
+   /**
+    * Accessor getValue returns value member from card object.
+    */
    public char getValue()
    {
       return this.value;
    }
 
-   //Accessor getErrorFlag returns a boolean value. True if bad values are passed to suit and value member
-   //variables and false if good values are passed.
+   /**
+    *Accessor getErrorFlag returns a boolean value. True if bad values are passed to suit and value member
+    *variables and false if good values are passed.
+    */
    public boolean getErrorFlag()
    {
       return this.errorFlag;
    }
 
-   //This method, equals(Card card), returns a boolean value based on terms for the the if-else statement.
-   //If card on the left and right have the same member variables (value and suit) true is returned.
-   //If both member variables are not the same false is returned.
+   /**
+    *This method, equals(Card card), returns a boolean value based on terms for the the if-else statement.
+    *If card on the left and right have the same member variables (value and suit) true is returned.
+    *If both member variables are not the same false is returned.
+    */
    public boolean equals(Card card)
    {
       if (this.suit == card.suit & this.value == card.value)
@@ -342,11 +350,13 @@ class Hand
       }
    }
 
-   //card playCard() method stores and returns the top card in a temp card object (topCard).
-   //Temp array object is created to store the new set of cards in the hand.
-   //For loop is used to store each card except for the card that is removed (top card).
-   //myCards array is updated by using the = operator.
-   //numCard value is decremented to store the correct value for number of cards.
+   /**
+    *card playCard() method stores and returns the top card in a temp card object (topCard).
+    *Temp array object is created to store the new set of cards in the hand.
+    *For loop is used to store each card except for the card that is removed (top card).
+    *myCards array is updated by using the = operator.
+    *numCard value is decremented to store the correct value for number of cards.
+    */
    public Card playCard()
    {
 
@@ -364,8 +374,10 @@ class Hand
       return topCard;
    }
 
-   //toString() returns a string obtains all of the cards in the myCards array.
-   //This is done by creating a string variable and using a for loop to store each card.
+   /**
+    *toString() returns a string obtains all of the cards in the myCards array.
+    *This is done by creating a string variable and using a for loop to store each card.
+    */
    public String toString()
    {
       String displayHand = "";
