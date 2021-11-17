@@ -25,7 +25,7 @@ public class DeckOfCards
       if (numPlayers < 1 || numPlayers > 10)
       {
          System.out.println(
-               "Invalid input. You must choose a number between 1 and 10.");
+                 "Invalid input. You must choose a number between 1 and 10.");
          return getNumPlayers();
       }
 
@@ -261,7 +261,7 @@ class Card
       boolean validValue = false;
       boolean validSuit = false;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+              'J', 'Q', 'K' };
       for (char i : cardValues)
       {
          if (i == value)
@@ -283,7 +283,7 @@ class Card
 
    }
 
-   //Accessor getSuit returns suit member from card object. 
+   //Accessor getSuit returns suit member from card object.
    public Suit getSuit()
    {
       return this.suit;
@@ -488,7 +488,7 @@ class Deck
    {
       int i = 0;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+              'J', 'Q', 'K' };
       if (!allocated)
       {
          allocated = true;
@@ -500,7 +500,7 @@ class Deck
                for (int k = 0; k < cardValues.length; k++)
                {
                   masterPack[i] = new Card(cardValues[k],
-                        Card.Suit.values()[j]);
+                          Card.Suit.values()[j]);
                   i++;
                }
             }
@@ -533,10 +533,13 @@ class Deck
    public void shuffle()
    {
       Random shuffle = new Random();
-      for (int i = 0; i < cards.length; i++)
+
+      for(int i = 0; i < cards.length; i++)
       {
          int randomCard = shuffle.nextInt(PACK);
+         Card assignCard = cards[randomCard];
          cards[randomCard] = cards[i];
+         cards[i] = assignCard;
       }
    }
 
