@@ -423,6 +423,9 @@ class Hand
 
 }
 
+/**
+ *  A class to model a deck of cards
+ */
 class Deck
 {
    public static final int PACK = 52;
