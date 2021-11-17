@@ -379,8 +379,10 @@ class Hand
       return topCard;
    }
 
-   //toString() returns a string obtains all of the cards in the myCards array.
-   //This is done by creating a string variable and using a for loop to store each card.
+   /**
+    * converts myCards array to string form
+    * @return myCards array as a string
+    */
    public String toString()
    {
       String displayHand = "";
