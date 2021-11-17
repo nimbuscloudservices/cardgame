@@ -570,7 +570,7 @@ class Deck
    }
 
 }
-/**
+/******************************** Output***************************************
  * Double deck, unshuffled:
  * K of spades, Q of spades, J of spades, T of spades,
  * 9 of spades, 8 of spades, 7 of spades, 6 of spades, 5 of spades, 4 of spades,
@@ -670,4 +670,4 @@ class Deck
  * , 2 of hearts)
  * hand = (8 of clubs , 6 of clubs , J of clubs , 8 of spades , T of diamonds,
  * 8 of diamonds)
- */
+ *****************************************************************************/
