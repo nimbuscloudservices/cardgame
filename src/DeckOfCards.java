@@ -537,7 +537,7 @@ class Deck
 
       for(int i = 0; i < cards.length; i++)
       {
-         int randomCard = shuffle.nextInt(PACK);
+         int randomCard = shuffle.nextInt(PACK*numPacks);
          Card assignCard = cards[randomCard];
          cards[randomCard] = cards[i];
          cards[i] = assignCard;
