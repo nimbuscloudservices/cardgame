@@ -124,7 +124,7 @@ public class DeckOfCards
       System.out.println("All hands, unshuffled: ");
       for (int i = 0; i < hands.length; i++)
       {
-         System.out.println(hands[i]);
+         System.out.println("hand = ( "+ hands[i] +" )");
       }
 
       // Shuffle, reset hands, and deal again
@@ -139,7 +139,7 @@ public class DeckOfCards
       System.out.println("All hands, shuffled: ");
       for (int i = 0; i < hands.length; i++)
       {
-         System.out.println(hands[i]);
+         System.out.println("hand = ("+ hands[i] +")");
       }
    }
 }
@@ -174,8 +174,8 @@ class Card
    }
 
    /**
-    * a copy constructor that will create a duplicate of the original
-    * which is not a reference
+    * a copy constructor that will create a duplicate of the original which is
+    * not a reference
     *
     * @param origCard original card object
     */
@@ -381,6 +381,7 @@ class Hand
 
    /**
     * converts myCards array to string form
+    *
     * @return myCards array as a string
     */
    public String toString()
@@ -426,7 +427,7 @@ class Hand
 }
 
 /**
- *  A class to model a deck of cards
+ * A class to model a deck of cards
  */
 class Deck
 {
@@ -553,8 +554,8 @@ class Deck
    }
 
    /**
-    * Accessor for an individual card.
-    * Returns a card with errorFlag = true if k is bad
+    * Accessor for an individual card. Returns a card with errorFlag = true if k
+    * is bad
     *
     * @param k index of card being checked
     * @return returns an object copy of card with errorFlag = true
