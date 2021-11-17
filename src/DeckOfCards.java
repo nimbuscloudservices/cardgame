@@ -62,45 +62,6 @@ public class DeckOfCards
 
    public static void main(String[] args)
    {
-      //Phase 1 Test
-      Card cardOne = new Card('T', Card.Suit.clubs);
-      //illegal card
-      Card cardTwo = new Card('d', Card.Suit.hearts);
-      Card cardThree = new Card('4', Card.Suit.diamonds);
-      Card cardFour = new Card();
-      Card cardFive = new Card(cardThree);
-
-      System.out.println(cardOne);
-      System.out.println(cardTwo);
-      System.out.println(cardThree);
-      System.out.println(cardFour);
-      System.out.println(cardFive);
-
-      //Good gone bad card
-      cardOne.set('U', Card.Suit.clubs);
-      //illegal card turned good
-      cardTwo.set('K', Card.Suit.hearts);
-      System.out.println(cardOne);
-      System.out.println(cardTwo);
-      System.out.println(cardThree);
-      System.out.println(cardFour);
-      System.out.println(cardFive);
-
-      //Phase 2 Test
-      Hand hand = new Hand();
-      hand.takeCard(cardTwo);
-      hand.takeCard(cardThree);
-      System.out.println(hand);
-      hand.resetHand();
-      System.out.println(hand);
-
-      System.out.println("-----------");
-      hand.takeCard(cardTwo);
-      hand.takeCard(cardThree);
-      System.out.println(hand.inspectCard(1000));
-      System.out.println(hand.inspectCard(1));
-
-      // Phase 3:
       // Tests for deck with 2 packs
       Deck doubleDeck = new Deck(2);
       System.out.println("Double deck, unshuffled:");
@@ -145,7 +106,6 @@ public class DeckOfCards
       }
       System.out.println();
 
-      // Phase 4:
       // Get the number of players from user input
       int numPlayers = getNumPlayers();
 
