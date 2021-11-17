@@ -390,7 +390,7 @@ class Hand
    public Card playCard()
    {
 
-      Card topCard = myCards[1];
+      Card topCard = myCards[numCards - 1];
       Card[] updatedCard = new Card[numCards - 1];
 
       for (int i = 0; i < numCards - 1; i++)
