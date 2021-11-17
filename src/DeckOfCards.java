@@ -25,7 +25,7 @@ public class DeckOfCards
       if (numPlayers < 1 || numPlayers > 10)
       {
          System.out.println(
-                 "Invalid input. You must choose a number between 1 and 10.");
+               "Invalid input. You must choose a number between 1 and 10.");
          return getNumPlayers();
       }
 
@@ -221,7 +221,7 @@ class Card
       boolean validValue = false;
       boolean validSuit = false;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-              'J', 'Q', 'K' };
+            'J', 'Q', 'K' };
       for (char i : cardValues)
       {
          if (i == value)
@@ -243,28 +243,43 @@ class Card
 
    }
 
-   //Accessor getSuit returns suit member from card object.
+   /**
+    * gets this card's suit
+    *
+    * @return suit of this card
+    */
    public Suit getSuit()
    {
       return this.suit;
    }
 
-   //Accessor getValue returns value member from card object.
+   /**
+    * gets value of this card
+    *
+    * @return value of this card
+    */
    public char getValue()
    {
       return this.value;
    }
 
-   //Accessor getErrorFlag returns a boolean value. True if bad values are passed to suit and value member
-   //variables and false if good values are passed.
+   /**
+    * gets errorFlag value
+    *
+    * @return value of errorFlag of this card
+    */
    public boolean getErrorFlag()
    {
       return this.errorFlag;
    }
 
-   //This method, equals(Card card), returns a boolean value based on terms for the the if-else statement.
-   //If card on the left and right have the same member variables (value and suit) true is returned.
-   //If both member variables are not the same false is returned.
+   /**
+    * Compares this card object to a user specified card object to confirm if
+    * they are equal
+    *
+    * @param card that is being compared to this card
+    * @return true if cards are the same, else false if it does not match
+    */
    public boolean equals(Card card)
    {
       if (this.suit == card.suit & this.value == card.value)
@@ -342,11 +357,11 @@ class Hand
       }
    }
 
-   //card playCard() method stores and returns the top card in a temp card object (topCard).
-   //Temp array object is created to store the new set of cards in the hand.
-   //For loop is used to store each card except for the card that is removed (top card).
-   //myCards array is updated by using the = operator.
-   //numCard value is decremented to store the correct value for number of cards.
+   /**
+    * returns and removes the card in the top occupied position of the array.
+    *
+    * @return card at the top of the myCards array
+    */
    public Card playCard()
    {
 
@@ -415,9 +430,8 @@ class Deck
    public static final int MAX_CARDS = PACK * MAX_NUMBER_PACK;
    static boolean allocated = false;
    private static Card[] masterPack;
-   private int numPacks;
-
    int topCard;
+   private int numPacks;
    private Card[] cards;
 
    /**
@@ -428,7 +442,7 @@ class Deck
    public Deck(int numPacks)
    {
       allocateMasterPack();
-      cards = new Card[numPacks*PACK];
+      cards = new Card[numPacks * PACK];
       init(numPacks);
 
    }
@@ -448,7 +462,7 @@ class Deck
    {
       int i = 0;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-              'J', 'Q', 'K' };
+            'J', 'Q', 'K' };
       if (!allocated)
       {
          allocated = true;
@@ -460,7 +474,7 @@ class Deck
                for (int k = 0; k < cardValues.length; k++)
                {
                   masterPack[i] = new Card(cardValues[k],
-                          Card.Suit.values()[j]);
+                        Card.Suit.values()[j]);
                   i++;
                }
             }
@@ -495,9 +509,9 @@ class Deck
    {
       Random shuffle = new Random();
 
-      for(int i = 0; i < cards.length; i++)
+      for (int i = 0; i < cards.length; i++)
       {
-         int randomCard = shuffle.nextInt(PACK*numPacks);
+         int randomCard = shuffle.nextInt(PACK * numPacks);
          Card assignCard = cards[randomCard];
          cards[randomCard] = cards[i];
          cards[i] = assignCard;
