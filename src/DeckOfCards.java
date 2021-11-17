@@ -515,6 +515,7 @@ class Deck
     */
    public void init(int numPacks)
    {
+      this.numPacks = numPacks;
       cards = new Card[numPacks * PACK];
       topCard = numPacks * PACK;
       for (int packNum = 0; packNum < numPacks; packNum++)
