@@ -25,7 +25,7 @@ public class DeckOfCards
       if (numPlayers < 1 || numPlayers > 10)
       {
          System.out.println(
-               "Invalid input. You must choose a number between 1 and 10.");
+                 "Invalid input. You must choose a number between 1 and 10.");
          return getNumPlayers();
       }
 
@@ -40,15 +40,13 @@ public class DeckOfCards
     */
    private static void dealDeck(Deck deck, Hand[] hands)
    {
-      int deckIndex = 0;
       int handIndex = 0;
-      Card nextCard = deck.inspectCard(deckIndex);
+      Card nextCard = deck.dealCard();
       Hand nextHand = hands[handIndex];
-      while (!nextCard.getErrorFlag())
+      while (nextCard != null)
       {
-         nextHand.takeCard(deck.dealCard());
-         deckIndex++;
-         nextCard = deck.inspectCard(deckIndex);
+         nextHand.takeCard(nextCard);
+         nextCard = deck.dealCard();
 
          if (handIndex >= hands.length - 1)
          {
@@ -58,23 +56,25 @@ public class DeckOfCards
          {
             handIndex++;
          }
+         nextHand = hands[handIndex];
       }
    }
 
    public static void main(String[] args)
    {
       //Phase 1 Test
-      System.out.println("------------Phase One------------");
       Card cardOne = new Card('T', Card.Suit.clubs);
       //illegal card
       Card cardTwo = new Card('d', Card.Suit.hearts);
       Card cardThree = new Card('4', Card.Suit.diamonds);
-
+      Card cardFour = new Card();
+      Card cardFive = new Card(cardThree);
 
       System.out.println(cardOne);
       System.out.println(cardTwo);
       System.out.println(cardThree);
-      System.out.println();
+      System.out.println(cardFour);
+      System.out.println(cardFive);
 
       //Good gone bad card
       cardOne.set('U', Card.Suit.clubs);
@@ -83,10 +83,10 @@ public class DeckOfCards
       System.out.println(cardOne);
       System.out.println(cardTwo);
       System.out.println(cardThree);
-
+      System.out.println(cardFour);
+      System.out.println(cardFive);
 
       //Phase 2 Test
-      System.out.println("------------Phase Two------------");
       Hand hand = new Hand();
       hand.takeCard(cardTwo);
       hand.takeCard(cardThree);
@@ -101,37 +101,51 @@ public class DeckOfCards
       System.out.println(hand.inspectCard(1));
 
       // Phase 3:
-      System.out.println("-----------Phase Three-----------");
       // Tests for deck with 2 packs
       Deck doubleDeck = new Deck(2);
-      for (int i = 0; i < (52 * 2); i++)
+      System.out.println("Double deck, unshuffled:");
+      System.out.print(doubleDeck.dealCard());
+      for (int i = 1; i < (52 * 2); i++)
       {
-         System.out.print(doubleDeck.dealCard() + " / ");
+         System.out.print(", ");
+         System.out.print(doubleDeck.dealCard());
       }
+      System.out.println();
+
       doubleDeck.init(2);
       doubleDeck.shuffle();
-      for (int i = 0; i < (52 * 2); i++)
+      System.out.println("Double deck, shuffled:");
+      System.out.print(doubleDeck.dealCard());
+      for (int i = 1; i < (52 * 2); i++)
       {
-         System.out.print(doubleDeck.dealCard() + " / ");
+         System.out.print(", ");
+         System.out.print(doubleDeck.dealCard());
       }
+      System.out.println();
 
       // Tests for deck with 1 pack
       Deck singleDeck = new Deck(1);
-      System.out.println();
-      for (int i = 0; i < 52; i++)
+      System.out.println("Single deck, unshuffled:");
+      System.out.print(singleDeck.dealCard());
+      for (int i = 1; i < 52; i++)
       {
-         System.out.print(singleDeck.dealCard() + " / ");
+         System.out.print(", ");
+         System.out.print(singleDeck.dealCard());
       }
+      System.out.println();
+
       singleDeck.init(1);
       singleDeck.shuffle();
-      for (int i = 0; i < 52; i++)
+      System.out.println("Single deck, shuffled:");
+      System.out.print(singleDeck.dealCard());
+      for (int i = 1; i < 52; i++)
       {
-         System.out.print(singleDeck.dealCard() + " / ");
+         System.out.print(", ");
+         System.out.print(singleDeck.dealCard());
       }
       System.out.println();
 
       // Phase 4:
-      System.out.println("------------Phase Four------------");
       // Get the number of players from user input
       int numPlayers = getNumPlayers();
 
@@ -247,7 +261,7 @@ class Card
       boolean validValue = false;
       boolean validSuit = false;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+              'J', 'Q', 'K' };
       for (char i : cardValues)
       {
          if (i == value)
@@ -269,43 +283,28 @@ class Card
 
    }
 
-   /**
-    * gets the suit of this card
-    *
-    * @return suit of this card
-    */
+   //Accessor getSuit returns suit member from card object.
    public Suit getSuit()
    {
       return this.suit;
    }
 
-   /**
-    * gets the value of this card
-    *
-    * @return value of this card
-    */
+   //Accessor getValue returns value member from card object.
    public char getValue()
    {
       return this.value;
    }
 
-   /**
-    * gets the state of the errorFlag
-    *
-    * @return state of errorFlag
-    */
+   //Accessor getErrorFlag returns a boolean value. True if bad values are passed to suit and value member
+   //variables and false if good values are passed.
    public boolean getErrorFlag()
    {
       return this.errorFlag;
    }
 
-   /**
-    * compares this card to another card and checks if cards are identical
-    *
-    * @param card that is being compared to.
-    * @return returns true if all the fields are identical to parameter
-    * object card, or it returns false if they are not identical.
-    */
+   //This method, equals(Card card), returns a boolean value based on terms for the the if-else statement.
+   //If card on the left and right have the same member variables (value and suit) true is returned.
+   //If both member variables are not the same false is returned.
    public boolean equals(Card card)
    {
       if (this.suit == card.suit & this.value == card.value)
@@ -326,7 +325,7 @@ class Card
    public String toString()
    {
       if (errorFlag)
-         return "**illegal**";
+         return "Invalid";
       return value + " of " + suit;
    }
 
@@ -373,11 +372,8 @@ class Hand
    {
       if (numCards < MAX_CARDS)
       {
-         if(myCards[numCards] == null)
-         {
-            myCards[numCards] = new Card();
-         }
-         myCards[numCards++].set(card.getValue(),card.getSuit());
+         myCards[numCards] = new Card(card);
+         numCards++;
          return true;
       }
       else
@@ -386,11 +382,11 @@ class Hand
       }
    }
 
-   /**
-    * returns and remove the card in the top occupied position of the array
-    *
-    * @return card that is being removed from top position in the array
-    */
+   //card playCard() method stores and returns the top card in a temp card object (topCard).
+   //Temp array object is created to store the new set of cards in the hand.
+   //For loop is used to store each card except for the card that is removed (top card).
+   //myCards array is updated by using the = operator.
+   //numCard value is decremented to store the correct value for number of cards.
    public Card playCard()
    {
 
@@ -408,24 +404,18 @@ class Hand
       return topCard;
    }
 
-   /**
-    * a stringizer that the client can use to display the entire hand
-    *
-    * @return the entire hand array as a string
-    */
+   //toString() returns a string obtains all of the cards in the myCards array.
+   //This is done by creating a string variable and using a for loop to store each card.
    public String toString()
    {
       String displayHand = "";
 
       displayHand += myCards[0];
 
-      for (int i = 1; i < myCards.length; i++)
+      for (int i = 1; i < numCards; i++)
       {
-         if(myCards[i] != null)
-         {
-            displayHand += " , ";
-            displayHand += myCards[i];
-         }
+         displayHand += " , ";
+         displayHand += myCards[i];
       }
       return displayHand;
    }
@@ -498,7 +488,7 @@ class Deck
    {
       int i = 0;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+              'J', 'Q', 'K' };
       if (!allocated)
       {
          allocated = true;
@@ -510,7 +500,7 @@ class Deck
                for (int k = 0; k < cardValues.length; k++)
                {
                   masterPack[i] = new Card(cardValues[k],
-                        Card.Suit.values()[j]);
+                          Card.Suit.values()[j]);
                   i++;
                }
             }
@@ -543,10 +533,13 @@ class Deck
    public void shuffle()
    {
       Random shuffle = new Random();
-      for (int i = 0; i < cards.length; i++)
+
+      for(int i = 0; i < cards.length; i++)
       {
          int randomCard = shuffle.nextInt(PACK);
+         Card assignCard = cards[randomCard];
          cards[randomCard] = cards[i];
+         cards[i] = assignCard;
       }
    }
 
@@ -596,13 +589,3 @@ class Deck
    }
 
 }
-/**
- * ------------Phase One------------
- * T of clubs
- * **illegal**
- * 4 of diamonds
- *
- * **illegal**
- * K of hearts
- * 4 of diamonds
- */
