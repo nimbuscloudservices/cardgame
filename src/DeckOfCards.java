@@ -283,43 +283,28 @@ class Card
 
    }
 
-   /**
-    * gets the suit of this card
-    *
-    * @return suit of this card
-    */
+   //Accessor getSuit returns suit member from card object. 
    public Suit getSuit()
    {
       return this.suit;
    }
 
-   /**
-    * gets the value of this card
-    *
-    * @return value of this card
-    */
+   //Accessor getValue returns value member from card object.
    public char getValue()
    {
       return this.value;
    }
 
-   /**
-    * gets the state of the errorFlag
-    *
-    * @return state of errorFlag
-    */
+   //Accessor getErrorFlag returns a boolean value. True if bad values are passed to suit and value member
+   //variables and false if good values are passed.
    public boolean getErrorFlag()
    {
       return this.errorFlag;
    }
 
-   /**
-    * compares this card to another card and checks if cards are identical
-    *
-    * @param card that is being compared to.
-    * @return returns true if all the fields are identical to parameter
-    * object card, or it returns false if they are not identical.
-    */
+   //This method, equals(Card card), returns a boolean value based on terms for the the if-else statement.
+   //If card on the left and right have the same member variables (value and suit) true is returned.
+   //If both member variables are not the same false is returned.
    public boolean equals(Card card)
    {
       if (this.suit == card.suit & this.value == card.value)
@@ -397,11 +382,11 @@ class Hand
       }
    }
 
-   /**
-    * returns and remove the card in the top occupied position of the array
-    *
-    * @return card that is being removed from top position in the array
-    */
+   //card playCard() method stores and returns the top card in a temp card object (topCard).
+   //Temp array object is created to store the new set of cards in the hand.
+   //For loop is used to store each card except for the card that is removed (top card).
+   //myCards array is updated by using the = operator.
+   //numCard value is decremented to store the correct value for number of cards.
    public Card playCard()
    {
 
@@ -419,11 +404,8 @@ class Hand
       return topCard;
    }
 
-   /**
-    * a stringizer that the client can use to display the entire hand
-    *
-    * @return the entire hand array as a string
-    */
+   //toString() returns a string obtains all of the cards in the myCards array.
+   //This is done by creating a string variable and using a for loop to store each card.
    public String toString()
    {
       String displayHand = "";
