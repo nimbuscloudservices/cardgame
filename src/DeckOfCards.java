@@ -124,7 +124,7 @@ public class DeckOfCards
       System.out.println("All hands, unshuffled: ");
       for (int i = 0; i < hands.length; i++)
       {
-         System.out.println("hand = ( " + hands[i] + " )");
+         System.out.println("hand = (" + hands[i] + ")");
       }
 
       // Shuffle, reset hands, and deal again
