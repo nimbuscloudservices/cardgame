@@ -364,19 +364,15 @@ class Hand
     */
    public Card playCard()
    {
-
-      Card topCard = myCards[numCards - 1];
-      Card[] updatedCard = new Card[numCards - 1];
-
-      for (int i = 0; i < numCards - 1; i++)
-      {
-         updatedCard[i] = myCards[i];
-      }
-
-      myCards = updatedCard;
+      if(numCards == 0)
+         return null;
+      char value = myCards[numCards -1].getValue();
+      Card.Suit suit = myCards[numCards -1].getSuit();
+      Card card = new Card(value, suit);
+      myCards[numCards -1] = null;
       numCards--;
 
-      return topCard;
+      return card;
    }
 
    /**
