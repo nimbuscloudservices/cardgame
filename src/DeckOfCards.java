@@ -366,6 +366,7 @@ class Hand
    {
       if(numCards == 0)
          return null;
+
       char value = myCards[numCards -1].getValue();
       Card.Suit suit = myCards[numCards -1].getSuit();
       Card card = new Card(value, suit);
@@ -491,7 +492,7 @@ class Deck
     */
    public void init(int numPacks)
    {
-      if(numPacks > 0 || numPacks <=6)
+      if(numPacks > 0 && numPacks <=6)
       {
          this.numPacks = numPacks;
          cards = new Card[numPacks * PACK];
@@ -568,104 +569,3 @@ class Deck
    }
 
 }
-/******************************** Output***************************************
- * Double deck, unshuffled:
- * K of spades, Q of spades, J of spades, T of spades,
- * 9 of spades, 8 of spades, 7 of spades, 6 of spades, 5 of spades, 4 of spades,
- * 3 of spades, 2 of spades, A of spades, K of hearts, Q of hearts, J of hearts,
- * T of hearts, 9 of hearts, 8 of hearts, 7 of hearts, 6 of hearts, 5 of hearts,
- * 4 of hearts, 3 of hearts, 2 of hearts, A of hearts, K of diamonds, Q of
- * diamonds, J of diamonds, T of diamonds, 9 of diamonds, 8 of diamonds, 7 of
- * diamonds, 6 of diamonds, 5 of diamonds, 4 of diamonds, 3 of diamonds, 2 of
- * diamonds, A of diamonds, K of clubs, Q of clubs, J of clubs, T of clubs, 9 of
- * clubs, 8 of clubs, 7 of clubs, 6 of clubs, 5 of clubs, 4 of clubs, 3 of
- * clubs, 2 of clubs, A of clubs, K of spades, Q of spades, J of spades, T of
- * spades, 9 of spades, 8 of spades, 7 of spades, 6 of spades, 5 of spades, 4 of
- * spades, 3 of spades, 2 of spades, A of spades, K of hearts, Q of hearts, J of
- * hearts, T of hearts, 9 of hearts, 8 of hearts, 7 of hearts, 6 of hearts, 5 of
- * hearts, 4 of hearts, 3 of hearts, 2 of hearts, A of hearts, K of diamonds, Q
- * of diamonds, J of diamonds, T of diamonds, 9 of diamonds, 8 of diamonds, 7 of
- * diamonds, 6 of diamonds, 5 of diamonds, 4 of diamonds, 3 of diamonds, 2 of
- * diamonds, A of diamonds, K of clubs, Q of clubs, J of clubs, T of clubs, 9 of
- * clubs, 8 of clubs, 7 of clubs, 6 of clubs, 5 of clubs, 4 of clubs, 3 of
- * clubs, 2 of clubs, A of clubs
- *
- * Double deck, shuffled:
- * 8 of clubs, 3 of spades, 3 of diamonds, Q of spades, 6 of hearts, 4 of
- * spades, 5 of clubs, 2 of spades, 2 of clubs, 7 of clubs, 3 of hearts, 2 of
- * diamonds, 5 of diamonds, 7 of clubs, 9 of clubs, 3 of clubs, J of
- * diamonds, 9 of clubs, 7 of spades, 4 of diamonds, 6 of hearts, T of
- * hearts, 8 of hearts, 7 of diamonds, Q of
- * hearts, J of hearts, 4 of hearts, A of clubs, 5 of hearts, 4 of hearts, 9 of
- * hearts, 4 of spades, Q of spades, J of spades, 3 of spades, 8 of diamonds, 7
- * of diamonds, 4 of clubs, K of diamonds, 5 of spades, T of clubs, 5 of hearts,
- * 2 of clubs, Q of diamonds, 5 of spades, J of spades, 8 of spades, A of
- * spades, T of diamonds, 4 of diamonds, J of clubs, K of hearts, A of clubs, 6
- * of clubs, 9 of spades, 9 of spades, 4 of clubs, 2 of hearts, 5 of diamonds, J
- * of diamonds, K of diamonds, T of spades, 3 of diamonds, 7 of hearts, T of
- * diamonds, Q of diamonds, 9 of hearts, A of spades, T of hearts, J of clubs, 9
- * of diamonds, K of clubs, K of spades, K of clubs, 7 of hearts, 2 of spades, 8
- * of hearts, Q of clubs, A of hearts, 5 of clubs, 6 of clubs, 3 of hearts, T of
- * spades, 6 of diamonds, 9 of diamonds, K of spades, 6 of diamonds, 6 of
- * spades, 8 of spades, 3 of clubs, Q of hearts, T of clubs, A of hearts, Q of
- * clubs, A of diamonds, 2 of hearts, 8 of clubs, 2 of diamonds, J of hearts, A
- * of diamonds, 7 of spades, 6 of spades, 8 of diamonds, K of hearts
- *
- * Single deck, unshuffled:
- * K of spades, Q of spades, J of spades, T of spades, 9 of spades, 8 of
- * spades, 7 of spades, 6 of spades, 5 of spades, 4 of spades, 3 of
- * spades, 2 of spades, A of spades, K of hearts, Q of hearts, J of hearts, T of
- * hearts, 9 of hearts, 8 of hearts, 7 of hearts, 6 of hearts, 5 of hearts, 4 of
- * hearts, 3 of hearts, 2 of hearts, A of hearts, K of diamonds, Q of diamonds,
- * J of diamonds, T of diamonds, 9 of diamonds, 8 of diamonds, 7 of diamonds, 6
- * of diamonds, 5 of diamonds, 4 of diamonds, 3 of diamonds, 2 of diamonds, A of
- * diamonds, K of clubs, Q of clubs, J of clubs, T of clubs, 9 of clubs, 8 of
- * clubs, 7 of clubs, 6 of clubs, 5 of clubs, 4 of clubs, 3 of clubs, 2 of
- * clubs, A of clubs Single deck, shuffled: 5 of clubs, 9 of spades, 8 of
- * diamonds, 6 of spades, 8 of clubs, T of diamonds, Q of clubs, 9 of hearts, 3
- * of clubs, 8 of hearts, A of clubs, 7 of spades, 3 of diamonds, T of clubs, 6
- * of clubs, K of clubs, 6 of diamonds, 9 of clubs, J of hearts, Q of hearts, 9
- * of diamonds, 6 of hearts, 7 of hearts, K of spades, 7 of diamonds, 8 of
- * spades, 4 of hearts, 4 of diamonds, T of spades, Q of spades, 4 of spades, Q
- * of diamonds, 5 of hearts, A of hearts, A of spades, J of clubs, A of
- * diamonds, K of hearts, J of spades, 2 of diamonds, T of hearts, K of
- * diamonds, 2 of spades, 3 of spades, 7 of clubs, 5 of spades, J of diamonds, 3
- * of hearts, 5 of diamonds, 4 of clubs, 2 of hearts, 2 of clubs
- *
- * Select the number of players (1-10): 8
- * All hands, unshuffled:
- * hand = ( K of spades , 5 of spades , T of hearts , 2 of hearts , 7 of
- * diamonds , Q of clubs , 4 of clubs )
- * hand = ( Q of spades , 4 of spades , 9 of hearts , A of hearts , 6 of
- * diamonds , J of clubs , 3 of clubs )
- * hand = ( J of spades , 3 of spades , 8 of hearts , K of diamonds , 5 of
- * diamonds , T of clubs , 2 of clubs )
- * hand = ( T of spades , 2 of spades , 7 of hearts , Q of diamonds , 4 of
- * diamonds , 9 of clubs , A of clubs )
- * hand = ( 9 of spades , A of spades , 6 of hearts , J of diamonds , 3 of
- * diamonds , 8 of clubs )
- * hand = ( 8 of spades , K of hearts, 5 of hearts , T of diamonds , 2 of
- * diamonds , 7 of clubs )
- * hand = ( 7 of spades , Q of hearts , 4 of hearts , 9 of diamonds , A of
- * diamonds , 6 of clubs )
- * hand = ( 6 of spades , J of hearts , 3 of hearts , 8 of diamonds , K
- * of clubs , 5 of clubs )
- *
- * All hands, shuffled:
- * hand = (5 of clubs , 6 of hearts, 3 of spades , K of spades , 8 of hearts ,
- * 7 of spades , 3 of hearts)
- * hand = (3 of clubs , Q of spades , 5 of diamonds , T of hearts , 7 of
- * hearts , 9 of clubs , K of clubs)
- * hand = (3 of diamonds , 5 of hearts , 9 of spades , A of clubs , 4 of
- * hearts , J of spades , 2 of spades)
- * hand = (K of hearts , K of diamonds , 7 of diamonds , A of hearts , 9 of
- * diamonds , 4 of clubs , 4 of diamonds)
- * hand = (T of spades , 7 of clubs , 6 of spades , J of diamonds , A  of
- * spades , 6 of diamonds)
- * hand = (T of clubs , 9 of hearts , 4 of spades , Q of clubs , 5 of spades,
- * Q of diamonds)
- * hand = (2 of diamonds , 2 of clubs ,J of hearts , Q of hearts , A of diamonds
- * , 2 of hearts)
- * hand = (8 of clubs , 6 of clubs , J of clubs , 8 of spades , T of diamonds,
- * 8 of diamonds)
- *****************************************************************************/
