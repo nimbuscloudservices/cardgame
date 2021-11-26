@@ -495,17 +495,19 @@ class Deck
     */
    public void init(int numPacks)
    {
-      this.numPacks = numPacks;
-      cards = new Card[numPacks * PACK];
-      topCard = numPacks * PACK;
-      for (int packNum = 0; packNum < numPacks; packNum++)
+      if(numPacks > 0 || numPacks <=6)
       {
-         for (int card = 0; card < PACK; card++)
+         this.numPacks = numPacks;
+         cards = new Card[numPacks * PACK];
+         topCard = numPacks * PACK;
+         for (int packNum = 0; packNum < numPacks; packNum++)
          {
-            cards[packNum * PACK + card] = new Card(masterPack[card]);
+            for (int card = 0; card < PACK; card++)
+            {
+               cards[packNum * PACK + card] = new Card(masterPack[card]);
+            }
          }
       }
-
    }
 
    /**
@@ -538,7 +540,7 @@ class Deck
          cards[getTopCard() - 1] = null;
 
          topCard--;
-         return dealCard;
+         return new Card(dealCard);
       }
       return null;
    }
