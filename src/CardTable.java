@@ -16,6 +16,7 @@ public class CardTable extends JFrame
    private int numPlayers;
    public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea;
 
+
    /**
     * filters input, adds panels to the JFrame
     * establishes layouts according to the general description
@@ -69,6 +70,7 @@ public class CardTable extends JFrame
    {
       int k;
       Icon tempIcon;
+      GUICard.loadCardIcons();
 
       // establish main frame in which program will run
       CardTable myCardTable
@@ -84,21 +86,27 @@ public class CardTable extends JFrame
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
-         tempIcon = GUICard.getIcon(randomCardGenerator());
-         humanLabels[k] = new JLabel(tempIcon);
       }
 
+      for (k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
+         tempIcon = GUICard.getIcon(randomCardGenerator());
+         humanLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
+      }
       // ADD LABELS TO PANELS
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          myCardTable.pnlHumanHand.add(humanLabels[k]);
+      }
+
+      for (k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
          myCardTable.pnlComputerHand.add(computerLabels[k]);
       }
 
       // and two random cards in the play region (simulating a computer/hum ply)
       for (k = 0; k < NUM_PLAYERS; k++)
       {
-         tempIcon = GUICard.getIcon(randomCardGenerator());
          playedCardLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
       }
 
@@ -158,9 +166,8 @@ class GUICard
             i++;
          }
       }
-      iconCards[NUM_CARD_IMAGES-1] = new Icon[0];
-      iconBack = new ImageIcon("/images/BK.gif");
-         iconsLoaded = true;
+      iconBack = new ImageIcon("images/BK.gif");
+      iconsLoaded = true;
    }
 
    static String intToCardValue(int k)
@@ -227,6 +234,7 @@ class GUICard
     */
    public static Icon getIcon(Card card)
    {
+      loadCardIcons();
       return iconCards[valueAsInt(card)][suitAsInt(card)];
    }
 
