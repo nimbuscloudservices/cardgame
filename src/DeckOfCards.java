@@ -153,6 +153,8 @@ class Card
    private char value;
    private Suit suit;
    private boolean errorFlag;
+   public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7',
+      '8', '9', 'T', 'J', 'Q', 'K'};
 
    /**
     * constructor for Card object
@@ -309,6 +311,52 @@ class Card
    {
       clubs, diamonds, hearts, spades
    }
+
+   /**
+    * Puts the order of the card values in here with the smallest first
+    * NEEDS JOKER
+    *
+    * @param card
+    * @return card value
+    */
+   static int cardValue(Card card)
+   {
+      for (int i = 0; i < valueRanks.length; i++)
+      {
+         if (card.getValue() == valueRanks[i])
+         {
+            return i;
+         }
+      }
+      return - 1;
+   }
+
+   /**
+    * Sorts the incoming array of cards using a bubble sort routine
+    * @param cardArray
+    * @param arraySize
+    */
+   public static void arraySort(Card[] cardArray, int arraySize)
+   {
+      Card temp;
+
+      for(int card = 0; card < arraySize; card++)
+      {
+         for(int nextCard = 1; nextCard < (arraySize - card); nextCard++)
+         {
+            int prevCard = cardValue(cardArray[nextCard - 1]);
+            int curCard = cardValue(cardArray[nextCard]);
+
+            if(prevCard  < curCard)
+            {
+               temp = cardArray[nextCard -1];
+               cardArray[nextCard - 1] = cardArray[nextCard];
+               cardArray[arraySize] = temp;
+            }
+         }
+      }
+   }
+
 }
 
 /**
@@ -420,7 +468,6 @@ class Hand
 
       return new Card(' ', Card.Suit.spades);
    }
-
 }
 
 /**
