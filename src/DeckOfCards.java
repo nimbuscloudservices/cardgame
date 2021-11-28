@@ -155,6 +155,8 @@ class Card
    private boolean errorFlag;
    public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7',
       '8', '9', 'T', 'J', 'Q', 'K'};
+   public static Suit[] suitRanks = {Suit.clubs, Suit.diamonds, Suit.hearts,
+           Suit.spades};
 
    /**
     * constructor for Card object

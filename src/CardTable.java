@@ -69,7 +69,6 @@ public class CardTable extends JFrame
    {
       int k;
       Icon tempIcon;
-      GUICard.loadCardIcons();
 
       // establish main frame in which program will run
       CardTable myCardTable
@@ -85,30 +84,40 @@ public class CardTable extends JFrame
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
-         tempIcon = GUICard.getIcon(generateRandomCard());
+         tempIcon = GUICard.getIcon(randomCardGenerator());
          humanLabels[k] = new JLabel(tempIcon);
       }
 
       // ADD LABELS TO PANELS
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
+         myCardTable.pnlHumanHand.add(humanLabels[k]);
          myCardTable.pnlComputerHand.add(computerLabels[k]);
-         myCardTable.pnlComputerHand.add(humanLabels[k]);
       }
 
       // and two random cards in the play region (simulating a computer/hum ply)
       for (k = 0; k < NUM_PLAYERS; k++)
       {
-         tempIcon = GUICard.getIcon(generateRandomCard());
-         playedCardLabels[k] = new JLabel(tempIcon);
+         tempIcon = GUICard.getIcon(randomCardGenerator());
+         playedCardLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
+      }
+
+      playLabelText[0] = new JLabel("Computer", 0);
+      playLabelText[1] = new JLabel("You", 0);
+
+      for(k = 0; k < NUM_PLAYERS; k++)
+      {
          myCardTable.pnlPlayArea.add(playedCardLabels[k]);
       }
+
+      myCardTable.pnlPlayArea.add(playLabelText[0]);
+      myCardTable.pnlPlayArea.add(playLabelText[1]);
 
       // show everything to the user
       myCardTable.setVisible(true);
    }
 
-   public static Card generateRandomCard()
+   public static Card randomCardGenerator()
    {
       Deck deck = new Deck();
       Random randomCard = new Random();
@@ -134,63 +143,80 @@ class GUICard
     */
    public static void loadCardIcons()
    {
-      if (iconsLoaded)
-         return;
-      for(int value = 0; value < iconCards.length; value++)
+      if (!iconsLoaded)
       {
-         for(int suit = 0; suit < iconCards[value].length; suit++)
+         for (int value = 0; value < iconCards.length; value++)
          {
-            String filename = numCard(value) + numSuit(suit) + ".gif";
-            ImageIcon cardImage = new ImageIcon("images/" + filename);
-            iconCards[value][suit] = cardImage;
+            for (int suit = 0; suit < iconCards[value].length; suit++)
+            {
+               iconCards[value][suit] = new ImageIcon("images/" + numCard(suit)
+                       + numSuit(value) + ".gif");
+            }
          }
-      }
 
-      iconBack = new ImageIcon("/images/BK.gif");
-      iconsLoaded = true;
+         iconBack = new ImageIcon("/images/BK.gif");
+         iconsLoaded = true;
+      }
    }
 
    static String numCard(int cardNum)
    {
-      String[] values = {"A", "2", "3", "4", "5", "6",
-              "7", "8", "9", "T", "J", "Q", "K", "X"};
-      return values[cardNum];
+      String returnValue = null;
+      String[] compValue = {"A", "2", "3", "4", "5", "6", "7", "8", "9",
+              "T", "J", "Q", "K", "X"};
+
+      if(cardNum >=0 && cardNum <= 13)
+      {
+         returnValue = compValue[cardNum];
+      }
+      else
+      {
+         return compValue[0];
+      }
+      return returnValue;
    }
 
    static String numSuit(int suitNum)
    {
-      if(suitNum < 0 || suitNum > 3)
-         return "Invalid";
-      return Card.Suit.values()[suitNum].toString().toUpperCase().substring(0,1);
+      String returnSuit = null;
+      String[] compSuit = {"C", "D", "H", "S"};
+      if(suitNum >=0 && suitNum <= 3)
+      {
+         returnSuit = compSuit[suitNum];
+      }
+      else
+      {
+         return compSuit[0];
+      }
+      return returnSuit;
    }
 
    private static int valueAsInt(Card card)
    {
-      return Card.cardValue(card);
+      char cardsValue = card.getValue();
+
+      if(cardsValue == 'A')
+         return 0;
+      if(cardsValue == 'X')
+         return 13;
+      for(int k = 0; k <= 11; k++)
+      {
+         if(Card.valueRanks[k] == cardsValue)
+            return k + 1;
+      }
+      return 0;
    }
 
    private static int suitAsInt(Card card)
    {
       Card.Suit cardSuit = card.getSuit();
 
-      switch (cardSuit)
+      for(int k = 0; k <= 13; k++)
       {
-         case spades -> {
-            return 0;
-         }
-         case hearts -> {
-            return 1;
-         }
-         case diamonds -> {
-            return 2;
-         }
-         case clubs -> {
-            return 3;
-         }
-         default -> {
-            return - 1;
-         }
+         if(Card.suitRanks[k] == cardSuit)
+            return k;
       }
+      return 0;
    }
 
    /**
@@ -199,6 +225,7 @@ class GUICard
     */
    public static Icon getIcon(Card card)
    {
+      loadCardIcons();
       return iconCards[valueAsInt(card)][suitAsInt(card)];
    }
 
