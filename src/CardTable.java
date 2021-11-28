@@ -28,14 +28,14 @@ public class CardTable extends JFrame
    {
       super(title);
       setLayout(new BorderLayout(1, 3));
-      JLabel pnlComputerHand = new JLabel( "Computer Hand");
-      add(pnlComputerHand, BorderLayout.NORTH);
+      JLabel computerHand = new JLabel( "Computer Hand");
+      add(computerHand, BorderLayout.NORTH);
 
-      JLabel pnlPlayArea = new JLabel( "Playing Area");
-      add(pnlPlayArea, BorderLayout.CENTER);
+      JLabel playingArea = new JLabel( "Playing Area");
+      add(playingArea, BorderLayout.CENTER);
 
-      JLabel pnlHumanHand = new JLabel( "Your Hand");
-      add(pnlHumanHand, BorderLayout.SOUTH);
+      JLabel yourHand = new JLabel( "Your Hand");
+      add(yourHand, BorderLayout.SOUTH);
 
       if(numCardsPerHand > CardTable.MAX_CARDS_PER_HAND && numPlayers > CardTable.MAX_PLAYERS)
       {
