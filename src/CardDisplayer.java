@@ -7,7 +7,7 @@ public class CardDisplayer
    static Icon[] icon = new ImageIcon[NUM_CARD_IMAGES];
 
    /**
-    *
+    * @return each of the 57 icons in the icon[] array
     */
    static void loadCardIcons()
    {
