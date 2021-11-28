@@ -135,6 +135,7 @@ class GUICard
 {
    // 14 = A thru K + joker
    private static Icon[][] iconCards = new ImageIcon[14][4];
+   static final int NUM_CARD_IMAGES = 57;
    private static Icon iconBack;
    static boolean iconsLoaded = false;
 
@@ -143,52 +144,53 @@ class GUICard
     */
    public static void loadCardIcons()
    {
-      if (!iconsLoaded)
+      String dirPrefix = "images/";
+      String ext = ".gif";
+      int i = 0;
+      for (int val = 0; val < 14; val++)
       {
-         for (int value = 0; value < iconCards.length; value++)
+         for (int suit = 0; suit < 4; suit++)
          {
-            for (int suit = 0; suit < iconCards[value].length; suit++)
-            {
-               iconCards[value][suit] = new ImageIcon("images/" + numCard(suit)
-                       + numSuit(value) + ".gif");
-            }
+            String cardVal = intToCardValue(val);
+            String cardSuit = intToCardSuit(suit);
+            String fileName = dirPrefix + cardVal + cardSuit + ext;
+            iconCards[val][suit] = new ImageIcon(fileName);
+            i++;
          }
-
-         iconBack = new ImageIcon("/images/BK.gif");
+      }
+      iconCards[NUM_CARD_IMAGES-1] = new Icon[0];
+      iconBack = new ImageIcon("/images/BK.gif");
          iconsLoaded = true;
-      }
    }
 
-   static String numCard(int cardNum)
+   static String intToCardValue(int k)
    {
-      String returnValue = null;
-      String[] compValue = {"A", "2", "3", "4", "5", "6", "7", "8", "9",
-              "T", "J", "Q", "K", "X"};
+      char[] cardVal = { 'A', '2', '3', '4', '5', '6', '7', '8',
+              '9', 'T', 'J', 'Q', 'K', 'X' };
 
-      if(cardNum >=0 && cardNum <= 13)
+      if (k < 0 || k > cardVal.length - 1)
       {
-         returnValue = compValue[cardNum];
+         return "invalid value";
       }
       else
       {
-         return compValue[0];
+         return Character.toString(cardVal[k]);
       }
-      return returnValue;
+
    }
 
-   static String numSuit(int suitNum)
+   static String intToCardSuit(int k)
    {
-      String returnSuit = null;
-      String[] compSuit = {"C", "D", "H", "S"};
-      if(suitNum >=0 && suitNum <= 3)
+      char[] suitVal = { 'C', 'D', 'H', 'S' };
+
+      if (k < 0 || k > suitVal.length)
       {
-         returnSuit = compSuit[suitNum];
+         return "invalid value";
       }
       else
       {
-         return compSuit[0];
+         return Character.toString(suitVal[k]);
       }
-      return returnSuit;
    }
 
    private static int valueAsInt(Card card)
@@ -225,7 +227,6 @@ class GUICard
     */
    public static Icon getIcon(Card card)
    {
-      loadCardIcons();
       return iconCards[valueAsInt(card)][suitAsInt(card)];
    }
 
@@ -237,4 +238,3 @@ class GUICard
       return iconBack;
    }
 }
-
