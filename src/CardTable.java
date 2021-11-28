@@ -37,6 +37,15 @@ public class CardTable extends JFrame
       JLabel yourHand = new JLabel( "Your Hand");
       add(yourHand, BorderLayout.SOUTH);
 
+
+      pnlComputerHand = new JPanel();
+      pnlHumanHand = new JPanel();
+      pnlPlayArea = new JPanel();
+
+      add(pnlComputerHand, BorderLayout.NORTH);
+      add(pnlPlayArea, BorderLayout.CENTER);
+      add(pnlHumanHand, BorderLayout.CENTER);
+
       if(numCardsPerHand > CardTable.MAX_CARDS_PER_HAND && numPlayers > CardTable.MAX_PLAYERS)
       {
          this.numCardsPerHand = CardTable.MAX_CARDS_PER_HAND;
@@ -58,7 +67,7 @@ public class CardTable extends JFrame
          this.numPlayers = numPlayers;
       }
    }
-   
+
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
