@@ -14,7 +14,9 @@ public class CardTable extends JFrame
    static int MAX_PLAYERS = 2;
    private int numCardsPerHand;
    private int numPlayers;
-   public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea;
+   public JPanel pnlComputerHand = new JPanel();
+   public JPanel pnlHumanHand = new JPanel();
+   public JPanel pnlPlayArea = new JPanel();
 
 
    /**
@@ -29,13 +31,16 @@ public class CardTable extends JFrame
       super(title);
       setLayout(new BorderLayout(1, 3));
       JLabel computerHand = new JLabel( "Computer Hand");
-      add(computerHand, BorderLayout.NORTH);
+      add(pnlComputerHand, BorderLayout.NORTH);
+      pnlComputerHand.add(computerHand);
 
       JLabel playingArea = new JLabel( "Playing Area");
-      add(playingArea, BorderLayout.CENTER);
+      add(pnlPlayArea, BorderLayout.CENTER);
+      pnlPlayArea.add(playingArea);
 
       JLabel yourHand = new JLabel( "Your Hand");
-      add(yourHand, BorderLayout.SOUTH);
+      add(pnlHumanHand, BorderLayout.SOUTH);
+      pnlHumanHand.add(yourHand);
 
       if(numCardsPerHand > CardTable.MAX_CARDS_PER_HAND && numPlayers > CardTable.MAX_PLAYERS)
       {
