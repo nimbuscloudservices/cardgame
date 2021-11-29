@@ -35,7 +35,8 @@ public class CardTable extends JFrame
      pnlComputerHand = new JPanel();
      pnlComputerHand.setBorder(border);
      add(pnlComputerHand, BorderLayout.NORTH);
-     JLabel computerHand = new JLabel( "Computer Hand");
+     JLabel computerHand = new JLabel( "Computer Hand",
+           SwingConstants.CENTER);
      computerHand.setVerticalTextPosition(JLabel.TOP);
      computerHand.setHorizontalTextPosition(JLabel.LEFT);
      pnlComputerHand.setLayout(new BorderLayout());
@@ -45,7 +46,7 @@ public class CardTable extends JFrame
      pnlPlayArea = new JPanel();
      pnlPlayArea.setBorder(border);
      add(pnlPlayArea, BorderLayout.CENTER);
-     JLabel playingArea = new JLabel( "Playing Area");
+     JLabel playingArea = new JLabel( "Playing Area", SwingConstants.CENTER);
      playingArea.setVerticalTextPosition(JLabel.TOP);
      playingArea.setHorizontalTextPosition(JLabel.LEFT);
      pnlPlayArea.setLayout(new BorderLayout());
@@ -55,7 +56,7 @@ public class CardTable extends JFrame
      pnlHumanHand = new JPanel();
      pnlHumanHand.setBorder(border);
      add(pnlHumanHand, BorderLayout.SOUTH);
-     JLabel yourHand = new JLabel( "Your Hand");
+     JLabel yourHand = new JLabel( "Your Hand", SwingConstants.CENTER);
      yourHand.setVerticalTextPosition(JLabel.TOP);
      yourHand.setHorizontalTextPosition(JLabel.LEFT);
      pnlHumanHand.setLayout(new BorderLayout());
@@ -183,7 +184,6 @@ class GUICard
    {
       String dirPrefix = "images/";
       String ext = ".gif";
-      int i = 0;
       for (int val = 0; val < 14; val++)
       {
          for (int suit = 0; suit < 4; suit++)
@@ -192,7 +192,7 @@ class GUICard
             String cardSuit = intToCardSuit(suit);
             String fileName = dirPrefix + cardVal + cardSuit + ext;
             iconCards[val][suit] = new ImageIcon(fileName);
-            i++;
+
          }
       }
       iconBack = new ImageIcon("images/BK.gif");
@@ -244,17 +244,21 @@ class GUICard
       }
       return 0;
    }
-
+   /**
+    * helper method to convert suit to int
+    * @param card that is being used
+    * @return suit of this card as int
+    */
    private static int suitAsInt(Card card)
    {
-      Card.Suit cardSuit = card.getSuit();
-
-      for(int k = 0; k <= 13; k++)
-      {
-         if(Card.suitRanks[k] == cardSuit)
-            return k;
-      }
-      return 0;
+      Card.Suit suit = card.getSuit();
+      return switch (suit)
+            {
+               case clubs -> 0;
+               case diamonds -> 1;
+               case hearts -> 2;
+               case spades -> 3;
+            };
    }
 
    /**
@@ -263,7 +267,10 @@ class GUICard
     */
    public static Icon getIcon(Card card)
    {
-      loadCardIcons();
+      if(!iconsLoaded)
+      {
+         loadCardIcons();
+      }
       return iconCards[valueAsInt(card)][suitAsInt(card)];
    }
 
