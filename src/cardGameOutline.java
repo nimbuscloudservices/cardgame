@@ -165,4 +165,98 @@ class CardGameOutline
       return hand[playerIndex].takeCard(deck.dealCard());
    }
 
+   static int NUM_CARDS_PER_HAND = 7;
+   static int  NUM_PLAYERS = 2;
+   static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
+   static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];
+   static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS];
+   static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS];
+
+   public static void main(String[] args)
+   {
+      int k;
+      Icon tempIcon;
+      GUICard.loadCardIcons();
+
+      int numPacksPerDeck = 1;
+      int numJokersPerPack = 2;
+      int numUnusedCardsPerPack = 0;
+      Card[] unusedCardsPerPack = null;
+
+      CardGameOutline SuitMatchGame = new CardGameOutline(
+            numPacksPerDeck, numJokersPerPack,
+            numUnusedCardsPerPack, unusedCardsPerPack,
+            NUM_PLAYERS, NUM_CARDS_PER_HAND);
+
+      SuitMatchGame.deal();
+
+      // establish main frame in which program will run
+      CardTable myCardTable
+         = new CardTable("CardTable", NUM_CARDS_PER_HAND, NUM_PLAYERS);
+      myCardTable.setSize(800, 600);
+      myCardTable.setLocationRelativeTo(null);
+      myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+
+      // show everything to the user
+      myCardTable.setVisible(true);
+
+      // CREATE LABELS
+      Deck deck = new Deck();
+
+      for (k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
+         computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
+         humanLabels[k] = new JLabel(GUICard.getIcon(deck.inspectCard(k)));
+      }
+
+      // ADD LABELS TO PANELS
+      JPanel humanHand = new JPanel();
+      for (k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
+         humanHand.add(humanLabels[k]);
+      }
+      myCardTable.pnlHumanHand.add(humanHand);
+
+      JPanel computerHand = new JPanel();
+      for (k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
+         computerHand.add(computerLabels[k]);
+      }
+
+      myCardTable.pnlComputerHand.add(computerHand);
+
+      // and two random cards in the play region (simulating a computer/hum ply)
+      for (k = 0; k < NUM_PLAYERS; k++)
+      {
+         playedCardLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
+      }
+
+      playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
+      playLabelText[1] = new JLabel("You", JLabel.CENTER);
+
+      JPanel playHand = new JPanel();
+      playHand.setLayout(new GridLayout(2,2));
+
+      for(k = 0; k < NUM_PLAYERS; k++)
+      {
+         playHand.add(playedCardLabels[k]);
+      }
+
+      playHand.add(playLabelText[0]);
+      playHand.add(playLabelText[1]);
+
+      myCardTable.pnlPlayArea.add(playHand, BorderLayout.CENTER);
+
+      // show everything to the user
+      myCardTable.setVisible(true);
+
+   }
+
+   public static Card randomCardGenerator()
+   {
+      Deck deck = new Deck();
+      Random randomCard = new Random();
+      return deck.inspectCard(randomCard.nextInt(deck.getTopCard()));
+   }
+
 }
