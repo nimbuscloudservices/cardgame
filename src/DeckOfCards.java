@@ -476,11 +476,9 @@ class Hand
       return new Card(' ', Card.Suit.spades);
    }
 
-   public void sortHands()
+   public void sort()
    {
-      int k;
-      for (k = 0; k < numCards; k++)
-         myCards[k].arraySort(myCards, numCards);
+      Card.arraySort(myCards, numCards);
    }
 }
 
@@ -631,30 +629,56 @@ class Deck
 
    /**
     * Adds the card to the top of the deck based on the number of packs
-    *
     * @param card
     * @return true if the card can be successfully added
     */
    public boolean addCard(Card card)
    {
-      if(cards.length == topCard)
-      {
+      if (cards.length == topCard) {
          return false;
       }
 
-      for(int i = 0; i < topCard; i++)
-      {
-         if(cards[i].equals((card)))
-         {
+      for (int i = 0; i < topCard; i++) {
+         if (cards[i].equals((card))) {
             return false;
          }
       }
 
-      for(int i = 0; i < numPacks; i++)
-      {
+      for (int i = 0; i < numPacks; i++) {
          cards[topCard] = card;
          topCard++;
       }
       return true;
+   }
+
+   /**
+    * Remove all the instances of a specific card from the deck
+    * @param card
+    * @return true if the card is successfully removed
+    */
+   public boolean removeCard(Card card)
+   {
+      int i = 0;
+
+      while (i < topCard)
+      {
+         if (cards[i].equals(card))
+         {
+            cards[i] = cards[topCard - 1];
+            cards[topCard - 1] = null;
+            topCard--;
+            return false;
+         }
+         else
+         {
+            i++;
+         }
+      }
+      return false;
+   }
+
+   public int getNumCards()
+   {
+      return topCard;
    }
 }
