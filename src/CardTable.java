@@ -206,7 +206,7 @@ class GUICard
    static String intToCardValue(int k)
    {
       char[] cardVal = { 'A', '2', '3', '4', '5', '6', '7', '8',
-              '9', 'T', 'J', 'Q', 'K', 'X' };
+              '9', 'T', 'J', 'Q', 'K'};
 
       if (k < 0 || k > cardVal.length - 1)
       {

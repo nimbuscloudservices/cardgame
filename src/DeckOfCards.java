@@ -154,7 +154,7 @@ class Card
    private Suit suit;
    private boolean errorFlag;
    public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7',
-      '8', '9', 'T', 'J', 'Q', 'K', 'X'};
+      '8', '9', 'T', 'J', 'Q', 'K'};
    public static Suit[] suitRanks = {Suit.clubs, Suit.diamonds, Suit.hearts,
            Suit.spades};
 
@@ -364,7 +364,7 @@ class Card
  */
 class Hand
 {
-   public final int MAX_CARDS = 58;
+   public final int MAX_CARDS = 50;
    Card[] myCards;
    int numCards;
 
@@ -487,7 +487,7 @@ class Hand
  */
 class Deck
 {
-   public static final int PACK = 56;
+   public static final int PACK = 52;
    public static final int MAX_NUMBER_PACK = 6;
    public static final int MAX_CARDS = PACK * MAX_NUMBER_PACK;
    static boolean allocated = false;
@@ -524,7 +524,7 @@ class Deck
    {
       int i = 0;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K', 'X' };
+            'J', 'Q', 'K'};
       if (!allocated)
       {
          allocated = true;
@@ -677,6 +677,10 @@ class Deck
       return false;
    }
 
+   /**
+    *
+    * @return the number of cards remaining in the deck
+    */
    public int getNumCards()
    {
       return topCard;
