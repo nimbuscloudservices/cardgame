@@ -28,27 +28,38 @@ public class CardTable extends JFrame
     */
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
-      super(title);
-      setLayout(new BorderLayout(1, 3));
-      
-      pnlComputerHand = new JPanel();
-      pnlHumanHand = new JPanel();
-      pnlPlayArea = new JPanel();
+     super(title);
+     Border border = BorderFactory.createLineBorder(Color.black);
+     setLayout(new BorderLayout());
 
-      JLabel computerHand = new JLabel( "Computer Hand");
-      add(pnlComputerHand, BorderLayout.NORTH);
-      pnlComputerHand.add(computerHand);
+     pnlComputerHand = new JPanel();
+     pnlComputerHand.setBorder(border);
+     add(pnlComputerHand, BorderLayout.NORTH);
+     JLabel computerHand = new JLabel( "Computer Hand");
+     computerHand.setVerticalTextPosition(JLabel.TOP);
+     computerHand.setHorizontalTextPosition(JLabel.LEFT);
+     pnlComputerHand.setLayout(new BorderLayout());
+     pnlComputerHand.add(computerHand, BorderLayout.NORTH);
+     pnlComputerHand.setBorder(border);
 
-      JLabel playingArea = new JLabel( "Playing Area");
-      add(pnlPlayArea, BorderLayout.CENTER);
-      pnlPlayArea.add(playingArea);
+     pnlPlayArea = new JPanel();
+     pnlPlayArea.setBorder(border);
+     add(pnlPlayArea, BorderLayout.CENTER);
+     JLabel playingArea = new JLabel( "Playing Area");
+     playingArea.setVerticalTextPosition(JLabel.TOP);
+     playingArea.setHorizontalTextPosition(JLabel.LEFT);
+     pnlPlayArea.setLayout(new BorderLayout());
+     pnlPlayArea.add(playingArea, BorderLayout.NORTH);
 
-      JLabel yourHand = new JLabel( "Your Hand");
-      add(pnlHumanHand, BorderLayout.SOUTH);
-      pnlHumanHand.add(yourHand);
 
-
-
+     pnlHumanHand = new JPanel();
+     pnlHumanHand.setBorder(border);
+     add(pnlHumanHand, BorderLayout.SOUTH);
+     JLabel yourHand = new JLabel( "Your Hand");
+     yourHand.setVerticalTextPosition(JLabel.TOP);
+     yourHand.setHorizontalTextPosition(JLabel.LEFT);
+     pnlHumanHand.setLayout(new BorderLayout());
+     pnlHumanHand.add(yourHand, BorderLayout.NORTH);
 
       if(numCardsPerHand > CardTable.MAX_CARDS_PER_HAND && numPlayers > CardTable.MAX_PLAYERS)
       {
@@ -107,15 +118,19 @@ public class CardTable extends JFrame
          humanLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
       }
       // ADD LABELS TO PANELS
+      JPanel humanHand = new JPanel();
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
-         myCardTable.pnlHumanHand.add(humanLabels[k]);
+         humanHand.add(humanLabels[k]);
       }
+      myCardTable.pnlHumanHand.add(humanHand);
 
+      JPanel computerHand = new JPanel();
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
-         myCardTable.pnlComputerHand.add(computerLabels[k]);
+         computerHand.add(computerLabels[k]);
       }
+      myCardTable.pnlComputerHand.add(computerHand);
 
       // and two random cards in the play region (simulating a computer/hum ply)
       for (k = 0; k < NUM_PLAYERS; k++)
@@ -123,16 +138,21 @@ public class CardTable extends JFrame
          playedCardLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
       }
 
-      playLabelText[0] = new JLabel("Computer", 0);
-      playLabelText[1] = new JLabel("You", 0);
+      playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
+      playLabelText[1] = new JLabel("You", JLabel.CENTER);
+
+      JPanel playHand = new JPanel();
+      playHand.setLayout(new GridLayout(2,2));
 
       for(k = 0; k < NUM_PLAYERS; k++)
       {
-         myCardTable.pnlPlayArea.add(playedCardLabels[k]);
+         playHand.add(playedCardLabels[k]);
       }
 
-      myCardTable.pnlPlayArea.add(playLabelText[0]);
-      myCardTable.pnlPlayArea.add(playLabelText[1]);
+      playHand.add(playLabelText[0]);
+      playHand.add(playLabelText[1]);
+
+      myCardTable.pnlPlayArea.add(playHand, BorderLayout.CENTER);
 
       // show everything to the user
       myCardTable.setVisible(true);
