@@ -600,7 +600,7 @@ class Deck
          topCard--;
          return new Card(dealCard);
       }
-      return null;
+      return new Card(' ', Card.Suit.spades);
    }
 
    /**
@@ -629,4 +629,32 @@ class Deck
       return cards[k];
    }
 
+   /**
+    * Adds the card to the top of the deck based on the number of packs
+    *
+    * @param card
+    * @return true if the card can be successfully added
+    */
+   public boolean addCard(Card card)
+   {
+      if(cards.length == topCard)
+      {
+         return false;
+      }
+
+      for(int i = 0; i < topCard; i++)
+      {
+         if(cards[i].equals((card)))
+         {
+            return false;
+         }
+      }
+
+      for(int i = 0; i < numPacks; i++)
+      {
+         cards[topCard] = card;
+         topCard++;
+      }
+      return true;
+   }
 }
