@@ -154,7 +154,7 @@ class Card
    private Suit suit;
    private boolean errorFlag;
    public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7',
-      '8', '9', 'T', 'J', 'Q', 'K'};
+      '8', '9', 'T', 'J', 'Q', 'K', 'X'};
    public static Suit[] suitRanks = {Suit.clubs, Suit.diamonds, Suit.hearts,
            Suit.spades};
 
@@ -316,8 +316,6 @@ class Card
 
    /**
     * Puts the order of the card values in here with the smallest first
-    * NEEDS JOKER
-    *
     * @param card
     * @return card value
     */
