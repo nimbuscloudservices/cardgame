@@ -37,8 +37,7 @@ public class CardTable extends JFrame
      add(pnlComputerHand, BorderLayout.NORTH);
      JLabel computerHand = new JLabel( "Computer Hand",
            SwingConstants.CENTER);
-     computerHand.setVerticalTextPosition(JLabel.TOP);
-     computerHand.setHorizontalTextPosition(JLabel.LEFT);
+
      pnlComputerHand.setLayout(new BorderLayout());
      pnlComputerHand.add(computerHand, BorderLayout.NORTH);
      pnlComputerHand.setBorder(border);
@@ -47,8 +46,7 @@ public class CardTable extends JFrame
      pnlPlayArea.setBorder(border);
      add(pnlPlayArea, BorderLayout.CENTER);
      JLabel playingArea = new JLabel( "Playing Area", SwingConstants.CENTER);
-     playingArea.setVerticalTextPosition(JLabel.TOP);
-     playingArea.setHorizontalTextPosition(JLabel.LEFT);
+
      pnlPlayArea.setLayout(new BorderLayout());
      pnlPlayArea.add(playingArea, BorderLayout.NORTH);
 
@@ -57,8 +55,7 @@ public class CardTable extends JFrame
      pnlHumanHand.setBorder(border);
      add(pnlHumanHand, BorderLayout.SOUTH);
      JLabel yourHand = new JLabel( "Your Hand", SwingConstants.CENTER);
-     yourHand.setVerticalTextPosition(JLabel.TOP);
-     yourHand.setHorizontalTextPosition(JLabel.LEFT);
+  
      pnlHumanHand.setLayout(new BorderLayout());
      pnlHumanHand.add(yourHand, BorderLayout.NORTH);
 
