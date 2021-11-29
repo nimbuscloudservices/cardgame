@@ -110,13 +110,9 @@ public class CardTable extends JFrame
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
-      }
-
-      for (k = 0; k < NUM_CARDS_PER_HAND; k++)
-      {
-         tempIcon = GUICard.getIcon(randomCardGenerator());
          humanLabels[k] = new JLabel(GUICard.getIcon(randomCardGenerator()));
       }
+
       // ADD LABELS TO PANELS
       JPanel humanHand = new JPanel();
       for (k = 0; k < NUM_CARDS_PER_HAND; k++)
