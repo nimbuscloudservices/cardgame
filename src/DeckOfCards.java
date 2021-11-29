@@ -364,7 +364,7 @@ class Card
  */
 class Hand
 {
-   public final int MAX_CARDS = 50;
+   public final int MAX_CARDS = 58;
    Card[] myCards;
    int numCards;
 
@@ -410,16 +410,23 @@ class Hand
     *
     * @return card at the top of the myCards array
     */
-   public Card playCard()
+   public Card playCard(int cardIndex)
    {
-      if(numCards == 0)
-         return null;
 
-      char value = myCards[numCards -1].getValue();
-      Card.Suit suit = myCards[numCards -1].getSuit();
-      Card card = new Card(value, suit);
-      myCards[numCards -1] = null;
+      if (numCards == 0) //error
+      {
+         //Creates a card that does not work
+         return new Card('M', Card.Suit.spades);
+      }
+      //Decreases numCards.
+      Card card = myCards[cardIndex];
+
       numCards--;
+      for (int i = cardIndex; i < numCards; i++) {
+         myCards[i] = myCards[i + 1];
+      }
+
+      myCards[numCards] = null;
 
       return card;
    }
@@ -468,6 +475,13 @@ class Hand
 
       return new Card(' ', Card.Suit.spades);
    }
+
+   public void sortHands()
+   {
+      int k;
+      for (k = 0; k < numCards; k++)
+         myCards[k].arraySort(myCards, numCards);
+   }
 }
 
 /**
@@ -475,7 +489,7 @@ class Hand
  */
 class Deck
 {
-   public static final int PACK = 52;
+   public static final int PACK = 56;
    public static final int MAX_NUMBER_PACK = 6;
    public static final int MAX_CARDS = PACK * MAX_NUMBER_PACK;
    static boolean allocated = false;
@@ -512,7 +526,7 @@ class Deck
    {
       int i = 0;
       char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+            'J', 'Q', 'K', 'X' };
       if (!allocated)
       {
          allocated = true;
