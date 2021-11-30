@@ -7,7 +7,9 @@ public class CardDisplayer
    static Icon[] icon = new ImageIcon[NUM_CARD_IMAGES];
 
    /**
+    * creates a string for the file name of each card
     *
+    * @return Icons in a 2-D array
     */
    static void loadCardIcons()
    {
