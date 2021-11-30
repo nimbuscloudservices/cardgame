@@ -175,6 +175,8 @@ class GUICard
    static boolean iconsLoaded = false;
 
    /**
+    * creates a string for the file name of each card
+    *
     * @return Icons in a 2-D array
     */
    public static void loadCardIcons()
@@ -196,6 +198,12 @@ class GUICard
       iconsLoaded = true;
    }
 
+   /**
+    * helper method that returns corresponding card value
+    *
+    * @param k index of card value in array
+    * @return card value
+    */
    static String intToCardValue(int k)
    {
       char[] cardVal = { 'A', '2', '3', '4', '5', '6', '7', '8',
@@ -212,6 +220,12 @@ class GUICard
 
    }
 
+   /**
+    * helper method that returns corresponding card suit
+    *
+    * @param k index of suit in array
+    * @return suit value
+    */
    static String intToCardSuit(int k)
    {
       char[] suitVal = { 'C', 'D', 'H', 'S' };
@@ -226,6 +240,12 @@ class GUICard
       }
    }
 
+   /**
+    * helper method to convert value to int
+    *
+    * @param card that is being used
+    * @return value of this card as int
+    */
    private static int valueAsInt(Card card)
    {
       char cardsValue = card.getValue();
@@ -243,6 +263,7 @@ class GUICard
    }
    /**
     * helper method to convert suit to int
+    *
     * @param card that is being used
     * @return suit of this card as int
     */
@@ -259,8 +280,9 @@ class GUICard
    }
 
    /**
-    * @param card
-    * @return Icon
+    * gets a 2D array of card value and suit as an int
+    *
+    * @return value and suit
     */
    public static Icon getIcon(Card card)
    {
