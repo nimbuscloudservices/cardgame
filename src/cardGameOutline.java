@@ -554,47 +554,53 @@ class GUICardTable
       return iconBack;
    }
 }
-class playGame implements ActionListener
-{
 
-   @Override
-   public void actionPerformed(ActionEvent e)
+class suitMatch
+{
+   class playGame implements ActionListener
    {
 
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+
+
+      }
+   }
+
+   class resetGame implements ActionListener
+   {
+
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+
+      }
 
    }
 
-}
-
-class resetGame implements ActionListener
-{
-
-   @Override
-   public void actionPerformed(ActionEvent e)
+   class endGame implements ActionListener
    {
 
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
+         System.exit(0);
+      }
    }
 
-}
-
-class endGame implements ActionListener
-{
-
-   @Override
-   public void actionPerformed(ActionEvent e)
-   {
-      System.exit(0);
-   }
-
-}
-
-class selectCard implements ActionListener
-{
-
-   @Override
-   public void actionPerformed(ActionEvent e)
+   class selectCard implements ActionListener
    {
 
-   }
+      @Override
+      public void actionPerformed(ActionEvent e)
+      {
 
+      }
+   }
 }
+
+
+
+
+
