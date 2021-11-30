@@ -295,39 +295,48 @@ class GameTable extends JFrame
 
       // ADD LABELS TO PANELS
       JPanel humanHand = new JPanel();
-      humanHand.setLayout(new GridLayout(2,7));
+      humanHand.setLayout(new GridLayout(1,7));
 
-      for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
-      {
-         humanHand.add(humanLabels[k]);
-      }
-
-      JButton firtCard = new JButton("1");
+      //First Card
+      JButton firtCard = new JButton();
+      firtCard.add(humanLabels[0]);
       selectCard buttonCard = new selectCard();
       firtCard.addActionListener(buttonCard);
       humanHand.add(firtCard);
 
-      JButton secondCard = new JButton("2");
+      //Second Card
+      JButton secondCard = new JButton();
+      secondCard.add(humanLabels[1]);
       secondCard.addActionListener(buttonCard);
       humanHand.add(secondCard);
 
-      JButton thirdCard = new JButton("3");
+      //Third Card
+      JButton thirdCard = new JButton();
+      thirdCard.add(humanLabels[2]);
       thirdCard.addActionListener(buttonCard);
       humanHand.add(thirdCard);
 
-      JButton fourthCard = new JButton("4");
+      //Fourth Card
+      JButton fourthCard = new JButton();
+      fourthCard.add(humanLabels[3]);
       fourthCard.addActionListener(buttonCard);
       humanHand.add(fourthCard);
 
-      JButton fifthCard = new JButton("5");
+      //Fifth Card
+      JButton fifthCard = new JButton();
+      fifthCard.add(humanLabels[4]);
       fifthCard.addActionListener(buttonCard);
       humanHand.add(fifthCard);
 
-      JButton sixthCard = new JButton("6");
+      //Sixth Card
+      JButton sixthCard = new JButton();
+      sixthCard.add(humanLabels[5]);
       sixthCard.addActionListener(buttonCard);
       humanHand.add(sixthCard);
 
+      //Seventh Card
       JButton seventhCard = new JButton("7");
+      seventhCard.add(humanLabels[6]);
       seventhCard.addActionListener(buttonCard);
       humanHand.add(seventhCard);
 
