@@ -55,7 +55,7 @@ public class CardTable extends JFrame
      pnlHumanHand.setBorder(border);
      add(pnlHumanHand, BorderLayout.SOUTH);
      JLabel yourHand = new JLabel( "Your Hand", SwingConstants.CENTER);
-  
+
      pnlHumanHand.setLayout(new BorderLayout());
      pnlHumanHand.add(yourHand, BorderLayout.NORTH);
 
@@ -79,6 +79,16 @@ public class CardTable extends JFrame
          this.numCardsPerHand = numCardsPerHand;
          this.numPlayers = numPlayers;
       }
+   }
+
+   public int getnumCardsPerHand()
+   {
+      return this.numCardsPerHand;
+   }
+
+   public int getnumPlayers()
+   {
+      return this.numPlayers;
    }
 
    static int NUM_CARDS_PER_HAND = 7;
