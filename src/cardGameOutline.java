@@ -262,148 +262,157 @@ class GameTable extends JFrame
    {
      GUICard.loadCardIcons();
 
-     int numPacksPerDeck = 1;
-     int numJokersPerPack = 2;
-     int numUnusedCardsPerPack = 0;
-     Card[] unusedCardsPerPack = null;
+      int numPacksPerDeck = 1;
+      int numJokersPerPack = 2;
+      int numUnusedCardsPerPack = 0;
+      Card[] unusedCardsPerPack = null;
 
-     CardGameOutline SuitMatchGame = new CardGameOutline(
-             numPacksPerDeck, numJokersPerPack,
-             numUnusedCardsPerPack, unusedCardsPerPack,
-             NUM_PLAYERS, NUM_CARDS_PER_HAND);
+      CardGameOutline SuitMatchGame = new CardGameOutline(
+              numPacksPerDeck, numJokersPerPack,
+              numUnusedCardsPerPack, unusedCardsPerPack,
+              NUM_PLAYERS, NUM_CARDS_PER_HAND);
 
-     SuitMatchGame.deal();
+      SuitMatchGame.deal();
 
-     // establish main frame in which program will run
-     GameTable myCardTable
-             = new GameTable("GameTable", NUM_CARDS_PER_HAND, NUM_PLAYERS);
-     myCardTable.setSize(800, 600);
-     myCardTable.setLocationRelativeTo(null);
-     myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+      // establish main frame in which program will run
+      GameTable myCardTable
+              = new GameTable("GameTable", NUM_CARDS_PER_HAND, NUM_PLAYERS);
+      myCardTable.setSize(800, 600);
+      myCardTable.setLocationRelativeTo(null);
+      myCardTable.setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 
-     // show everything to the user
-     myCardTable.setVisible(true);
+      // show everything to the user
+      myCardTable.setVisible(true);
 
-     // CREATE LABELS
-     Deck deck = new Deck();
+      // CREATE LABELS
+      Deck deck = new Deck();
 
-     for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
-     {
-        computerLabels[k] = new JLabel(GUICardTable.getBackCardIcon());
-        humanLabels[k] = new JLabel(GUICardTable.getIcon(deck.inspectCard(k)));
-     }
+      for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
+         computerLabels[k] = new JLabel(GUICardTable.getBackCardIcon());
+         humanLabels[k] = new JLabel(GUICardTable.getIcon(deck.inspectCard(k)));
+      }
 
-     // ADD LABELS TO PANELS
-     JPanel humanHand = new JPanel();
-     humanHand.setLayout(new GridLayout(1,7));
+      // ADD LABELS TO PANELS
+      JPanel humanHand = new JPanel();
+      humanHand.setLayout(new GridLayout(1,7));
 
-     cardGame gamePlay = new cardGame();
+      cardGame gamePlay = new cardGame();
 
-     //First Card
-     JButton firstCard = new JButton();
-     firstCard.add(humanLabels[0]);
-     firstCard.setActionCommand("First Card");
-     firstCard.addActionListener(gamePlay);
-     humanHand.add(firstCard);
+      //First Card
+      JButton firstCard = new JButton();
+      firstCard.add(humanLabels[0]);
+      firstCard.setActionCommand("First Card");
+      firstCard.addActionListener(gamePlay);
+      humanHand.add(firstCard);
 
-     //Second Card
-     JButton secondCard = new JButton();
-     secondCard.add(humanLabels[1]);
-     secondCard.setActionCommand("Second Card");
-     humanHand.add(secondCard);
+      //Second Card
+      JButton secondCard = new JButton();
+      secondCard.add(humanLabels[1]);
+      secondCard.setActionCommand("Second Card");
+      secondCard.addActionListener(gamePlay);
+      humanHand.add(secondCard);
 
-     //Third Card
-     JButton thirdCard = new JButton();
-     thirdCard.add(humanLabels[2]);
-     thirdCard.setActionCommand("Third Card");
-     humanHand.add(thirdCard);
+      //Third Card
+      JButton thirdCard = new JButton();
+      thirdCard.add(humanLabels[2]);
+      thirdCard.setActionCommand("Third Card");
+      thirdCard.addActionListener(gamePlay);
+      humanHand.add(thirdCard);
 
-     //Fourth Card
-     JButton fourthCard = new JButton();
-     fourthCard.add(humanLabels[3]);
-     fourthCard.setActionCommand("Fourth Card");
-     humanHand.add(fourthCard);
+      //Fourth Card
+      JButton fourthCard = new JButton();
+      fourthCard.add(humanLabels[3]);
+      fourthCard.setActionCommand("Fourth Card");
+      fourthCard.addActionListener(gamePlay);
+      humanHand.add(fourthCard);
 
-     //Fifth Card
-     JButton fifthCard = new JButton();
-     fifthCard.add(humanLabels[4]);
-     fifthCard.setActionCommand("Fifth Card");
-     humanHand.add(fifthCard);
+      //Fifth Card
+      JButton fifthCard = new JButton();
+      fifthCard.add(humanLabels[4]);
+      fifthCard.setActionCommand("Fifth Card");
+      fifthCard.addActionListener(gamePlay);
+      humanHand.add(fifthCard);
 
-     //Sixth Card
-     JButton sixthCard = new JButton();
-     sixthCard.add(humanLabels[5]);
-     sixthCard.setActionCommand("Sixth Card");
-     humanHand.add(sixthCard);
+      //Sixth Card
+      JButton sixthCard = new JButton();
+      sixthCard.add(humanLabels[5]);
+      sixthCard.setActionCommand("Sixth Card");
+      sixthCard.addActionListener(gamePlay);
+      humanHand.add(sixthCard);
 
-     //Seventh Card
-     JButton seventhCard = new JButton();
-     seventhCard.add(humanLabels[6]);
-     seventhCard.setActionCommand("Seventh Card");
-     humanHand.add(seventhCard);
-
-
-     myCardTable.pnlHumanHand.add(humanHand);
-
-     JPanel computerHand = new JPanel();
-     for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
-     {
-        computerHand.add(computerLabels[k]);
-     }
-
-     myCardTable.pnlComputerHand.add(computerHand);
-
-     // and two random cards in the play region (simulating a computer/hum ply)
-     for (int k = 0; k < NUM_PLAYERS; k++)
-     {
-        playedCardLabels[k] = new JLabel(GUICardTable.getIcon(randomCardGenerator()));
-     }
-
-     playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
-     playLabelText[1] = new JLabel("You", JLabel.CENTER);
-
-     JPanel playHand = new JPanel();
-     playHand.setLayout(new GridLayout(2,2));
-
-     for(int k = 0; k < NUM_PLAYERS; k++)
-     {
-        playHand.add(playedCardLabels[k]);
-     }
-
-     playHand.add(playLabelText[0]);
-     playHand.add(playLabelText[1]);
-
-     myCardTable.pnlPlayArea.add(playHand, BorderLayout.CENTER);
+      //Seventh Card
+      JButton seventhCard = new JButton();
+      seventhCard.add(humanLabels[6]);
+      seventhCard.setActionCommand("Seventh Card");
+      seventhCard.addActionListener(gamePlay);
+      humanHand.add(seventhCard);
 
 
-     //Creating JButtons
+      myCardTable.pnlHumanHand.add(humanHand);
 
-     //play button
-     JButton play = new JButton("Play Game");
+      JPanel computerHand = new JPanel();
+      for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
+      {
+         computerHand.add(computerLabels[k]);
+      }
 
-     play.setActionCommand("Play Game");
-     myCardTable.pnlPlayArea.add(play, BorderLayout.WEST);
+      myCardTable.pnlComputerHand.add(computerHand);
 
-     //reset  & end button
-     JPanel leftOptions = new JPanel();
-     leftOptions.setLayout(new GridLayout(2,1));
+      // and two random cards in the play region (simulating a computer/hum ply)
+      for (int k = 0; k < NUM_PLAYERS; k++)
+      {
+         playedCardLabels[k] = new JLabel(GUICardTable.getIcon(randomCardGenerator()));
+      }
 
-     JButton reset = new JButton ("Reset Game");
-     reset.setActionCommand("Reset Game");
+      playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
+      playLabelText[1] = new JLabel("You", JLabel.CENTER);
+
+      JPanel playHand = new JPanel();
+      playHand.setLayout(new GridLayout(2,2));
+
+      for(int k = 0; k < NUM_PLAYERS; k++)
+      {
+         playHand.add(playedCardLabels[k]);
+      }
+
+      playHand.add(playLabelText[0]);
+      playHand.add(playLabelText[1]);
+
+      myCardTable.pnlPlayArea.add(playHand, BorderLayout.CENTER);
 
 
-     JButton end = new JButton("End Game");
-     end.setActionCommand("End Game");
+      //Creating JButtons
+
+      //play button
+      JButton play = new JButton("Play Game");
+
+      play.setActionCommand("Play Game");
+      play.addActionListener(gamePlay);
+      myCardTable.pnlPlayArea.add(play, BorderLayout.WEST);
+
+      //reset  & end button
+      JPanel leftOptions = new JPanel();
+      leftOptions.setLayout(new GridLayout(2,1));
+
+      JButton reset = new JButton ("Reset Game");
+      reset.setActionCommand("Reset Game");
+      reset.addActionListener(gamePlay);
 
 
-     leftOptions.add(reset);
-     leftOptions.add(end);
+      JButton end = new JButton("End Game");
+      end.setActionCommand("End Game");
+      end.addActionListener(gamePlay);
 
-     myCardTable.pnlPlayArea.add(leftOptions,BorderLayout.EAST);
+
+      leftOptions.add(reset);
+      leftOptions.add(end);
+
+      myCardTable.pnlPlayArea.add(leftOptions,BorderLayout.EAST);
 
 
-     // show everything to the user
-     myCardTable.setVisible(true);
+      // show everything to the user
+      myCardTable.setVisible(true);
 
    }
 
@@ -570,6 +579,12 @@ class GUICardTable
     @Override
     public void actionPerformed(ActionEvent e)
     {
+      String actionCommand = e.getActionCommand();
+
+      if(actionCommand.equals("End Game"))
+      {
+         System.exit(0);
+      }
 
 
     }
