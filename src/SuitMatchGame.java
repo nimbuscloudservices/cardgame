@@ -4,10 +4,35 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.util.Random;
+import javax.swing.JFrame;
+import javax.swing.JPanel;
+import javax.swing.JLabel;
+import javax.swing.JButton;
+import java.awt.BorderLayout;
 
-public class SuitMatchGame
+
+public class SuitMatchGame extends JFrame implements ActionListener
 {
    public static void main(String[] args)
+   {
+      GameStructure newGame = new GameStructure();
+   }
+
+   @Override
+   public void actionPerformed(ActionEvent e)
+   {
+      String actionCommand = e.getActionCommand();
+
+      if (actionCommand.equals("End Game"))
+      {
+         System.exit(0);
+      }
+
+      gamePLay(e);
+
+   }
+
+   public void gamePLay(ActionEvent e)
    {
 
    }
@@ -596,21 +621,6 @@ class GUICardTable
  *
  * @return cards in a winnings[] array, not hand
  */
-class cardGame implements ActionListener
-{
-   @Override public void actionPerformed(ActionEvent e)
-   {
-      String actionCommand = e.getActionCommand();
-
-      if (actionCommand.equals("End Game"))
-      {
-         System.exit(0);
-      }
-
-   }
-
-}
-
 
 /**
  * Class that models game structure
