@@ -430,6 +430,24 @@ class Hand
 
       return card;
    }
+   /*
+    * playCard plays card on top of the deck
+    * and returns that card to the caller
+    * */
+   public Card playCard()
+   {
+
+      if(numCards == 0)
+         return null;
+
+      Card card = new Card(myCards[numCards -1].getValue(),
+            myCards[numCards -1].getSuit());
+      myCards[numCards -1] = null;
+      numCards--;
+
+      return card;
+
+   }
 
    /**
     * converts myCards array to string form

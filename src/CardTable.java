@@ -256,7 +256,7 @@ class GUICard
     * @param card that is being used
     * @return value of this card as int
     */
-   private static int valueAsInt(Card card)
+   static int valueAsInt(Card card)
    {
       char cardsValue = card.getValue();
 
@@ -277,7 +277,7 @@ class GUICard
     * @param card that is being used
     * @return suit of this card as int
     */
-   private static int suitAsInt(Card card)
+   public static int suitAsInt(Card card)
    {
       Card.Suit suit = card.getSuit();
       return switch (suit)
