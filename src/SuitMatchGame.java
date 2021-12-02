@@ -201,7 +201,7 @@ class CardGameOutline
       return hand[playerIndex].takeCard(deck.dealCard());
    }
 }
-public class GamePlay extends CardTable implements ActionListener
+class GamePlay extends CardTable implements ActionListener
 {
 
    CardGameOutline SuitMatchGame;
@@ -380,8 +380,8 @@ public class GamePlay extends CardTable implements ActionListener
       playedCardLabels[0] = new JLabel(GUICard.getIcon(computerHand));
       computerPlayCard.add(playedCardLabels[0]);
 
-      playedCardLabels[1] = new JLabel(GUICard.getIcon(humanCard));
-      humanPlayCard.add(playedCardLabels[1]);
+      playedCardLabels[0] = new JLabel(GUICard.getIcon(humanCard));
+      humanPlayCard.add(playedCardLabels[0]);
 
 
       playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
