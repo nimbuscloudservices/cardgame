@@ -201,21 +201,9 @@ class CardGameOutline
       return hand[playerIndex].takeCard(deck.dealCard());
    }
 }
-public class GamePlay extends CardTable implements ActionListener
+
+class GamePlay extends CardTable implements ActionListener
 {
-
-   CardGameOutline SuitMatchGame;
-
-   public GamePlay(String title, int numCardsPerHand, int numPlayers, CardGameOutline a)
-   {
-      super(title, numCardsPerHand, numPlayers);
-      cardsInComputerHand = numCardsPerHand;
-      cardsInHumanHand = numCardsPerHand;
-      SuitMatchGame = a;
-      setLayout(new BorderLayout());
-      createLabels();
-   }
-
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
@@ -223,10 +211,12 @@ public class GamePlay extends CardTable implements ActionListener
    static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS];
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS];
 
-   int cardsInComputerHand, cardsInHumanHand, rounds = 0;
+   //Keep track of how many cards are left in each hand
+   int cardsInComputerHand, cardsInHumanHand;
 
-   Card[] computerWinnings = new Card[52];
-   Card[] humanWinnings = new Card[52];
+   //Store cards that are won after each round
+   Hand computerWinnings = new Hand();
+   Hand humanWinnings = new Hand();
 
    //JButtons
 
@@ -237,89 +227,112 @@ public class GamePlay extends CardTable implements ActionListener
    private JButton button5 = new JButton();
    private JButton button6 = new JButton();
    private JButton button7 = new JButton();
-
-   private JButton resetGame = new JButton("Reset");
    private JButton exitGame = new JButton("Exit");
 
-   JPanel leftOptions = new JPanel(), addCardButtons = new JPanel();
-
+   public JPanel addCardButtons = new JPanel();
    public JPanel winner = new JPanel();
    public JPanel computerHand = new JPanel();
-   public JPanel computerPlayCard = new JPanel(), humanPlayCard = new JPanel();
-   public JPanel  playHand = new JPanel();
+   public JLabel computerPlayCard = new JLabel();
+   public JLabel humanPlayCard = new JLabel();
+   public JPanel playHand = new JPanel();
    public JLabel pickCardMessage= new JLabel("Pick a card from your hand!", SwingConstants.CENTER);
    public JLabel computerWins= new JLabel("Computer Wins!", SwingConstants.CENTER);
    public JLabel humanWins= new JLabel("Human Wins!", SwingConstants.CENTER);
 
    Border border = BorderFactory.createLineBorder(Color.black);
+
+   CardGameOutline SuitMatchGame;
+
    /*
-    * Method sets buttons on JFrame
+    * Constructor of GamePlay calls CardTable, sets cardsInComputerHand , cardsInHumanHand, SuitMatchGame
+    * and calls createLabels().
     */
-   public void setButtons()
+   public GamePlay(String title, int numCardsPerHand, int numPlayers, CardGameOutline a)
+   {
+      super(title, numCardsPerHand, numPlayers);
+      cardsInComputerHand = numCardsPerHand;
+      cardsInHumanHand = numCardsPerHand;
+      SuitMatchGame = a;
+      createLabels();
+   }
+   /*
+    * Method setButtons creates the buttons to be added onto the JFrame
+    */
+   private void setButtons()
    {
       button1.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(0)));
+      button1.setHorizontalAlignment(JButton.CENTER);
       button1.setActionCommand("1");
       button1.addActionListener(this);
       addCardButtons.add(button1);
 
       button2.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(1)));
+      button2.setHorizontalAlignment(JButton.CENTER);
       button2.setActionCommand("2");
       button2.addActionListener(this);
       addCardButtons.add(button2);
 
       button3.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(2)));
+      button3.setHorizontalAlignment(JButton.CENTER);
       button3.setActionCommand("3");
       button3.addActionListener(this);
       addCardButtons.add(button3);
 
       button4.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(3)));
+      button4.setHorizontalAlignment(JButton.CENTER);
       button4.setActionCommand("4");
       button4.addActionListener(this);
       addCardButtons.add(button4);
 
       button5.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(4)));
+      button5.setHorizontalAlignment(JButton.CENTER);
       button5.setActionCommand("5");
       button5.addActionListener(this);
       addCardButtons.add(button5);
 
       button6.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(5)));
+      button6.setHorizontalAlignment(JButton.CENTER);
       button6.setActionCommand("6");
       button6.addActionListener(this);
       addCardButtons.add(button6);
 
       button7.setIcon(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(6)));
+      button7.setHorizontalAlignment(JButton.CENTER);
       button7.setActionCommand("7");
       button7.addActionListener(this);
       addCardButtons.add(button7);
 
-      resetGame.setActionCommand("Reset");
-      resetGame.addActionListener(this);
-      leftOptions.add(resetGame);
-
-      exitGame.setActionCommand("Exit");
+      exitGame.setText("Exit");
+      exitGame.setHorizontalAlignment(JButton.CENTER);
+      exitGame.setActionCommand("End Game");
       exitGame.addActionListener(this);
-      leftOptions.add(exitGame);
-
+      add(exitGame, BorderLayout.EAST);
    }
-   public void setPanels()
+   /*
+    * setPanels sets the top panel where computer cards will be displayed, sets bottom panel
+    * where the cards of the human will be displayed and sets the middle panel where cards that are
+    * played will be displayed.
+    */
+
+   private void setPanels()
    {
       playHand.setLayout(new GridLayout(2,2));
 
+      //Adding JPanel pnlComputerHand on top in JFrame
       pnlComputerHand = new JPanel();
       pnlComputerHand.setBorder(border);
       add(pnlComputerHand, BorderLayout.NORTH);
 
-      //Adding label on top panel
       JLabel computerHand = new JLabel("Computer Hand", SwingConstants.CENTER);
       pnlComputerHand.setLayout(new BorderLayout());
       pnlComputerHand.add(computerHand, BorderLayout.NORTH);
       pnlComputerHand.setBorder(border);
 
+      //Adding JPanel pnlPlayArea on center in JFrame
       pnlPlayArea = new JPanel();
       pnlPlayArea.setBorder(border);
       add(pnlPlayArea, BorderLayout.CENTER);
 
-      //Adding label on middle panel
       JLabel playingArea = new JLabel("Playing Area", SwingConstants.CENTER);
       pnlPlayArea.setLayout(new BorderLayout());
       pnlPlayArea.add(playingArea, BorderLayout.NORTH);
@@ -328,28 +341,28 @@ public class GamePlay extends CardTable implements ActionListener
       pnlHumanHand.setBorder(border);
       add(pnlHumanHand, BorderLayout.SOUTH);
 
-      //Adding label on bottom panel
+      //Adding JLabel pnlHumanHand on bottom in JFrame
       JLabel yourHand = new JLabel("Your Hand", SwingConstants.CENTER);
       pnlHumanHand.setLayout(new BorderLayout());
       pnlHumanHand.add(yourHand, BorderLayout.NORTH);
 
-
-      leftOptions.setLayout(new GridLayout(2,1));
-      add(leftOptions,BorderLayout.EAST);
-
       addCardButtons.setLayout(new GridLayout(1,7));
       pnlHumanHand.add(addCardButtons, BorderLayout.SOUTH);
 
-      //Message to pick a card
+      //JLabel pickCardMessage added to middle of JFrame
       pnlPlayArea.add(pickCardMessage, BorderLayout.CENTER);
 
    }
-   public void createLabels()
+   /*
+    * createLabels() calls setPanels() to create the panels on the JFrame.
+    * Then after createLabels() creates the labels that will be added to the top panel and bottom panel
+    * of the JFrame. setButtons() is called at the end.
+    */
+   private void createLabels()
    {
       setPanels();
 
       // CREATE LABELS
-      Deck deck = new Deck();
       for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
@@ -365,6 +378,10 @@ public class GamePlay extends CardTable implements ActionListener
 
       setButtons();
    }
+   /*
+    * callCardtoPlayAre takes in two cards that were are being played by computer
+    * and hand. The winner is determined by an if&else statement. Winner is displayed on JFrame.
+    */
    public void callCardtoPlayArea(Card humanCard, Card computerHand)
    {
       pnlPlayArea.remove(humanWins);
@@ -378,10 +395,12 @@ public class GamePlay extends CardTable implements ActionListener
 
 
       playedCardLabels[0] = new JLabel(GUICard.getIcon(computerHand));
-      computerPlayCard.add(playedCardLabels[0]);
+      computerPlayCard.setIcon(GUICard.getIcon(computerHand));
+      computerPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
-      playedCardLabels[1] = new JLabel(GUICard.getIcon(humanCard));
-      humanPlayCard.add(playedCardLabels[1]);
+      playedCardLabels[0] = new JLabel(GUICard.getIcon(humanCard));
+      humanPlayCard.setIcon(GUICard.getIcon(humanCard));
+      humanPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
 
       playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
@@ -404,7 +423,8 @@ public class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.add(computerWins, BorderLayout.SOUTH);
          pnlPlayArea.revalidate();
          pnlPlayArea.repaint();
-         computerWinnings[rounds] = humanCard;
+         computerWinnings.takeCard(humanCard);
+         computerWinnings.takeCard(computerHand);
          System.out.println("Computer Wins");
       }
       else
@@ -412,12 +432,14 @@ public class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.add(humanWins, BorderLayout.SOUTH);
          pnlPlayArea.revalidate();
          pnlPlayArea.repaint();
-         humanWinnings[rounds] = computerHand;
+         computerWinnings.takeCard(humanCard);
+
+         humanWinnings.takeCard(computerHand);
          System.out.println("Human Wins");
       }
    }
    /*
-    * Updates button by adding a new Card to the button
+    *updateButton method updates button by adding a new Card to the button as an icon.
     */
    public void updateButton(JButton button, int index)
    {
@@ -426,6 +448,7 @@ public class GamePlay extends CardTable implements ActionListener
 
          humanLabels[index] = new JLabel(GUICard.getIcon(SuitMatchGame.getCardFromDeck()));
          button.setIcon(GUICard.getIcon(SuitMatchGame.getCardFromDeck()));
+         button.setHorizontalAlignment(JButton.CENTER);
          button.revalidate();
          button.repaint();
       }
@@ -442,9 +465,11 @@ public class GamePlay extends CardTable implements ActionListener
       }
 
    }
+   /*
+    * updateComputerCards updates the hand of the computer
+    */
    public void updateComputerCards(Card card, int index)
    {
-      JLabel temp = new JLabel (GUICard.getIcon(card));
       if(SuitMatchGame.getNumCardsRemainingInDeck()!=0)
       {
          computerLabels[index] = new JLabel(GUICard.getIcon(SuitMatchGame.getCardFromDeck()));
@@ -462,42 +487,15 @@ public class GamePlay extends CardTable implements ActionListener
       }
 
    }
+   /*
+    * endGame determines who the winner is according to who had the most cards.
+    */
    public void endGame()
    {
-      JLabel winner = new JLabel();
-      pnlPlayArea.removeAll();
+      //Still need to write this
 
-      int human=0, computer=0;
 
-      for(int i=0; i<52; i++)
-      {
-         if(computerWinnings[i]!=null)
-         {
-            computer++;
-         }
-         if(humanWinnings[i]!=null)
-         {
-            human++;
-         }
-      }
 
-      if(human>computer)
-      {
-         //Human wins (has the most cards)
-         winner = new JLabel ("You are the winner!", SwingConstants.CENTER);
-      }
-      else if (human < computer)
-      {
-         //Computer wins (has the most cards)
-         winner = new JLabel ("Computer is the winner!", SwingConstants.CENTER);
-      }
-      else if (human == computer)
-      {
-         //Tie both players win
-         winner = new JLabel ("Tie! You Both Win!", SwingConstants.CENTER);
-      }
-
-      pnlPlayArea.add(winner, BorderLayout.CENTER);
 
    }
 
@@ -522,10 +520,14 @@ public class GamePlay extends CardTable implements ActionListener
       game.setVisible(true);
    }
 
+   /*
+    * actionPerformed used if/else statements to distinct what button is being pressed.
+    */
    @Override
    public void actionPerformed(ActionEvent e)
    {
       String actionCommand = e.getActionCommand();
+
       Random ran = new Random();
 
       int i = ran.nextInt(NUM_CARDS_PER_HAND);
@@ -535,22 +537,15 @@ public class GamePlay extends CardTable implements ActionListener
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(0), SuitMatchGame.getHand(0).inspectCard(i));
          updateButton(button1, 0);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
-
       }
       else if(actionCommand.equals("2"))
       {
-
-
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(1), SuitMatchGame.getHand(0).inspectCard(i));
          updateButton(button2, 1);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
-
-
       }
       else if(actionCommand.equals("3"))
       {
-
-
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(2), SuitMatchGame.getHand(0).inspectCard(i));
          updateButton(button3, 2);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
@@ -581,11 +576,7 @@ public class GamePlay extends CardTable implements ActionListener
          updateButton(button7, 6);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
       }
-      else if(actionCommand.equals("Reset"))
-      {
-
-      }
-      else if(actionCommand.equals("Exit"))
+      else if(actionCommand.equals("End Game"))
       {
          System.exit(0);
       }
