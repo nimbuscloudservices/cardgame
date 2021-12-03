@@ -509,22 +509,20 @@ class GamePlay extends CardTable implements ActionListener
     */
    public void endGame()
    {
-      //Determine who collected the most cards
-      if (humanWinnings.length < computerWinnings.length)
-      {
-         winner = humanWins;
-      }
-      else
-      {
-         winner = computerWins;
-      }
+     //Determine who collected the most cards
+     if (humanWinningsCounter > computerWinningsCounter)
+     {
+        winner = humanWins;
+     }
+     else
+     {
+        winner = computerWins;
+     }
 
-      //Display the winner
-      pnlPlayArea.removeAll();
-      winner.setText("The winner is .....");
-      winner.setFont(new Font("Verdana", Font.BOLD, 25));
-      winner.setHorizontalAlignment(JLabel.CENTER);
-      pnlPlayArea.add(winner, BorderLayout.CENTER);
+     //Display the winner
+     pnlPlayArea.removeAll();
+     winner.setHorizontalAlignment(JLabel.CENTER);
+     pnlPlayArea.add(winner, BorderLayout.CENTER);
 
    }
 
