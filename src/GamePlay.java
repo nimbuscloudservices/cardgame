@@ -207,12 +207,11 @@ class GamePlay extends CardTable implements ActionListener
    static JLabel[] playLabelText = new JLabel[NUM_PLAYERS];
    static int computerWinningsCounter = 0;
    static int humanWinningsCounter = 0;
-   //Keep track of how many cards are left in each hand
-   int cardsInComputerHand, cardsInHumanHand;
-   //Store cards that are won after each round
-   Hand[] computerWinnings = new Hand[NUM_CARDS_PER_HAND * NUM_PLAYERS];
-   Hand[] humanWinnings = new Hand[NUM_CARDS_PER_HAND * NUM_PLAYERS];
+
+   //Store cards that are won after each round into a Hand array
+   Hand[] winnings = new Hand[NUM_PLAYERS];
    CardGameOutline SuitMatchGame;
+
    //JButtons
    private JButton button1 = new JButton();
    private JButton button2 = new JButton();
@@ -221,10 +220,12 @@ class GamePlay extends CardTable implements ActionListener
    private JButton button5 = new JButton();
    private JButton button6 = new JButton();
    private JButton button7 = new JButton();
+
    //JPanels
    private JPanel addCardButtons = new JPanel();
    private JPanel computerHand = new JPanel();
    private JPanel playHand = new JPanel();
+
    //JLabels
    private JLabel computerPlayCard = new JLabel();
    private JLabel humanPlayCard = new JLabel();
@@ -244,9 +245,15 @@ class GamePlay extends CardTable implements ActionListener
          CardGameOutline a)
    {
       super(title, numCardsPerHand, numPlayers);
-      cardsInComputerHand = numCardsPerHand;
-      cardsInHumanHand = numCardsPerHand;
+
       SuitMatchGame = a;
+
+      //Create the hand array where the winning cards will be added for each player.
+      for(int k = 0; k < numPlayers; k++)
+      {
+        winnings[k] = new Hand();
+      }
+
       createLabels();
    }
 
@@ -383,6 +390,11 @@ class GamePlay extends CardTable implements ActionListener
          computerHand.add(computerLabels[k]);
       }
 
+      for(int k = 0; k < 2; k++)
+       {
+         winnings[k] = new Hand();
+       }
+
       pnlComputerHand.add(computerHand);
 
       computerWins.setFont(new Font("Verdana", Font.BOLD, 15));
@@ -435,20 +447,18 @@ class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.add(computerWins, BorderLayout.SOUTH);
          pnlPlayArea.revalidate();
          pnlPlayArea.repaint();
-         computerWinnings[computerWinningsCounter].takeCard(humanCard);
-         computerWinningsCounter++;
-         computerWinnings[computerWinningsCounter].takeCard(computerHand);
-         computerWinningsCounter++;
+         winnings[0].takeCard(humanCard);
+         winnings[0].takeCard(computerHand);
+         computerWinningsCounter+=2;
       }
       else
       {
          pnlPlayArea.add(humanWins, BorderLayout.SOUTH);
          pnlPlayArea.revalidate();
          pnlPlayArea.repaint();
-         humanWinnings[humanWinningsCounter].takeCard(humanCard);
-         humanWinningsCounter++;
-         humanWinnings[humanWinningsCounter].takeCard(computerHand);
-         humanWinningsCounter++;
+         winnings[1].takeCard(humanCard);
+         winnings[1].takeCard(computerHand);
+         humanWinningsCounter+=2;
       }
    }
 
@@ -469,14 +479,12 @@ class GamePlay extends CardTable implements ActionListener
          addCardButtons.remove(button);
          addCardButtons.revalidate();
          addCardButtons.repaint();
-         --cardsInHumanHand;
 
-         if (cardsInComputerHand == 0 || cardsInHumanHand == 0)
+         if(addCardButtons.getComponentCount() == 0)
          {
             endGame();
          }
       }
-
    }
 
    /*
@@ -494,14 +502,12 @@ class GamePlay extends CardTable implements ActionListener
          computerHand.remove(computerLabels[index]);
          computerHand.revalidate();
          computerHand.repaint();
-         --cardsInComputerHand;
 
-         if (cardsInComputerHand == 0 || cardsInHumanHand == 0)
+         if(computerHand.getComponentCount()==0)
          {
             endGame();
          }
       }
-
    }
 
    /*
@@ -509,20 +515,20 @@ class GamePlay extends CardTable implements ActionListener
     */
    public void endGame()
    {
-     //Determine who collected the most cards
-     if (humanWinningsCounter > computerWinningsCounter)
-     {
-        winner = humanWins;
-     }
-     else
-     {
-        winner = computerWins;
-     }
+      //Determine who collected the most cards
+      if (humanWinningsCounter > computerWinningsCounter)
+      {
+         winner = humanWins;
+      }
+      else
+      {
+         winner = computerWins;
+      }
 
-     //Display the winner
-     pnlPlayArea.removeAll();
-     winner.setHorizontalAlignment(JLabel.CENTER);
-     pnlPlayArea.add(winner, BorderLayout.CENTER);
+      //Display the winner
+      pnlPlayArea.removeAll();
+      winner.setHorizontalAlignment(JLabel.CENTER);
+      pnlPlayArea.add(winner, BorderLayout.CENTER);
 
    }
 
