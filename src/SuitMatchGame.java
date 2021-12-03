@@ -224,11 +224,9 @@ class GamePlay extends CardTable implements ActionListener
    private JButton button5 = new JButton();
    private JButton button6 = new JButton();
    private JButton button7 = new JButton();
-   private JButton exitGame = new JButton("Exit");
 
    //JPanels
    private JPanel addCardButtons = new JPanel();
-   private JPanel winner = new JPanel();
    private JPanel computerHand = new JPanel();
    private JPanel playHand = new JPanel();
    //JLabels
@@ -237,6 +235,7 @@ class GamePlay extends CardTable implements ActionListener
    private JLabel pickCardMessage= new JLabel("Pick a card from your hand!", SwingConstants.CENTER);
    private JLabel computerWins= new JLabel("Computer Wins!", SwingConstants.CENTER);
    private JLabel humanWins= new JLabel("Human Wins!", SwingConstants.CENTER);
+   private JLabel winner = new JLabel();
 
    private Border border = BorderFactory.createLineBorder(Color.black);
 
@@ -300,12 +299,6 @@ class GamePlay extends CardTable implements ActionListener
       button7.setActionCommand("7");
       button7.addActionListener(this);
       addCardButtons.add(button7);
-
-      exitGame.setText("Exit");
-      exitGame.setHorizontalAlignment(JButton.CENTER);
-      exitGame.setActionCommand("End Game");
-      exitGame.addActionListener(this);
-      add(exitGame, BorderLayout.EAST);
    }
    /*
     * setPanels sets the top panel where computer cards will be displayed, sets bottom panel
@@ -374,6 +367,8 @@ class GamePlay extends CardTable implements ActionListener
 
       pnlComputerHand.add(computerHand);
 
+      computerWins.setFont(new Font("Verdana", Font.BOLD, 15));
+      humanWins.setFont(new Font("Verdana", Font.BOLD, 15));
       setButtons();
    }
    /*
@@ -450,9 +445,10 @@ class GamePlay extends CardTable implements ActionListener
          addCardButtons.remove(button);
          addCardButtons.revalidate();
          addCardButtons.repaint();
-         cardsInHumanHand--;
+         --cardsInHumanHand;
 
-         if(cardsInHumanHand==0)
+         if(cardsInComputerHand==0 || cardsInHumanHand==0
+               )
          {
             endGame();
          }
@@ -473,9 +469,9 @@ class GamePlay extends CardTable implements ActionListener
          computerHand.remove(computerLabels[index]);
          computerHand.revalidate();
          computerHand.repaint();
-         cardsInComputerHand--;
+         --cardsInComputerHand;
 
-         if(cardsInComputerHand==0)
+         if(cardsInComputerHand==0 || cardsInHumanHand==0)
          {
             endGame();
          }
@@ -487,9 +483,16 @@ class GamePlay extends CardTable implements ActionListener
     */
    public void endGame()
    {
-      //Still need to write this
+      //Determine who collected the most cards
 
 
+
+      //Display the winner
+      pnlPlayArea.removeAll();
+      winner.setText("The winner is .....");
+      winner.setFont(new Font("Verdana", Font.BOLD, 25));
+      winner.setHorizontalAlignment(JLabel.CENTER);
+      pnlPlayArea.add(winner, BorderLayout.CENTER);
 
 
    }
@@ -569,10 +572,6 @@ class GamePlay extends CardTable implements ActionListener
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(6), SuitMatchGame.getHand(0).inspectCard(i));
          updateButton(button7, 6);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
-      }
-      else if(actionCommand.equals("End Game"))
-      {
-         System.exit(0);
       }
    }
 }
