@@ -201,6 +201,20 @@ class CardGameOutline
       return hand[playerIndex].takeCard(deck.dealCard());
    }
 }
+class GamePlay extends CardTable implements ActionListener
+{
+
+   CardGameOutline SuitMatchGame;
+
+   public GamePlay(String title, int numCardsPerHand, int numPlayers, CardGameOutline a)
+   {
+      super(title, numCardsPerHand, numPlayers);
+      cardsInComputerHand = numCardsPerHand;
+      cardsInHumanHand = numCardsPerHand;
+      SuitMatchGame = a;
+      setLayout(new BorderLayout());
+      createLabels();
+   }
 
 class GamePlay extends CardTable implements ActionListener
 {
