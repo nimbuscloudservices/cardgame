@@ -29,6 +29,9 @@ public class CardTable extends JFrame
    public CardTable(String title, int numCardsPerHand, int numPlayers)
    {
      super(title);
+     setSize(1150, 650);
+     setLocationRelativeTo(null);
+     setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
      Border border = BorderFactory.createLineBorder(Color.black);
      setLayout(new BorderLayout());
 
