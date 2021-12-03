@@ -213,8 +213,10 @@ class GamePlay extends CardTable implements ActionListener
    int cardsInComputerHand, cardsInHumanHand;
 
    //Store cards that are won after each round
-   Hand computerWinnings = new Hand();
-   Hand humanWinnings = new Hand();
+   Hand[] computerWinnings = new Hand[0];
+   Hand[] humanWinnings = new Hand[0];
+   static int computerWinningsCounter = 0;
+   static int humanWinningsCounter = 0;
 
    //JButtons
    private JButton button1 = new JButton();
@@ -484,8 +486,16 @@ class GamePlay extends CardTable implements ActionListener
    public void endGame()
    {
       //Determine who collected the most cards
-
-
+      if(humanWinnings < computerWinnings)
+      {
+         computerWinnings[computerWinningsCounter] = ;
+         computerWinningsCounter += 2;
+      }
+      else
+      {
+         humanWinnings[humanWinningsCounter] = ;
+         humanWinningsCounter += 2;
+      }
 
       //Display the winner
       pnlPlayArea.removeAll();
