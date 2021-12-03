@@ -201,28 +201,12 @@ class CardGameOutline
       return hand[playerIndex].takeCard(deck.dealCard());
    }
 }
-class GamePlay extends CardTable implements ActionListener
-{
-
-   CardGameOutline SuitMatchGame;
-
-   public GamePlay(String title, int numCardsPerHand, int numPlayers, CardGameOutline a)
-   {
-      super(title, numCardsPerHand, numPlayers);
-      cardsInComputerHand = numCardsPerHand;
-      cardsInHumanHand = numCardsPerHand;
-      SuitMatchGame = a;
-      setLayout(new BorderLayout());
-      createLabels();
-   }
 
 class GamePlay extends CardTable implements ActionListener
 {
    static int NUM_CARDS_PER_HAND = 7;
    static int  NUM_PLAYERS = 2;
    static JLabel[] computerLabels = new JLabel[NUM_CARDS_PER_HAND];
-   static JLabel[] humanLabels = new JLabel[NUM_CARDS_PER_HAND];
-   static JLabel[] playedCardLabels  = new JLabel[NUM_PLAYERS];
    static JLabel[] playLabelText  = new JLabel[NUM_PLAYERS];
 
    //Keep track of how many cards are left in each hand
@@ -233,7 +217,6 @@ class GamePlay extends CardTable implements ActionListener
    Hand humanWinnings = new Hand();
 
    //JButtons
-
    private JButton button1 = new JButton();
    private JButton button2 = new JButton();
    private JButton button3 = new JButton();
@@ -243,17 +226,19 @@ class GamePlay extends CardTable implements ActionListener
    private JButton button7 = new JButton();
    private JButton exitGame = new JButton("Exit");
 
-   public JPanel addCardButtons = new JPanel();
-   public JPanel winner = new JPanel();
-   public JPanel computerHand = new JPanel();
-   public JLabel computerPlayCard = new JLabel();
-   public JLabel humanPlayCard = new JLabel();
-   public JPanel playHand = new JPanel();
-   public JLabel pickCardMessage= new JLabel("Pick a card from your hand!", SwingConstants.CENTER);
-   public JLabel computerWins= new JLabel("Computer Wins!", SwingConstants.CENTER);
-   public JLabel humanWins= new JLabel("Human Wins!", SwingConstants.CENTER);
+   //JPanels
+   private JPanel addCardButtons = new JPanel();
+   private JPanel winner = new JPanel();
+   private JPanel computerHand = new JPanel();
+   private JPanel playHand = new JPanel();
+   //JLabels
+   private JLabel computerPlayCard = new JLabel();
+   private JLabel humanPlayCard = new JLabel();
+   private JLabel pickCardMessage= new JLabel("Pick a card from your hand!", SwingConstants.CENTER);
+   private JLabel computerWins= new JLabel("Computer Wins!", SwingConstants.CENTER);
+   private JLabel humanWins= new JLabel("Human Wins!", SwingConstants.CENTER);
 
-   Border border = BorderFactory.createLineBorder(Color.black);
+   private Border border = BorderFactory.createLineBorder(Color.black);
 
    CardGameOutline SuitMatchGame;
 
@@ -380,7 +365,6 @@ class GamePlay extends CardTable implements ActionListener
       for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
       {
          computerLabels[k] = new JLabel(GUICard.getBackCardIcon());
-         humanLabels[k] = new JLabel(GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(k)));
       }
 
       for (int k = 0; k < NUM_CARDS_PER_HAND; k++)
@@ -404,33 +388,33 @@ class GamePlay extends CardTable implements ActionListener
       humanPlayCard.removeAll();
       computerPlayCard.removeAll();
 
-
       playHand.removeAll();
 
-
-      playedCardLabels[0] = new JLabel(GUICard.getIcon(computerHand));
       computerPlayCard.setIcon(GUICard.getIcon(computerHand));
       computerPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
-      playedCardLabels[0] = new JLabel(GUICard.getIcon(humanCard));
       humanPlayCard.setIcon(GUICard.getIcon(humanCard));
       humanPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
+      humanPlayCard.revalidate();
+      humanPlayCard.repaint();
+
+      computerPlayCard.revalidate();
+      computerPlayCard.repaint();
 
       playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
       playLabelText[1] = new JLabel("You", JLabel.CENTER);
-
 
       playHand.add(computerPlayCard);
       playHand.add(humanPlayCard);
 
       playHand.add(playLabelText[0]);
       playHand.add(playLabelText[1]);
+      playHand.revalidate();
+      playHand.repaint();
 
       pnlPlayArea.remove(pickCardMessage);
       pnlPlayArea.add(playHand, BorderLayout.CENTER);
-
-
 
       if(humanCard.getSuit() == computerHand.getSuit())
       {
@@ -439,7 +423,6 @@ class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.repaint();
          computerWinnings.takeCard(humanCard);
          computerWinnings.takeCard(computerHand);
-         System.out.println("Computer Wins");
       }
       else
       {
@@ -447,9 +430,7 @@ class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.revalidate();
          pnlPlayArea.repaint();
          computerWinnings.takeCard(humanCard);
-
          humanWinnings.takeCard(computerHand);
-         System.out.println("Human Wins");
       }
    }
    /*
@@ -457,10 +438,8 @@ class GamePlay extends CardTable implements ActionListener
     */
    public void updateButton(JButton button, int index)
    {
-      if(SuitMatchGame.getNumCardsRemainingInDeck()!=0)
+      if(SuitMatchGame.takeCard(1))
       {
-
-         humanLabels[index] = new JLabel(GUICard.getIcon(SuitMatchGame.getCardFromDeck()));
          button.setIcon(GUICard.getIcon(SuitMatchGame.getCardFromDeck()));
          button.setHorizontalAlignment(JButton.CENTER);
          button.revalidate();
@@ -472,6 +451,7 @@ class GamePlay extends CardTable implements ActionListener
          addCardButtons.revalidate();
          addCardButtons.repaint();
          cardsInHumanHand--;
+
          if(cardsInHumanHand==0)
          {
             endGame();
@@ -484,7 +464,7 @@ class GamePlay extends CardTable implements ActionListener
     */
    public void updateComputerCards(Card card, int index)
    {
-      if(SuitMatchGame.getNumCardsRemainingInDeck()!=0)
+      if(SuitMatchGame.takeCard(0))
       {
          computerLabels[index] = new JLabel(GUICard.getIcon(SuitMatchGame.getCardFromDeck()));
       }
@@ -494,6 +474,7 @@ class GamePlay extends CardTable implements ActionListener
          computerHand.revalidate();
          computerHand.repaint();
          cardsInComputerHand--;
+
          if(cardsInComputerHand==0)
          {
             endGame();
@@ -529,7 +510,6 @@ class GamePlay extends CardTable implements ActionListener
 
       SuitMatchGame.deal();
       GamePlay game = new GamePlay("CardTable", NUM_CARDS_PER_HAND, NUM_PLAYERS, SuitMatchGame);
-
 
       game.setVisible(true);
    }
