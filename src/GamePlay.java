@@ -15,7 +15,7 @@ class CardGameOutline
 {
    private static final int MAX_PLAYERS = 50;
    private int numPlayers, numPacks, numJokersPerPack,
-         numUnusedCardsPerPack, numCardsPerHand;
+           numUnusedCardsPerPack, numCardsPerHand;
    private Deck deck;
    private Hand[] hand;
    private Card[] unusedCardsPerPack;
@@ -31,8 +31,8 @@ class CardGameOutline
     * @param numCardsPerHand
     */
    public CardGameOutline(int numPacks, int numJokersPerPack,
-         int numUnusedCardsPerPack, Card[] unusedCardsPerPack, int numPlayers,
-         int numCardsPerHand)
+                          int numUnusedCardsPerPack, Card[] unusedCardsPerPack, int numPlayers,
+                          int numCardsPerHand)
    {
       int k;
 
@@ -201,20 +201,9 @@ class CardGameOutline
       return hand[playerIndex].takeCard(deck.dealCard());
    }
 }
-class GamePlay extends CardTable implements ActionListener
-{
 
-   CardGameOutline SuitMatchGame;
 
-   public GamePlay(String title, int numCardsPerHand, int numPlayers, CardGameOutline a)
-   {
-      super(title, numCardsPerHand, numPlayers);
-      cardsInComputerHand = numCardsPerHand;
-      cardsInHumanHand = numCardsPerHand;
-      SuitMatchGame = a;
-      setLayout(new BorderLayout());
-      createLabels();
-   }
+
 
 class GamePlay extends CardTable implements ActionListener
 {
@@ -229,11 +218,12 @@ class GamePlay extends CardTable implements ActionListener
    int cardsInComputerHand, cardsInHumanHand;
 
    //Store cards that are won after each round
-   Hand computerWinnings = new Hand();
-   Hand humanWinnings = new Hand();
+   Hand[] computerWinnings = new Hand[57];
+   Hand[] humanWinnings = new Hand[57];
+   static int computerWinningsCounter = 0;
+   static int humanWinningsCounter = 0;
 
    //JButtons
-
    private JButton button1 = new JButton();
    private JButton button2 = new JButton();
    private JButton button3 = new JButton();
@@ -404,9 +394,7 @@ class GamePlay extends CardTable implements ActionListener
       humanPlayCard.removeAll();
       computerPlayCard.removeAll();
 
-
       playHand.removeAll();
-
 
       playedCardLabels[0] = new JLabel(GUICard.getIcon(computerHand));
       computerPlayCard.setIcon(GUICard.getIcon(computerHand));
@@ -416,10 +404,8 @@ class GamePlay extends CardTable implements ActionListener
       humanPlayCard.setIcon(GUICard.getIcon(humanCard));
       humanPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
-
       playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
       playLabelText[1] = new JLabel("You", JLabel.CENTER);
-
 
       playHand.add(computerPlayCard);
       playHand.add(humanPlayCard);
@@ -429,8 +415,6 @@ class GamePlay extends CardTable implements ActionListener
 
       pnlPlayArea.remove(pickCardMessage);
       pnlPlayArea.add(playHand, BorderLayout.CENTER);
-
-
 
       if(humanCard.getSuit() == computerHand.getSuit())
       {
@@ -447,7 +431,6 @@ class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.revalidate();
          pnlPlayArea.repaint();
          computerWinnings.takeCard(humanCard);
-
          humanWinnings.takeCard(computerHand);
          System.out.println("Human Wins");
       }
@@ -503,14 +486,20 @@ class GamePlay extends CardTable implements ActionListener
    }
    /*
     * endGame determines who the winner is according to who had the most cards.
+    * place computerWinnings and humanWinnings in winnings[] array
     */
    public void endGame()
    {
-      //Still need to write this
-
-
-
-
+      if(humanWinningsCounter < computerWinningsCounter)
+      {
+         computerWinnings[computerWinningsCounter] = ;
+         computerWinningsCounter += 2;
+      }
+      else
+      {
+         humanWinnings[humanWinningsCounter] = ;
+         humanWinningsCounter += 2;
+      }
    }
 
    public static void main(String[] args)
@@ -523,9 +512,9 @@ class GamePlay extends CardTable implements ActionListener
       Card[] unusedCardsPerPack = null;
 
       CardGameOutline SuitMatchGame = new CardGameOutline(
-            numPacksPerDeck, numJokersPerPack,
-            numUnusedCardsPerPack, unusedCardsPerPack,
-            NUM_PLAYERS, NUM_CARDS_PER_HAND);
+              numPacksPerDeck, numJokersPerPack,
+              numUnusedCardsPerPack, unusedCardsPerPack,
+              NUM_PLAYERS, NUM_CARDS_PER_HAND);
 
       SuitMatchGame.deal();
       GamePlay game = new GamePlay("CardTable", NUM_CARDS_PER_HAND, NUM_PLAYERS, SuitMatchGame);
