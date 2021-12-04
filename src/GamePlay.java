@@ -499,7 +499,7 @@ class GamePlay extends CardTable implements ActionListener
       }
       else
       {
-         computerHand.remove(computerLabels[index]);
+         computerHand.remove(computerHand.getComponent(index));
          computerHand.revalidate();
          computerHand.repaint();
 
@@ -541,7 +541,7 @@ class GamePlay extends CardTable implements ActionListener
 
       Random ran = new Random();
 
-      int i = ran.nextInt(NUM_CARDS_PER_HAND);
+      int i = ran.nextInt(computerHand.getComponentCount());
 
       if (actionCommand.equals("1"))
       {
