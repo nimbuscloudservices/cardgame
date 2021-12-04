@@ -515,6 +515,9 @@ class GamePlay extends CardTable implements ActionListener
     */
    public void endGame()
    {
+      //Disable button
+      addCardButtons.getComponent(0).setEnabled(false);
+
       //Determine who collected the most cards
       if (humanWinningsCounter > computerWinningsCounter)
       {
