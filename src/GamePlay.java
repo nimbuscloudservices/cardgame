@@ -9,7 +9,8 @@ import java.util.Random;
 class CardGameOutline
 {
    private static final int MAX_PLAYERS = 50;
-   private int numPlayers, numPacks, numJokersPerPack, numUnusedCardsPerPack, numCardsPerHand;
+   private int numPlayers, numPacks, numJokersPerPack,
+               numUnusedCardsPerPack, numCardsPerHand;
    private Deck deck;
    private Hand[] hand;
    private Card[] unusedCardsPerPack;
@@ -24,9 +25,12 @@ class CardGameOutline
     * @param numPlayers
     * @param numCardsPerHand
     */
-   public CardGameOutline(int numPacks, int numJokersPerPack,
-         int numUnusedCardsPerPack, Card[] unusedCardsPerPack, int numPlayers,
-         int numCardsPerHand)
+   public CardGameOutline(int numPacks,
+                          int numJokersPerPack,
+                          int numUnusedCardsPerPack,
+                          Card[] unusedCardsPerPack,
+                          int numPlayers,
+                          int numCardsPerHand)
    {
       int k;
 
@@ -40,7 +44,8 @@ class CardGameOutline
       if (numPlayers < 1 || numPlayers > MAX_PLAYERS)
          numPlayers = 4;
       // one of many ways to assure at least one full deal to all players
-      if (numCardsPerHand < 1 || numCardsPerHand > numPacks * (52 - numUnusedCardsPerPack) / numPlayers)
+      if (numCardsPerHand < 1 || numCardsPerHand > numPacks *
+            (52 - numUnusedCardsPerPack) / numPlayers)
          numCardsPerHand = numPacks * (52 - numUnusedCardsPerPack) / numPlayers;
 
       // allocate
@@ -171,10 +176,12 @@ class CardGameOutline
          hand[k].sort();
    }
 
-   Card playCard(int playerIndex, int cardIndex)
+   Card playCard(int playerIndex,
+                 int cardIndex)
    {
       // returns bad card if either argument is bad
-      if (playerIndex < 0 || playerIndex > numPlayers - 1 || cardIndex < 0 || cardIndex > numCardsPerHand - 1)
+      if (playerIndex < 0 || playerIndex > numPlayers - 1 ||
+            cardIndex < 0 || cardIndex > numCardsPerHand - 1)
       {
          //Creates a card that does not work
          return new Card('M', Card.Suit.spades);
@@ -213,48 +220,42 @@ class GamePlay extends CardTable implements ActionListener
    CardGameOutline SuitMatchGame;
 
    //JButtons
-   private JButton button1 = new JButton();
-   private JButton button2 = new JButton();
-   private JButton button3 = new JButton();
-   private JButton button4 = new JButton();
-   private JButton button5 = new JButton();
-   private JButton button6 = new JButton();
-   private JButton button7 = new JButton();
+   private JButton button1, button2, button3, button4, button5, button6, button7;
 
    //JPanels
-   private JPanel addCardButtons = new JPanel();
-   private JPanel computerHand = new JPanel();
-   private JPanel playHand = new JPanel();
+   private JPanel addCardButtons, computerHand, playHand;
 
    //JLabels
-   private JLabel computerPlayCard = new JLabel();
-   private JLabel humanPlayCard = new JLabel();
-   private JLabel pickCardMessage = new JLabel("Pick a card from your hand!",
-         SwingConstants.CENTER);
-   private JLabel computerWins = new JLabel("Computer Wins!",
-         SwingConstants.CENTER);
-   private JLabel humanWins = new JLabel("Human Wins!", SwingConstants.CENTER);
-   private JLabel winner = new JLabel();
-   private Border border = BorderFactory.createLineBorder(Color.black);
+   private JLabel computerPlayCard, humanPlayCard, pickCardMessage,
+                  computerWins, humanWins, winner;
+   private Border border;
 
-   /*
-    * Constructor of GamePlay calls CardTable, sets cardsInComputerHand , cardsInHumanHand, SuitMatchGame
-    * and calls createLabels().
+   /**
+    * Constructor of GamePlay calls CardTable, sets cardsInComputerHand,
+    * cardsInHumanHand, SuitMatchGame and calls createLabels().
+    *
+    * @param title of game
+    * @param numCardsPerHand number of cards in hand
+    * @param numPlayers number of players
+    * @param a cardgame outline
     */
-   public GamePlay(String title, int numCardsPerHand, int numPlayers,
-         CardGameOutline a)
+   public GamePlay(String title,
+                   int numCardsPerHand,
+                   int numPlayers,
+                   CardGameOutline a)
    {
       super(title, numCardsPerHand, numPlayers);
-
+      initialize();
       SuitMatchGame = a;
 
       //Create the hand array where the winning cards will be added for each player.
-      for(int k = 0; k < numPlayers; k++)
+      for (int k = 0; k < numPlayers; k++)
       {
-        winnings[k] = new Hand();
+         winnings[k] = new Hand();
       }
 
       createLabels();
+
    }
 
    public static void main(String[] args)
@@ -276,11 +277,28 @@ class GamePlay extends CardTable implements ActionListener
 
       game.setVisible(true);
    }
-   /*
-    * setPanels sets the top panel where computer cards will be displayed, sets bottom panel
-    * where the cards of the human will be displayed and sets the middle panel where cards that are
-    * played will be displayed.
-    */
+
+   private void initialize()
+   {
+      border = BorderFactory.createLineBorder(Color.black);
+      winner = new JLabel();
+      humanWins = new JLabel("Human Wins!", SwingConstants.CENTER);
+      computerWins = new JLabel("Computer Wins!", SwingConstants.CENTER);
+      pickCardMessage = new JLabel("Pick a card from your hand!",
+            SwingConstants.CENTER);
+      humanPlayCard = new JLabel();
+      computerPlayCard = new JLabel();
+      playHand = new JPanel();
+      computerHand = new JPanel();
+      addCardButtons = new JPanel();
+      button2 = new JButton();
+      button3 = new JButton();
+      button5 = new JButton();
+      button4 = new JButton();
+      button6 = new JButton();
+      button7 = new JButton();
+      button1 = new JButton();
+   }
 
    /*
     * Method setButtons creates the buttons to be added onto the JFrame
@@ -330,6 +348,9 @@ class GamePlay extends CardTable implements ActionListener
       addCardButtons.add(button7);
    }
 
+   /**
+    * helper method to set panels
+    */
    private void setPanels()
    {
       playHand.setLayout(new GridLayout(2, 2));
@@ -372,8 +393,8 @@ class GamePlay extends CardTable implements ActionListener
 
    /*
     * createLabels() calls setPanels() to create the panels on the JFrame.
-    * Then after createLabels() creates the labels that will be added to the top panel and bottom panel
-    * of the JFrame. setButtons() is called at the end.
+    * Then after createLabels() creates the labels that will be added to the
+    * top panel and bottom panelof the JFrame. setButtons() is called at the end
     */
    private void createLabels()
    {
@@ -390,10 +411,10 @@ class GamePlay extends CardTable implements ActionListener
          computerHand.add(computerLabels[k]);
       }
 
-      for(int k = 0; k < 2; k++)
-       {
+      for (int k = 0; k < 2; k++)
+      {
          winnings[k] = new Hand();
-       }
+      }
 
       pnlComputerHand.add(computerHand);
 
@@ -402,11 +423,16 @@ class GamePlay extends CardTable implements ActionListener
       setButtons();
    }
 
-   /*
-    * callCardtoPlayAre takes in two cards that were are being played by computer
-    * and hand. The winner is determined by an if&else statement. Winner is displayed on JFrame.
+   /**
+    * callCardtoPlayAre takes in two cards that were are being played by
+    * computer and hand. The winner is determined by an if&else statement.
+    * Winner is displayed on JFrame.
+    *
+    * @param humanCard human players card
+    * @param computerHand cpu player card
     */
-   public void callCardtoPlayArea(Card humanCard, Card computerHand)
+   public void callCardtoPlayArea(Card humanCard,
+                                  Card computerHand)
    {
       pnlPlayArea.remove(humanWins);
       pnlPlayArea.remove(computerWins);
@@ -449,7 +475,7 @@ class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.repaint();
          winnings[0].takeCard(humanCard);
          winnings[0].takeCard(computerHand);
-         computerWinningsCounter+=2;
+         computerWinningsCounter += 2;
       }
       else
       {
@@ -458,14 +484,18 @@ class GamePlay extends CardTable implements ActionListener
          pnlPlayArea.repaint();
          winnings[1].takeCard(humanCard);
          winnings[1].takeCard(computerHand);
-         humanWinningsCounter+=2;
+         humanWinningsCounter += 2;
       }
    }
 
-   /*
-    *updateButton method updates button by adding a new Card to the button as an icon.
+   /**
+    * updates card button.
+    *
+    * @param button to change
+    * @param index of next card
     */
-   public void updateButton(JButton button, int index)
+   public void updateButton(JButton button,
+                            int index)
    {
       if (SuitMatchGame.takeCard(1))
       {
@@ -480,17 +510,21 @@ class GamePlay extends CardTable implements ActionListener
          addCardButtons.revalidate();
          addCardButtons.repaint();
 
-         if(addCardButtons.getComponentCount() == 0)
+         if (addCardButtons.getComponentCount() == 0)
          {
             endGame();
          }
       }
    }
 
-   /*
+   /**
     * updateComputerCards updates the hand of the computer
+    *
+    * @param card to add to hand
+    * @param index of card being replaced
     */
-   public void updateComputerCards(Card card, int index)
+   public void updateComputerCards(Card card,
+                                   int index)
    {
       if (SuitMatchGame.takeCard(0))
       {
@@ -503,7 +537,7 @@ class GamePlay extends CardTable implements ActionListener
          computerHand.revalidate();
          computerHand.repaint();
 
-         if(computerHand.getComponentCount()==0)
+         if (computerHand.getComponentCount() == 0)
          {
             endGame();
          }
@@ -536,7 +570,8 @@ class GamePlay extends CardTable implements ActionListener
    }
 
    /*
-    * actionPerformed used if/else statements to distinct what button is being pressed.
+    * actionPerformed used if/else statements to distinct what button is
+    * being pressed.
     */
    @Override public void actionPerformed(ActionEvent e)
    {
