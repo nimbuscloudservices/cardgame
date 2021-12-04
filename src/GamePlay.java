@@ -433,7 +433,7 @@ class GamePlay extends CardTable implements ActionListener
     * @param JButton button that holds human players card
     */
    public void callCardtoPlayArea(Card humanCard,
-                                  Card computerHand
+                                  Card computerHand,
                                   JButton button)
    {
       pnlPlayArea.remove(humanWins);
