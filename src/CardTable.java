@@ -84,11 +84,17 @@ public class CardTable extends JFrame
       }
    }
 
+   /**
+    * Accessor for numCardsPerHand
+    */
    public int getnumCardsPerHand()
    {
       return this.numCardsPerHand;
    }
 
+   /**
+    * Accessor for numPlayers
+    */
    public int getnumPlayers()
    {
       return this.numPlayers;
