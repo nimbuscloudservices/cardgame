@@ -425,14 +425,16 @@ class GamePlay extends CardTable implements ActionListener
 
    /**
     * callCardtoPlayAre takes in two cards that were are being played by
-    * computer and hand. The winner is determined by an if&else statement.
+    * computer and hand. The winner is determined by an if & else statement.
     * Winner is displayed on JFrame.
     *
     * @param humanCard human players card
     * @param computerHand cpu player card
+    * @param JButton button that holds human players card
     */
    public void callCardtoPlayArea(Card humanCard,
-                                  Card computerHand)
+                                  Card computerHand
+                                  JButton button)
    {
       pnlPlayArea.remove(humanWins);
       pnlPlayArea.remove(computerWins);
@@ -445,7 +447,7 @@ class GamePlay extends CardTable implements ActionListener
       computerPlayCard.setIcon(GUICard.getIcon(computerHand));
       computerPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
-      humanPlayCard.setIcon(GUICard.getIcon(humanCard));
+      humanPlayCard.setIcon(button.getIcon());
       humanPlayCard.setHorizontalAlignment(JLabel.CENTER);
 
       humanPlayCard.revalidate();
@@ -584,21 +586,22 @@ class GamePlay extends CardTable implements ActionListener
       if (actionCommand.equals("1"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(0),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button1);
          updateButton(button1, 0);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
       }
+
       else if (actionCommand.equals("2"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(1),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button2);
          updateButton(button2, 1);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
       }
       else if (actionCommand.equals("3"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(2),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button3);
          updateButton(button3, 2);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
 
@@ -606,21 +609,21 @@ class GamePlay extends CardTable implements ActionListener
       else if (actionCommand.equals("4"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(3),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button4);
          updateButton(button4, 3);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
       }
       else if (actionCommand.equals("5"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(4),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button5);
          updateButton(button5, 4);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
       }
       else if (actionCommand.equals("6"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(5),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button6);
          updateButton(button6, 5);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
 
@@ -628,7 +631,7 @@ class GamePlay extends CardTable implements ActionListener
       else if (actionCommand.equals("7"))
       {
          callCardtoPlayArea(SuitMatchGame.getHand(1).inspectCard(6),
-               SuitMatchGame.getHand(0).inspectCard(i));
+               SuitMatchGame.getHand(0).inspectCard(i), button7);
          updateButton(button7, 6);
          updateComputerCards(SuitMatchGame.getHand(0).inspectCard(i), i);
       }
