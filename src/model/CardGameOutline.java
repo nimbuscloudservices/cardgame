@@ -188,7 +188,7 @@ public class CardGameOutline
 
    }
 
-   boolean takeCard(int playerIndex)
+   public boolean takeCard(int playerIndex)
    {
       // returns false if either argument is bad
       if (playerIndex < 0 || playerIndex > numPlayers - 1)
