@@ -1,15 +1,14 @@
 package controller;
-
-import view.CardTable;
+import view.GamePlay;
 
 /**
  *
  */
 public class AppController {
 
-   private CardTable appFrame;
+   private GamePlay appFrame;
    public void start()
    {
-      appFrame = new CardTable(this);
+      appFrame = new GamePlay(this);
    }
 }
