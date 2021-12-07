@@ -19,7 +19,7 @@ public class View extends JFrame
       public JPanel pnlHumanHand = new JPanel();
       public JPanel pnlPlayArea = new JPanel();
       public JPanel pnlTimerArea = new JPanel();
-      
+      public static Controller.TimerView autoTimer;
       //JButtons
       public JButton button1, button2, button3, button4, button5, button6, button7, startButton, stopButton;
 
@@ -155,19 +155,19 @@ public class View extends JFrame
 
          //JLabel pickCardMessage added to middle of JFrame
          pnlPlayArea.add(pickCardMessage, BorderLayout.CENTER);
-         
+
          //Adding JPanel pnlTimerArea
-         JLabel timer = new JLabel("Timer", SwingConstants.CENTER);
+         autoTimer = new Controller.TimerView(true);
+         JButton timerToggleBtn = autoTimer.timerToggle();
+         timerToggleBtn.setText("Start/Stop Timer");
+
          pnlTimerArea.setLayout(new BorderLayout());
-         pnlTimerArea.add(timer, BorderLayout.NORTH);
+         pnlTimerArea.add(autoTimer, BorderLayout.NORTH);
          add(pnlTimerArea, BorderLayout.EAST);
-         
-         timerDisplay.add(seconds);
-         timerDisplay.add(minutes);
-         
-         timerButtons.setLayout(new GridLayout(1,2));
-         pnlTimerArea.add(timerDisplay, BorderLayout.CENTER);
-         pnlTimerArea.add(timerButtons, BorderLayout.SOUTH);
+
+         timerToggleBtn.setLayout(new GridLayout(1,2));
+         pnlTimerArea.add(autoTimer, BorderLayout.CENTER);
+         pnlTimerArea.add(timerToggleBtn, BorderLayout.SOUTH);
       }
       
       public void setPlayArea(JButton humanCard, Icon computerCard)
