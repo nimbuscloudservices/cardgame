@@ -218,17 +218,11 @@ public class View extends JFrame
          addCardButtons.add(button7);
       }
       
-      public void initializeComputerCard(Icon image)
+      public void initializeComputerCard(Icon image, int k)
       {
-         for (int k = 0; k < 7; k++)
-         {
-            computerLabels[k] = new JLabel(image);
-         }
+         computerLabels[k] = new JLabel(image);
 
-         for (int k = 0; k < 7; k++)
-         {
-            computerHand.add(computerLabels[k]);
-         }
+         computerHand.add(computerLabels[k]);
          
          pnlComputerHand.add(computerHand); 
       }

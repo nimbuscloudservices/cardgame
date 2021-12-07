@@ -27,6 +27,9 @@ public class Controller implements ActionListener
       
       initialize();
    }
+   /*
+    * initialize JButtons and
+    */
    public void initialize()
    {
       theView.initializeButtons(this);
@@ -37,7 +40,11 @@ public class Controller implements ActionListener
       theView.setIconButtons(theView.button5, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(4)));
       theView.setIconButtons(theView.button6, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(5)));
       theView.setIconButtons(theView.button7, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(6)));
-      theView.initializeComputerCard(theModel.initializeComputerCards());
+      for(int i=0; i<7; i++)
+      {
+        theView.initializeComputerCard(theModel.initializeComputerCards(), i);
+        System.out.println(theModel.initializeComputerCards());
+      }
    }
    public void checkDeck(JButton button, int index)
    {
@@ -123,7 +130,7 @@ public class Controller implements ActionListener
                SuitMatchGame.getHand(0).inspectCard(i)));
          checkDeck(theView.button7, i);
       }
-      
+      //check if hands for each player are empty
       if(theView.emptyComputerHands()== true)
       {
          theView.displayWinner(theModel.endGame());
