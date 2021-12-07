@@ -1,5 +1,6 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
+import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
 
@@ -17,16 +18,17 @@ public class View extends JFrame
       public JPanel pnlComputerHand = new JPanel();
       public JPanel pnlHumanHand = new JPanel();
       public JPanel pnlPlayArea = new JPanel();
+      public JPanel pnlTimerArea = new JPanel();
       
       //JButtons
-      public JButton button1, button2, button3, button4, button5, button6, button7, timerButton;
+      public JButton button1, button2, button3, button4, button5, button6, button7, startButton, stopButton;
 
       //JPanels
-      public JPanel addCardButtons, computerHand, playHand;
+      public JPanel addCardButtons, computerHand, playHand, timerDisplay;
 
       //JLabels
       public JLabel computerPlayCard, humanPlayCard, pickCardMessage,
-                     computerWins, humanWins, winner;
+                     computerWins, humanWins, winner, seconds, minutes;
       private Border border;
       
       static JLabel[] computerLabels = new JLabel[7];
@@ -89,9 +91,12 @@ public class View extends JFrame
                SwingConstants.CENTER);
          humanPlayCard = new JLabel();
          computerPlayCard = new JLabel();
+         seconds = new JLabel();
+         minutes = new JLabel();
          playHand = new JPanel();
          computerHand = new JPanel();
          addCardButtons = new JPanel();
+         timerDisplay = new JPanel();
          button2 = new JButton();
          button3 = new JButton();
          button5 = new JButton();
@@ -99,6 +104,8 @@ public class View extends JFrame
          button6 = new JButton();
          button7 = new JButton();
          button1 = new JButton();
+         startButton = new JButton();
+         stopButton = new JButton();
          
          setLabel();
       }
@@ -147,7 +154,17 @@ public class View extends JFrame
 
          //JLabel pickCardMessage added to middle of JFrame
          pnlPlayArea.add(pickCardMessage, BorderLayout.CENTER);
-
+         
+         //Adding JPanel pnlTimerArea
+         JLabel timer = new JLabel("Timer", SwingConstants.CENTER);
+         pnlTimerArea.setLayout(new BorderLayout());
+         pnlTimerArea.add(timer, BorderLayout.NORTH);
+         add(pnlTimerArea, BorderLayout.EAST);
+         
+         timerDisplay.setLayout(new GridLayout(2,2));
+         timerDisplay.add(seconds);
+         timerDisplay.add(minutes);
+         pnlTimerArea.add(timerDisplay, BorderLayout.CENTER);
       }
       
       public void setPlayArea(JButton humanCard, Icon computerCard)
@@ -216,6 +233,15 @@ public class View extends JFrame
          button7.setActionCommand("7");
          button7.addActionListener(controller);
          addCardButtons.add(button7);
+         
+         startButton.setActionCommand("Start");
+         startButton.setText("Start");
+         timerDisplay.add(startButton, BorderLayout.WEST);
+         
+         stopButton.setActionCommand("Stop");
+         stopButton.setText("Stop");
+         timerDisplay.add(stopButton, BorderLayout.EAST);
+         
       }
       
       public void initializeComputerCard(Icon image, int k)

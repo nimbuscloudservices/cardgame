@@ -43,7 +43,6 @@ public class Controller implements ActionListener
       for(int i=0; i<7; i++)
       {
         theView.initializeComputerCard(theModel.initializeComputerCards(), i);
-        System.out.println(theModel.initializeComputerCards());
       }
    }
    public void checkDeck(JButton button, int index)
