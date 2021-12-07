@@ -24,7 +24,7 @@ public class View extends JFrame
       public JButton button1, button2, button3, button4, button5, button6, button7, startButton, stopButton;
 
       //JPanels
-      public JPanel addCardButtons, computerHand, playHand, timerDisplay;
+      public JPanel addCardButtons, computerHand, playHand, timerDisplay, timerButtons;
 
       //JLabels
       public JLabel computerPlayCard, humanPlayCard, pickCardMessage,
@@ -97,6 +97,7 @@ public class View extends JFrame
          computerHand = new JPanel();
          addCardButtons = new JPanel();
          timerDisplay = new JPanel();
+         timerButtons = new JPanel();
          button2 = new JButton();
          button3 = new JButton();
          button5 = new JButton();
@@ -161,10 +162,12 @@ public class View extends JFrame
          pnlTimerArea.add(timer, BorderLayout.NORTH);
          add(pnlTimerArea, BorderLayout.EAST);
          
-         timerDisplay.setLayout(new GridLayout(2,2));
          timerDisplay.add(seconds);
          timerDisplay.add(minutes);
+         
+         timerButtons.setLayout(new GridLayout(1,2));
          pnlTimerArea.add(timerDisplay, BorderLayout.CENTER);
+         pnlTimerArea.add(timerButtons, BorderLayout.SOUTH);
       }
       
       public void setPlayArea(JButton humanCard, Icon computerCard)
@@ -236,11 +239,11 @@ public class View extends JFrame
          
          startButton.setActionCommand("Start");
          startButton.setText("Start");
-         timerDisplay.add(startButton, BorderLayout.WEST);
+         timerButtons.add(startButton);
          
          stopButton.setActionCommand("Stop");
          stopButton.setText("Stop");
-         timerDisplay.add(stopButton, BorderLayout.EAST);
+         timerButtons.add(stopButton);
          
       }
       
