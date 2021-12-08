@@ -1,14 +1,13 @@
 import java.awt.BorderLayout;
 import java.awt.Color;
-import java.awt.Dimension;
 import java.awt.Font;
 import java.awt.GridLayout;
-
 import javax.swing.BorderFactory;
 import javax.swing.Icon;
 import javax.swing.JButton;
 import javax.swing.JFrame;
 import javax.swing.JLabel;
+import javax.swing.JLayeredPane;
 import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
@@ -20,22 +19,23 @@ public class View extends JFrame
       public JPanel pnlPlayArea;
       public JPanel pnlTimerArea;
       public static Controller.TimerView clock;
+
       //JButtons
-      public JButton button1, button2, button3, button4, button5, button6,
-   button7, timerToggleBtn;
+      public JButton button1, button2, button3, button4, button5, button6, button7, startButton, stopButton, cannotPlayButton, timerToggleBtn;
 
       //JPanels
-      public JPanel addCardButtons, computerHand, playHand, timerDisplay, timerButtons;
+      public JPanel addCardButtons, computerHand, playPanel, timerDisplay, timerButtons, cannotPlay;
 
       //JLabels
       public JLabel computerPlayCard, humanPlayCard, pickCardMessage,
-                     computerWins, humanWins, winner, seconds, minutes;
+                     computerWins, humanWins, winner, seconds, minutes, computerCP, humanCP, computer, human;
       private Border border;
       
       static JLabel[] computerLabels = new JLabel[7];
-      static JLabel[] playLabelText = new JLabel[7];
 
-
+      public JLayeredPane firstStack, secondStack, thirdStack;
+      
+      
       /**
        * filters input, adds panels to the JFrame
        * establishes layouts according to the general description
@@ -98,12 +98,17 @@ public class View extends JFrame
          computerPlayCard = new JLabel();
          seconds = new JLabel();
          minutes = new JLabel();
-         playHand = new JPanel();
          pnlTimerArea = new JPanel();
+         playPanel = new JPanel();
          computerHand = new JPanel();
          addCardButtons = new JPanel();
          timerDisplay = new JPanel();
          timerButtons = new JPanel();
+         cannotPlay = new JPanel();
+         computerCP = new JLabel("", SwingConstants.CENTER);
+         computer = new JLabel("Computer", SwingConstants.CENTER);
+         human = new JLabel("You", SwingConstants.CENTER);
+         humanCP = new JLabel("", SwingConstants.CENTER);
          button2 = new JButton();
          button3 = new JButton();
          button5 = new JButton();
@@ -113,13 +118,31 @@ public class View extends JFrame
          button1 = new JButton();
          timerToggleBtn = new JButton();
 
-
+         startButton = new JButton();
+         stopButton = new JButton();
+         cannotPlayButton = new JButton();
          
+         firstStack = new JLayeredPane();
+         firstStack.setBounds(0,0,5000,5000);
+         
+         
+         secondStack = new JLayeredPane();
+         secondStack.setBounds(400,0,5000,5000);
+         
+         thirdStack = new JLayeredPane();
+         thirdStack.setBounds(800,0,5000,5000);
+
          setLabel();
       }
       
       public void setLabel()
       {
+         human.setFont(new Font("Verdana", Font.BOLD, 20));               
+         computer.setFont(new Font("Verdana", Font.BOLD, 20));  
+         
+         computerCP.setFont(new Font("Verdana", Font.BOLD, 15));
+         humanCP.setFont(new Font("Verdana", Font.BOLD, 15));
+         
          computerWins.setFont(new Font("Verdana", Font.BOLD, 15));
          humanWins.setFont(new Font("Verdana", Font.BOLD, 15));
          setPanels();
@@ -127,8 +150,6 @@ public class View extends JFrame
       
       private void setPanels()
       {
-         playHand.setLayout(new GridLayout(2, 2));
-
          //Adding JPanel pnlComputerHand on top in JFrame
          pnlComputerHand = new JPanel();
          pnlComputerHand.setBorder(border);
@@ -147,6 +168,13 @@ public class View extends JFrame
          JLabel playingArea = new JLabel("Playing Area", SwingConstants.CENTER);
          pnlPlayArea.setLayout(new BorderLayout());
          pnlPlayArea.add(playingArea, BorderLayout.NORTH);
+         
+         playPanel.setLayout(new GridLayout(1, 3));
+         playPanel.add(firstStack);
+         playPanel.add(secondStack);
+         playPanel.add(thirdStack);
+         pnlPlayArea.add(playPanel, BorderLayout.CENTER);
+         
 
          pnlHumanHand = new JPanel();
          pnlHumanHand.setBorder(border);
@@ -175,43 +203,63 @@ public class View extends JFrame
          timerToggleBtn.setLayout(new GridLayout(1,2));
          pnlTimerArea.add(clock, BorderLayout.CENTER);
          pnlTimerArea.add(timerToggleBtn, BorderLayout.SOUTH);
+         
+         //Setting up cannotPlay JPanel
+         cannotPlay.setLayout(new GridLayout(5,1));
+         cannotPlay.setBorder(border);
+         add(cannotPlay, BorderLayout.WEST);
+         
+         cannotPlay.add(computer);
+         cannotPlay.add(computerCP);
+         cannotPlay.add(human);
+         cannotPlay.add(humanCP);
+         
+      }
+      
+      public void initializePlayArea(Icon firstImage, Icon secondImage, Icon thirdImage)
+      {
+        
+        JLabel firstCard = new JLabel();
+        JLabel secondCard = new JLabel();
+        JLabel thirdCard = new JLabel();
+        
+        firstCard.setIcon(firstImage);
+        firstCard.setBounds(155,100, firstImage.getIconWidth(),firstImage.getIconHeight());
+        
+        secondCard.setIcon(secondImage);
+        secondCard.setBounds(155,100, secondImage.getIconWidth(),secondImage.getIconHeight());
+        
+        thirdCard.setIcon(thirdImage);
+        thirdCard.setBounds(155,100, secondImage.getIconWidth(),secondImage.getIconHeight());
+        
+        
+        firstStack.add(firstCard, Integer.valueOf(0));
+        secondStack.add(secondCard, Integer.valueOf(0));
+        thirdStack.add(thirdCard, Integer.valueOf(0));
+      }
+      public void addCardToStack(int stackNumber, Icon image)
+      {
+         JLabel card = new JLabel();
+         card.setIcon(image);
+         card.setBounds(155,100, image.getIconWidth(),image.getIconHeight());
+         
+         if(stackNumber == 1)
+         {
+            firstStack.add(card, Integer.valueOf(firstStack.highestLayer()));
+         }
+         if(stackNumber == 2)
+         {
+            secondStack.add(card, Integer.valueOf(secondStack.highestLayer()));
+         }
+         if(stackNumber == 3)
+         {
+            thirdStack.add(card, Integer.valueOf(thirdStack.highestLayer()));
+         }
       }
       
       public void setPlayArea(JButton humanCard, Icon computerCard)
       {
-         pnlPlayArea.removeAll();
-         pnlPlayArea.revalidate();
-         pnlPlayArea.repaint();
-
-         humanPlayCard.removeAll();
-         computerPlayCard.removeAll();
-
-         playHand.removeAll();
-
-         computerPlayCard.setIcon(computerCard);
-         computerPlayCard.setHorizontalAlignment(JLabel.CENTER);
-
-         humanPlayCard.setIcon(humanCard.getIcon());
-         humanPlayCard.setHorizontalAlignment(JLabel.CENTER);
-
-         humanPlayCard.revalidate();
-         humanPlayCard.repaint();
-
-         computerPlayCard.revalidate();
-         computerPlayCard.repaint();
-
-         playLabelText[0] = new JLabel("Computer", JLabel.CENTER);
-         playLabelText[1] = new JLabel("You", JLabel.CENTER);
-
-         playHand.add(computerPlayCard);
-         playHand.add(humanPlayCard);
-
-         playHand.add(playLabelText[0]);
-         playHand.add(playLabelText[1]);
-         playHand.revalidate();
-         playHand.repaint();
          
-         pnlPlayArea.add(playHand, BorderLayout.CENTER);
       }
       
       public void initializeButtons(Controller controller)
@@ -244,6 +292,18 @@ public class View extends JFrame
          button7.addActionListener(controller);
          addCardButtons.add(button7);
 
+         startButton.setActionCommand("Start");
+         startButton.setText("Start");
+         timerButtons.add(startButton);
+         
+         stopButton.setActionCommand("Stop");
+         stopButton.setText("Stop");
+         timerButtons.add(stopButton);
+         
+         cannotPlayButton.setActionCommand("Cannot Play");
+         cannotPlayButton.setText("Cannot Play");
+         cannotPlayButton.addActionListener(controller);
+         cannotPlay.add(cannotPlayButton);
       }
       
       public void initializeComputerCard(Icon image, int k)
@@ -315,6 +375,17 @@ public class View extends JFrame
          else
          {
             return false;
+         }
+      }
+      public void displayCP(int player, int count)
+      {
+         if(player == 0)
+         {
+            computerCP.setText(String.valueOf(count));
+         }
+         else
+         {
+            humanCP.setText(String.valueOf(count));
          }
       }
       public void removeButton(JButton button)
