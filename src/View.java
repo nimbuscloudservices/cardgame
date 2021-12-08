@@ -15,13 +15,14 @@ import javax.swing.border.Border;
 
 public class View extends JFrame
 {
-      public JPanel pnlComputerHand = new JPanel();
-      public JPanel pnlHumanHand = new JPanel();
-      public JPanel pnlPlayArea = new JPanel();
-      public JPanel pnlTimerArea = new JPanel();
-      public static Controller.TimerView autoTimer;
+      public JPanel pnlComputerHand;
+      public JPanel pnlHumanHand;
+      public JPanel pnlPlayArea;
+      public JPanel pnlTimerArea;
+      public static Controller.TimerView clock;
       //JButtons
-      public JButton button1, button2, button3, button4, button5, button6, button7, startButton, stopButton;
+      public JButton button1, button2, button3, button4, button5, button6,
+   button7, timerToggleBtn;
 
       //JPanels
       public JPanel addCardButtons, computerHand, playHand, timerDisplay, timerButtons;
@@ -38,9 +39,9 @@ public class View extends JFrame
       /**
        * filters input, adds panels to the JFrame
        * establishes layouts according to the general description
-       * @param title
-       * @param numCardsPerHand
-       * @param numPlayers
+       * @param title of this game
+       * @param numCardsPerHand number of cards for each hand
+       * @param numPlayers of players for this game
        */
       public View(String title, int numCardsPerHand, int numPlayers)
       {
@@ -79,9 +80,13 @@ public class View extends JFrame
         pnlHumanHand.add(yourHand, BorderLayout.NORTH);
         
         initialize();
+
       }
-      
-      private void initialize()
+
+   /**
+    * Initializes JLabels and Panel
+    */
+   private void initialize()
       {
          border = BorderFactory.createLineBorder(Color.black);
          winner = new JLabel();
@@ -94,6 +99,7 @@ public class View extends JFrame
          seconds = new JLabel();
          minutes = new JLabel();
          playHand = new JPanel();
+         pnlTimerArea = new JPanel();
          computerHand = new JPanel();
          addCardButtons = new JPanel();
          timerDisplay = new JPanel();
@@ -105,8 +111,9 @@ public class View extends JFrame
          button6 = new JButton();
          button7 = new JButton();
          button1 = new JButton();
-         startButton = new JButton();
-         stopButton = new JButton();
+         timerToggleBtn = new JButton();
+
+
          
          setLabel();
       }
@@ -157,16 +164,16 @@ public class View extends JFrame
          pnlPlayArea.add(pickCardMessage, BorderLayout.CENTER);
 
          //Adding JPanel pnlTimerArea
-         autoTimer = new Controller.TimerView(true);
-         JButton timerToggleBtn = autoTimer.timerToggle();
-         timerToggleBtn.setText("Start/Stop Timer");
+         clock = new Controller.TimerView(true);
+         timerToggleBtn = clock.timerToggle();
+         timerToggleBtn.setText("Start/Stop");
 
          pnlTimerArea.setLayout(new BorderLayout());
-         pnlTimerArea.add(autoTimer, BorderLayout.NORTH);
+         pnlTimerArea.add(clock, BorderLayout.NORTH);
          add(pnlTimerArea, BorderLayout.EAST);
 
          timerToggleBtn.setLayout(new GridLayout(1,2));
-         pnlTimerArea.add(autoTimer, BorderLayout.CENTER);
+         pnlTimerArea.add(clock, BorderLayout.CENTER);
          pnlTimerArea.add(timerToggleBtn, BorderLayout.SOUTH);
       }
       
@@ -236,15 +243,7 @@ public class View extends JFrame
          button7.setActionCommand("7");
          button7.addActionListener(controller);
          addCardButtons.add(button7);
-         
-         startButton.setActionCommand("Start");
-         startButton.setText("Start");
-         timerButtons.add(startButton);
-         
-         stopButton.setActionCommand("Stop");
-         stopButton.setText("Stop");
-         timerButtons.add(stopButton);
-         
+
       }
       
       public void initializeComputerCard(Icon image, int k)
@@ -304,14 +303,7 @@ public class View extends JFrame
       }
       public boolean emptyHumanHands()
       {
-         if (addCardButtons.getComponentCount() == 0)
-         {
-            return true;
-         }
-         else
-         {
-            return false;
-         }
+         return addCardButtons.getComponentCount() == 0;
       }
       public boolean emptyComputerHands()
       {
