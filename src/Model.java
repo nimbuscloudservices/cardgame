@@ -1,28 +1,27 @@
-import java.awt.Component;
-
 import javax.swing.Icon;
-import javax.swing.JButton;
-import javax.swing.JLabel;
 
 public class Model
 {
    static int MAX_CARDS_PER_HAND = 56;
    static int MAX_PLAYERS = 2;
-   
+
    static int computerWinningsCounter = 0;
    static int humanWinningsCounter = 0;
-   
+
    private int numCardsPerHand = 7;
    private int numPlayers = 2 ;
-   
+
    private int humanCP = 0;
    private int computerCP = 0;
-   
+
+   public int humanRounds = 1, computerRounds = 1;
+   public int  bothCP = 0;
+
    Hand[] winnings = new Hand[numPlayers];
    Hand[] threeCardStack = new Hand[3];
-   
+
    public Model()
-   {      
+   {
       GUICard.loadCardIcons();
       for (int k = 0; k < 2; k++)
       {
@@ -32,64 +31,57 @@ public class Model
       {
          threeCardStack[k] = new Hand();
       }
-      
+
    }
    public Card firstCardInStack(Card card)
    {
       threeCardStack[0].takeCard(card);
-      System.out.println(threeCardStack[0].inspectCard(threeCardStack[0].getNumCards()-1));
-      
       return card;
-   } 
+   }
    public Card secondCardInStack(Card card)
    {
       threeCardStack[1].takeCard(card);
-      
-      System.out.println(threeCardStack[1].inspectCard(threeCardStack[0].getNumCards()-1));
+
       return card;
    }
    public Card thirdCardInStack(Card card)
    {
       threeCardStack[2].takeCard(card);
-      System.out.println(threeCardStack[2].inspectCard(threeCardStack[0].getNumCards()-1));
+
       return card;
    }
    public int getnumCardsPerHand()
    {
       return this.numCardsPerHand;
    }
-   
+
    public int getnumPlayers()
    {
       return this.numPlayers;
    }
-   
+
    public String playGame(Card card)
    {
       Card firstCard = threeCardStack[0].inspectCard(threeCardStack[0].getNumCards()-1);
-      Card secondCard = threeCardStack[1].inspectCard(threeCardStack[0].getNumCards()-1);
-      Card thirdCard = threeCardStack[2].inspectCard(threeCardStack[0].getNumCards()-1);
-      
-      System.out.println(card.getValue());
+      Card secondCard = threeCardStack[1].inspectCard(threeCardStack[1].getNumCards()-1);
+      Card thirdCard = threeCardStack[2].inspectCard(threeCardStack[2].getNumCards()-1);
 
-      if(firstCard.getValue() - card.getValue() == -1 || firstCard.getValue() - card.getValue() == 1)
+      if(Card.cardValue(firstCard) - Card.cardValue(card)  == -1 || Card.cardValue(firstCard) - Card.cardValue(card)  == 1)
       {
-         return "first";
+         return "1";
       }
-      else if(secondCard.getValue() - card.getValue() == -1 || secondCard.getValue() - card.getValue() == 1)
+      if(Card.cardValue(secondCard)- Card.cardValue(card) == -1 || Card.cardValue(secondCard) - Card.cardValue(card)  == 1)
       {
-         return "second";
+         return "2";
       }
-      else if(thirdCard.getValue() - card.getValue() == -1 || thirdCard.getValue() - card.getValue() == 1)
+      if(Card.cardValue(thirdCard) - Card.cardValue(card)  == -1 || Card.cardValue(thirdCard) - Card.cardValue(card)  == 1)
       {
-         return "third";
+         return "3";
       }
+      else
       {
          return "Cannot play";
       }
-         
-   
-         
    }
    public Icon getHumanCard(Card humanCard)
    {
@@ -99,14 +91,14 @@ public class Model
    {
       return GUICard.getIcon(computerCard);
    }
- 
+
    public Icon initializeHumanCards(Card humanCard)
    {
       return GUICard.getIcon(humanCard);
    }
    public Icon initializeComputerCards()
    {
-      return GUICard.getBackCardIcon();  
+      return GUICard.getBackCardIcon();
    }
    public Icon updateHand(Card card)
    {
