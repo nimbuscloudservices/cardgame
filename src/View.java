@@ -259,12 +259,7 @@ public class View extends JFrame
             System.out.println(Integer.valueOf(thirdStack.highestLayer()));
          }
       }
-
-      public void setPlayArea(JButton humanCard, Icon computerCard)
-      {
-
-      }
-
+      
       public void initializeButtons(Controller controller)
       {
          button1.setActionCommand("1");
