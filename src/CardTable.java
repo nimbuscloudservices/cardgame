@@ -189,7 +189,7 @@ class GUICard
 {
    // 14 = A thru K + joker
    private static Icon[][] iconCards = new ImageIcon[14][4];
-   static final int NUM_CARD_IMAGES = 57;
+   static final int NUM_CARD_IMAGES = 56;
    private static Icon iconBack;
    static boolean iconsLoaded = false;
 
@@ -225,8 +225,8 @@ class GUICard
     */
    static String intToCardValue(int k)
    {
-      char[] cardVal = { 'A', '2', '3', '4', '5', '6', '7', '8',
-              '9', 'T', 'J', 'Q', 'K'};
+      char[] cardVal = {'A', '2', '3', '4', '5', '6', '7', '8',
+              '9', 'T', 'J', 'Q', 'K', 'X'};
 
       if (k < 0 || k > cardVal.length - 1)
       {
@@ -269,16 +269,29 @@ class GUICard
    {
       char cardsValue = card.getValue();
 
+
+      int value = 0;
+
       if(cardsValue == 'A')
-         return 0;
-      if(cardsValue == 'X')
-         return 13;
-      for(int k = 0; k <= 11; k++)
       {
-         if(Card.valueRanks[k] == cardsValue)
-            return k + 1;
+         return 0;
       }
-      return 0;
+      else if(cardsValue == 'X')
+      {
+         return 14;
+      }
+      else
+      {
+         for(int k = 1; k < 13; k++)
+         {
+            if(Card.valueRanks[k] == cardsValue)
+            {
+               value = k;
+            }
+
+         }
+         return value;
+      }
    }
    /**
     * helper method to convert suit to int

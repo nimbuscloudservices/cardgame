@@ -153,8 +153,8 @@ class Card
    private char value;
    private Suit suit;
    private boolean errorFlag;
-   public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7',
-      '8', '9', 'T', 'J', 'Q', 'K'};
+   public static char[] valueRanks = {'A', '2', '3', '4', '5', '6', '7', '8',
+         '9', 'T', 'J', 'Q', 'K', 'X'};
    public static Suit[] suitRanks = {Suit.clubs, Suit.diamonds, Suit.hearts,
            Suit.spades};
 
@@ -224,8 +224,8 @@ class Card
    {
       boolean validValue = false;
       boolean validSuit = false;
-      char[] cardValues = { 'A', '2', '3', '4', '5', '6', '7', '8', '9', 'T',
-            'J', 'Q', 'K' };
+      char[] cardValues = {'A', '2', '3', '4', '5', '6', '7', '8',
+            '9', 'T', 'J', 'Q', 'K', 'X'};
       for (char i : cardValues)
       {
          if (i == value)
@@ -321,14 +321,33 @@ class Card
     */
    static int cardValue(Card card)
    {
-      for (int i = 0; i < valueRanks.length; i++)
+
+      int cardVal = 0;
+
+      char value = card.getValue();
+
+
+      if(card.getValue() == 'A')
       {
-         if (card.getValue() == valueRanks[i])
+         return 0;
+      }
+      if(card.getValue() == 'X')
+      {
+         return 14;
+      }
+      else
+      {
+         for(int i = 2; i < valueRanks.length-1; i++)
          {
-            return i;
+            if(valueRanks[i] == value)
+            {
+               cardVal = i + 1;
+            }
          }
       }
-      return - 1;
+      return cardVal;
+
+
    }
 
    /**
@@ -364,7 +383,7 @@ class Card
  */
 class Hand
 {
-   public final int MAX_CARDS = 50;
+   public final int MAX_CARDS = 56;
    Card[] myCards;
    int numCards;
 
@@ -522,7 +541,7 @@ class Deck
    public Deck(int numPacks)
    {
       allocateMasterPack();
-      cards = new Card[numPacks * PACK];
+      cards = new Card[numPacks + PACK];
       init(numPacks);
 
    }
