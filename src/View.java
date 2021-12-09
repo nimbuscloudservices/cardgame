@@ -14,7 +14,7 @@ import javax.swing.border.Border;
 
 public class View extends JFrame
 {
-      public int spacing = 100;
+      public int firstStackSpacing = 100, secondStackSpacing = 100, thirdStackSpacing = 100;
       public JPanel pnlComputerHand;
       public JPanel pnlHumanHand;
       public JPanel pnlPlayArea;
@@ -238,28 +238,30 @@ public class View extends JFrame
       public void addCardToStack(int stackNumber, Icon image)
       {
          JLabel card = new JLabel();
-         spacing +=20;
          card.setIcon(image);
-         card.setBounds(155,spacing, image.getIconWidth(),image.getIconHeight());
-
 
          if(stackNumber == 1)
          {
+            firstStackSpacing +=20;
+            card.setBounds(155,firstStackSpacing, image.getIconWidth(),image.getIconHeight());
             firstStack.add(card, Integer.valueOf(firstStack.highestLayer()+1));
-            System.out.println(Integer.valueOf(firstStack.highestLayer()));
+
          }
          if(stackNumber == 2)
          {
+            secondStackSpacing +=20;
+            card.setBounds(155,secondStackSpacing, image.getIconWidth(),image.getIconHeight());
             secondStack.add(card, Integer.valueOf(secondStack.highestLayer()+1));
-            System.out.println(Integer.valueOf(secondStack.highestLayer()));
+
          }
          if(stackNumber == 3)
          {
+            thirdStackSpacing +=20;
+            card.setBounds(155,thirdStackSpacing, image.getIconWidth(),image.getIconHeight());
             thirdStack.add(card, Integer.valueOf(thirdStack.highestLayer()+1));
-            System.out.println(Integer.valueOf(thirdStack.highestLayer()));
+
          }
       }
-      
       public void initializeButtons(Controller controller)
       {
          button1.setActionCommand("1");

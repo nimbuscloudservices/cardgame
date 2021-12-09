@@ -23,6 +23,7 @@ public class Model
    public Model()
    {
       GUICard.loadCardIcons();
+
       for (int k = 0; k < 2; k++)
       {
          winnings[k] = new Hand();
@@ -35,18 +36,25 @@ public class Model
    }
    public Card firstCardInStack(Card card)
    {
+
       threeCardStack[0].takeCard(card);
+
+
+
       return card;
    }
    public Card secondCardInStack(Card card)
    {
       threeCardStack[1].takeCard(card);
 
+
+
       return card;
    }
    public Card thirdCardInStack(Card card)
    {
       threeCardStack[2].takeCard(card);
+
 
       return card;
    }
@@ -62,19 +70,16 @@ public class Model
 
    public String playGame(Card card)
    {
-      Card firstCard = threeCardStack[0].inspectCard(threeCardStack[0].getNumCards()-1);
-      Card secondCard = threeCardStack[1].inspectCard(threeCardStack[1].getNumCards()-1);
-      Card thirdCard = threeCardStack[2].inspectCard(threeCardStack[2].getNumCards()-1);
 
-      if(Card.cardValue(firstCard) - Card.cardValue(card)  == -1 || Card.cardValue(firstCard) - Card.cardValue(card)  == 1)
+      if(Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == 1)
       {
          return "1";
       }
-      if(Card.cardValue(secondCard)- Card.cardValue(card) == -1 || Card.cardValue(secondCard) - Card.cardValue(card)  == 1)
+      if(Card.cardValue(threeCardStack[1].playCard())- Card.cardValue(card) == -1 || Card.cardValue(threeCardStack[1].playCard()) - Card.cardValue(card)  == 1)
       {
          return "2";
       }
-      if(Card.cardValue(thirdCard) - Card.cardValue(card)  == -1 || Card.cardValue(thirdCard) - Card.cardValue(card)  == 1)
+      if(Card.cardValue(threeCardStack[2].playCard()) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[2].playCard()) - Card.cardValue(card)  == 1)
       {
          return "3";
       }
@@ -82,6 +87,7 @@ public class Model
       {
          return "Cannot play";
       }
+
    }
    public Icon getHumanCard(Card humanCard)
    {
