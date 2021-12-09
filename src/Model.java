@@ -2,6 +2,13 @@ import javax.swing.Icon;
 
 public class Model
 {
+   private CardGameOutline SuitMatchGame;
+
+   private int numPacksPerDeck = 1;
+   private int numJokersPerPack = 2;
+   private int numUnusedCardsPerPack = 0;
+   private Card[] unusedCardsPerPack = null;
+
    static int MAX_CARDS_PER_HAND = 56;
    static int MAX_PLAYERS = 2;
 
@@ -24,6 +31,11 @@ public class Model
    {
       GUICard.loadCardIcons();
 
+      SuitMatchGame = new CardGameOutline(numPacksPerDeck, numJokersPerPack,
+            numUnusedCardsPerPack, unusedCardsPerPack, 2, 7);
+
+      SuitMatchGame.deal();
+
       for (int k = 0; k < 2; k++)
       {
          winnings[k] = new Hand();
@@ -33,44 +45,34 @@ public class Model
          threeCardStack[k] = new Hand();
       }
 
+      for(int i=0; i < 3; i++)
+      {
+         addCardsInTheStacks(getCardFromDeck(), i);
+      }
    }
-   public Card firstCardInStack(Card card)
+   public void addCardsInTheStacks(Card card, int indexOf)
    {
-
-      threeCardStack[0].takeCard(card);
-
-
-
-      return card;
+      threeCardStack[indexOf].takeCard(card);
    }
-   public Card secondCardInStack(Card card)
+   public Card getCardFromStack(int indexOf)
    {
-      threeCardStack[1].takeCard(card);
-
-
-
-      return card;
+      return threeCardStack[indexOf].playCard();
    }
-   public Card thirdCardInStack(Card card)
+   public Icon getIconCardFromStack(int indexOf)
    {
-      threeCardStack[2].takeCard(card);
-
-
-      return card;
+      return GUICard.getIcon(threeCardStack[indexOf].playCard());
    }
    public int getnumCardsPerHand()
    {
       return this.numCardsPerHand;
    }
-
    public int getnumPlayers()
    {
       return this.numPlayers;
    }
-
    public String playGame(Card card)
    {
-
+      System.out.println(threeCardStack[0].playCard() + " " + threeCardStack[1].playCard() + " " + threeCardStack[2].playCard());
       if(Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == 1)
       {
          return "1";
@@ -89,36 +91,51 @@ public class Model
       }
 
    }
-   public Icon getHumanCard(Card humanCard)
+   public int getNumberOfCardsInDeck()
    {
-      return GUICard.getIcon(humanCard);
+      return SuitMatchGame.getNumCardsRemainingInDeck();
    }
-   public Icon getComputerCard(Card computerCard)
+   public Card getCardFromDeck()
    {
-      return GUICard.getIcon(computerCard);
+      return SuitMatchGame.getCardFromDeck();
    }
-
-   public Icon initializeHumanCards(Card humanCard)
+   public Icon getCard(Card card)
    {
-      return GUICard.getIcon(humanCard);
+      return GUICard.getIcon(card);
+   }
+   public Card getCard(int player, int indexOf)
+   {
+      return SuitMatchGame.playCard(player, indexOf);
+   }
+   public Icon getIconCardFromDeck()
+   {
+      return GUICard.getIcon(SuitMatchGame.getCardFromDeck());
+   }
+   public Icon getHumanIconCard(int indexOf)
+   {
+      return GUICard.getIcon(SuitMatchGame.getHand(1).inspectCard(indexOf));
+   }
+   public void addCardToHand(int player)
+   {
+      SuitMatchGame.getHand(player).takeCard(getCardFromDeck());
+   }
+   public void playCard(int player, int indexOf)
+   {
+      SuitMatchGame.getHand(player).playCard(indexOf);
    }
    public Icon initializeComputerCards()
    {
       return GUICard.getBackCardIcon();
    }
-   public Icon updateHand(Card card)
-   {
-      return GUICard.getIcon(card);
-   }
    public int cannotPlayCounter(int player)
    {
       if(player == 0)
       {
-         return computerCP++;
+         return ++computerCP;
       }
       else
       {
-         return humanCP++;
+         return ++humanCP;
       }
    }
    public String endGame()

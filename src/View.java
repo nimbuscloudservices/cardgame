@@ -22,14 +22,14 @@ public class View extends JFrame
       public static Controller.TimerView clock;
 
       //JButtons
-      public JButton button1, button2, button3, button4, button5, button6, button7, startButton, stopButton, cannotPlayButton, timerToggleBtn;
+      public JButton button1, button2, button3, button4, button5, button6, button7, cannotPlayButton, timerToggleBtn;
 
       //JPanels
       public JPanel addCardButtons, computerHand, playPanel, timerDisplay, timerButtons, cannotPlay;
 
       //JLabels
-      public JLabel computerPlayCard, humanPlayCard, cardsOnDeck,
-                     computerWins, humanWins, winner, seconds, minutes, computerCP, humanCP, computer, human;
+      public JLabel  cardsOnDeck, computerWins, humanWins, winner, seconds, minutes, computerCP, humanCP, computer, human;
+
       private Border border;
 
       static JLabel[] computerLabels = new JLabel[7];
@@ -85,19 +85,25 @@ public class View extends JFrame
       }
 
    /**
-    * Initializes JLabels and Panel
+    * Initializes JLabels JPanels and JButtons
     */
    private void initialize()
       {
          border = BorderFactory.createLineBorder(Color.black);
+
+         //JLabels
          winner = new JLabel();
          humanWins = new JLabel("Human Wins!", SwingConstants.CENTER);
          computerWins = new JLabel("Computer Wins!", SwingConstants.CENTER);
          cardsOnDeck = new JLabel();
-         humanPlayCard = new JLabel();
-         computerPlayCard = new JLabel();
          seconds = new JLabel();
          minutes = new JLabel();
+         computerCP = new JLabel("", SwingConstants.CENTER);
+         computer = new JLabel("Computer", SwingConstants.CENTER);
+         human = new JLabel("You", SwingConstants.CENTER);
+         humanCP = new JLabel("", SwingConstants.CENTER);
+
+         //JPanels
          pnlTimerArea = new JPanel();
          playPanel = new JPanel();
          computerHand = new JPanel();
@@ -105,10 +111,9 @@ public class View extends JFrame
          timerDisplay = new JPanel();
          timerButtons = new JPanel();
          cannotPlay = new JPanel();
-         computerCP = new JLabel("", SwingConstants.CENTER);
-         computer = new JLabel("Computer", SwingConstants.CENTER);
-         human = new JLabel("You", SwingConstants.CENTER);
-         humanCP = new JLabel("", SwingConstants.CENTER);
+
+
+         //JBttons
          button2 = new JButton();
          button3 = new JButton();
          button5 = new JButton();
@@ -117,11 +122,9 @@ public class View extends JFrame
          button7 = new JButton();
          button1 = new JButton();
          timerToggleBtn = new JButton();
-
-         startButton = new JButton();
-         stopButton = new JButton();
          cannotPlayButton = new JButton();
 
+         //JLayred Pane
          firstStack = new JLayeredPane();
          firstStack.setBounds(0,0,5000,5000);
 
@@ -132,11 +135,7 @@ public class View extends JFrame
          thirdStack = new JLayeredPane();
          thirdStack.setBounds(800,0,5000,5000);
 
-         setLabel();
-      }
-
-      public void setLabel()
-      {
+         //Setting fonts for JLabels
          human.setFont(new Font("Verdana", Font.BOLD, 20));
          computer.setFont(new Font("Verdana", Font.BOLD, 20));
 
@@ -145,12 +144,8 @@ public class View extends JFrame
 
          computerWins.setFont(new Font("Verdana", Font.BOLD, 15));
          humanWins.setFont(new Font("Verdana", Font.BOLD, 15));
-         setPanels();
-      }
 
-      private void setPanels()
-      {
-         //Adding JPanel pnlComputerHand on top in JFrame
+         //Adding JPanel pnlComputerHand on top of JFrame
          pnlComputerHand = new JPanel();
          pnlComputerHand.setBorder(border);
          add(pnlComputerHand, BorderLayout.NORTH);
@@ -176,11 +171,6 @@ public class View extends JFrame
          pnlPlayArea.add(playPanel, BorderLayout.CENTER);
          pnlPlayArea.add(cardsOnDeck, BorderLayout.SOUTH);
 
-
-         pnlHumanHand = new JPanel();
-         pnlHumanHand.setBorder(border);
-         add(pnlHumanHand, BorderLayout.SOUTH);
-
          //Adding JLabel pnlHumanHand on bottom in JFrame
          JLabel yourHand = new JLabel("Your Hand", SwingConstants.CENTER);
          pnlHumanHand.setLayout(new BorderLayout());
@@ -202,7 +192,7 @@ public class View extends JFrame
          pnlTimerArea.add(clock, BorderLayout.CENTER);
          pnlTimerArea.add(timerToggleBtn, BorderLayout.SOUTH);
 
-         //Setting up cannotPlay JPanel
+         //Adding cannotPlay JPanel
          cannotPlay.setLayout(new GridLayout(5,1));
          cannotPlay.setBorder(border);
          add(cannotPlay, BorderLayout.WEST);
@@ -292,14 +282,6 @@ public class View extends JFrame
          button7.addActionListener(controller);
          addCardButtons.add(button7);
 
-         startButton.setActionCommand("Start");
-         startButton.setText("Start");
-         timerButtons.add(startButton);
-
-         stopButton.setActionCommand("Stop");
-         stopButton.setText("Stop");
-         timerButtons.add(stopButton);
-
          cannotPlayButton.setActionCommand("Cannot Play");
          cannotPlayButton.setText("Cannot Play");
          cannotPlayButton.addActionListener(controller);
@@ -321,10 +303,6 @@ public class View extends JFrame
          button.setHorizontalAlignment(JButton.CENTER);
          button.revalidate();
          button.repaint();
-      }
-      public void setComputerHand(Icon image, int index)
-      {
-         computerLabels[index] = new JLabel(image);
       }
       public void displayRemainingCards(int numOfCards)
       {
@@ -391,6 +369,5 @@ public class View extends JFrame
          computerHand.remove(computerHand.getComponent(index));
          computerHand.revalidate();
          computerHand.repaint();
-
       }
 }
