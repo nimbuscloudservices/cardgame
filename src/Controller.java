@@ -24,7 +24,6 @@ public class Controller implements ActionListener
    public Controller(Model theModel,
                      View theView)
    {
-
       SuitMatchGame = new CardGameOutline(numPacksPerDeck, numJokersPerPack,
             numUnusedCardsPerPack, unusedCardsPerPack, 2, 7);
 
@@ -61,7 +60,7 @@ public class Controller implements ActionListener
       theView.setIconButtons(theView.button2, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(1)));
 
       theView.setIconButtons(theView.button3, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(2)));
-  
+
       theView.setIconButtons(theView.button4, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(3)));
 
       theView.setIconButtons(theView.button5, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(4)));
@@ -69,13 +68,13 @@ public class Controller implements ActionListener
       theView.setIconButtons(theView.button6, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(5)));
 
       theView.setIconButtons(theView.button7, theModel.initializeHumanCards(SuitMatchGame.getHand(1).inspectCard(6)));
-  
+
       for(int i=0; i<7; i++)
       {
          theView.initializeComputerCard(theModel.initializeComputerCards(), i);
       }
-      
-      theView.initializePlayArea(theModel.getHumanCard(theModel.firstCardInStack(SuitMatchGame.getCardFromDeck())), theModel.getHumanCard(theModel.firstCardInStack(SuitMatchGame.getCardFromDeck())), theModel.getHumanCard(theModel.firstCardInStack(SuitMatchGame.getCardFromDeck())));
+
+      theView.initializePlayArea(theModel.getHumanCard(theModel.firstCardInStack(SuitMatchGame.getCardFromDeck())), theModel.getHumanCard(theModel.secondCardInStack(SuitMatchGame.getCardFromDeck())), theModel.getHumanCard(theModel.thirdCardInStack(SuitMatchGame.getCardFromDeck())));
    }
 
    /**
@@ -110,26 +109,108 @@ public class Controller implements ActionListener
          theView.removeComputerCard(index);
       }
    }
-
-   public void addCardToStack(String numberOfDeck, int player, int indexOf)
+   public void addCardToStack(String numberOfDeck, Icon image, Card card)
    {
-      if(numberOfDeck == "First")
+      if(numberOfDeck == "1")
       {
-         theView.addCardToStack(1,theModel.getHumanCard(SuitMatchGame.playCard(player,indexOf)));
+         System.out.println("adding to first stack");
+         theView.addCardToStack(1, image);
+         theModel.firstCardInStack(card);
+         theModel.humanRounds = 1;
       }
-      else if (numberOfDeck == "Second")
+      else if (numberOfDeck == "2")
       {
-         theView.addCardToStack(2,theModel.getHumanCard(SuitMatchGame.playCard(player,indexOf)));
+         System.out.println("adding to second stack");
+         theView.addCardToStack(2, image);
+         theModel.secondCardInStack(card);
+         theModel.humanRounds = 1;
+
       }
-      else if (numberOfDeck == "Third")
+      else if (numberOfDeck == "3")
       {
-         theView.addCardToStack(3,theModel.getHumanCard(SuitMatchGame.playCard(player,indexOf)));
+         System.out.println("adding to third stack");
+         theView.addCardToStack(3, image);
+         theModel.thirdCardInStack(card);
+         theModel.humanRounds = 1;
+
       }
       else
       {
+         theModel.bothCP++;
+         theModel.computerRounds = 2;
          theView.displayCP(1, theModel.cannotPlayCounter(1));
+
       }
-      
+
+      if(theModel.humanRounds!=2)
+      {
+         computerPlays(theModel.computerRounds);
+      }
+
+
+   }
+   public void computerPlays(int rounds)
+   {
+      System.out.println("Computer Plays: " + rounds + " round");
+
+      for(int k = 0; k < rounds; k++)
+      {
+         Random ran = new Random();
+
+         int i = ran.nextInt(theView.computerHand.getComponentCount());
+
+         String answer = theModel.playGame(SuitMatchGame.playCard(0,i));
+
+         if(answer == "Cannot play")
+         {
+            theModel.bothCP++;
+            theModel.computerRounds = 1;
+            theModel.humanRounds = 2;
+            rounds = 1;
+            theView.displayCP(0, theModel.cannotPlayCounter(0));
+         }
+         if(answer == "1")
+         {
+            theView.addCardToStack(1, theModel.getComputerCard(SuitMatchGame.getHand(0).inspectCard(i)));
+            theModel.firstCardInStack(SuitMatchGame.playCard(0,i));
+            theModel.bothCP = 0;
+         }
+         if(answer == "2")
+         {
+            theView.addCardToStack(2, theModel.getComputerCard(SuitMatchGame.getHand(0).inspectCard(i)));
+            theModel.secondCardInStack(SuitMatchGame.playCard(0,i));
+            theModel.bothCP = 0;
+
+         }
+         if(answer == "3")
+         {
+            theView.addCardToStack(3, theModel.getComputerCard(SuitMatchGame.getHand(0).inspectCard(i)));
+            theModel.thirdCardInStack(SuitMatchGame.playCard(0,i));
+            theModel.bothCP = 0;
+         }
+      }
+
+      theModel.computerRounds = 1;
+
+      Random ran = new Random();
+
+      int i = ran.nextInt(3);
+
+      if(theModel.bothCP==2)
+      {
+         theModel.humanRounds = 1;
+         theModel.bothCP = 0;
+         theView.addCardToStack(i, theModel.getHumanCard(SuitMatchGame.getCardFromDeck()));
+      }
+
+   }
+   public void emptyHands()
+   {
+      //Checks to see if hands for each player are empty
+      if (theView.emptyComputerHands() || theView.emptyHumanHands())
+      {
+         theView.displayWinner(theModel.endGame());
+      }
    }
    @Override
    public void actionPerformed(ActionEvent e)
@@ -143,73 +224,85 @@ public class Controller implements ActionListener
 
       if (actionCommand.equals("1"))
       {
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,0));
 
-         addCardToStack(answer, 1, 0);
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,0));
 
-         checkDeck(theView.button1, i);
+            addCardToStack(answer, theView.button1.getIcon(),SuitMatchGame.playCard(1,0));
+
+            checkDeck(theView.button1, i);
+
       }
 
       else if (actionCommand.equals("2"))
       {
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,1));
 
-         addCardToStack(answer, 1, 1);
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,1));
 
-         checkDeck(theView.button2, i);
+            addCardToStack(answer, theView.button2.getIcon(), SuitMatchGame.playCard(1,1));
+
+            checkDeck(theView.button2, i);
+
+
       }
       else if (actionCommand.equals("3"))
       {
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,2));
 
-         addCardToStack(answer, 1, 2);
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,2));
 
-         checkDeck(theView.button3, i);
+            addCardToStack(answer,  theView.button3.getIcon(),SuitMatchGame.playCard(1,2));
+
+            checkDeck(theView.button3, i);
+
+
       }
       else if (actionCommand.equals("4"))
       {
 
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,3));
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,3));
 
-         addCardToStack(answer, 1, 3);
+            addCardToStack(answer,  theView.button4.getIcon(), SuitMatchGame.playCard(1,3));
 
-         checkDeck(theView.button4, i);
+            checkDeck(theView.button4, i);
+
+
       }
       else if (actionCommand.equals("5"))
       {
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,4));
 
-         addCardToStack(answer, 1, 4);
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,4));
 
-         checkDeck(theView.button5, i);
+            addCardToStack(answer,  theView.button5.getIcon(), SuitMatchGame.playCard(1,4));
+
+            checkDeck(theView.button5, i);
+
+
       }
       else if (actionCommand.equals("6"))
       {
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,5));
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,5));
 
-         addCardToStack(answer, 1, 5);
-         checkDeck(theView.button6, i);
+            addCardToStack(answer, theView.button6.getIcon(), SuitMatchGame.playCard(1,5));
+            checkDeck(theView.button6, i);
+
+
       }
       else if (actionCommand.equals("7"))
       {
 
-         String answer = theModel.playGame(SuitMatchGame.playCard(1,6));
+            String answer = theModel.playGame(SuitMatchGame.playCard(1,6));
 
-         addCardToStack(answer, 1, 6);
+            addCardToStack(answer, theView.button7.getIcon(), SuitMatchGame.playCard(1,6));
 
-         checkDeck(theView.button7, i);
+            checkDeck(theView.button7, i);
+
       }
       else if(actionCommand.equals("Cannot Play"))
       {
          theView.displayCP(1, theModel.cannotPlayCounter(1));
+         theModel.computerRounds = 2;
       }
 
-      //check if hands for each player are empty
-      if (theView.emptyComputerHands() || theView.emptyHumanHands())
-      {
-         theView.displayWinner(theModel.endGame());
-      }
-
+      emptyHands();
    }
 
    /**
