@@ -1,3 +1,6 @@
+/**
+ * Class TimeBuildGame creates Model, View, Timer, and Controller objects. Sets View object visible.
+ */
 public class TimeBuildGame
 {
 
@@ -9,7 +12,7 @@ public class TimeBuildGame
       Model theModel = new Model();
       Timer theTimer = new Timer();
 
-      Controller controller = new Controller (theModel, theView);
+      Controller theController = new Controller (theModel, theView);
 
       theView.setVisible(true);
    }
