@@ -72,7 +72,6 @@ public class Model
    }
    public String playGame(Card card)
    {
-      System.out.println(threeCardStack[0].playCard() + " " + threeCardStack[1].playCard() + " " + threeCardStack[2].playCard());
       if(Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == 1)
       {
          return "1";
@@ -89,7 +88,6 @@ public class Model
       {
          return "Cannot play";
       }
-
    }
    public int getNumberOfCardsInDeck()
    {
