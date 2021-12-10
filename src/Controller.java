@@ -5,7 +5,7 @@ import java.util.Random;
 import javax.swing.*;
 
 /**
- *  Class controller controls the Time Build Game and implements ActionListener
+ *  Class Controller controls the Time Build Game and implements ActionListener
  */
 public class Controller implements ActionListener
 {
