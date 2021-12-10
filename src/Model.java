@@ -73,7 +73,7 @@ public class Model
     */
    public Card getCardFromStack(int indexOf)
    {
-      return threeCardStack[indexOf].playCard();
+      return threeCardStack[indexOf].inspectCard(threeCardStack[indexOf].numCards-1);
    }
    /**
     * getIconCardFromStack returns the image icon of the card selected from one of the three stacks.
@@ -83,7 +83,7 @@ public class Model
     */
    public Icon getIconCardFromStack(int indexOf)
    {
-      return GUICard.getIcon(threeCardStack[indexOf].playCard());
+      return GUICard.getIcon(threeCardStack[indexOf].inspectCard(threeCardStack[indexOf].numCards-1));
    }
    /**
     * playGame uses if and else statements to determine if a card can be placed in one of the three decks.
@@ -93,15 +93,15 @@ public class Model
     */
    public String playGame(Card card)
    {
-      if(Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[0].playCard()) - Card.cardValue(card)  == 1)
+      if(Card.cardValue(threeCardStack[0].inspectCard(threeCardStack[0].numCards-1)) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[0].inspectCard(threeCardStack[0].numCards-1)) - Card.cardValue(card)  == 1)
       {
          return "1";
       }
-      if(Card.cardValue(threeCardStack[1].playCard())- Card.cardValue(card) == -1 || Card.cardValue(threeCardStack[1].playCard()) - Card.cardValue(card)  == 1)
+      if(Card.cardValue(threeCardStack[1].inspectCard(threeCardStack[1].numCards-1))- Card.cardValue(card) == -1 || Card.cardValue(threeCardStack[1].inspectCard(threeCardStack[1].numCards-1)) - Card.cardValue(card)  == 1)
       {
          return "2";
       }
-      if(Card.cardValue(threeCardStack[2].playCard()) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[2].playCard()) - Card.cardValue(card)  == 1)
+      if(Card.cardValue(threeCardStack[2].inspectCard(threeCardStack[2].numCards-1)) - Card.cardValue(card)  == -1 || Card.cardValue(threeCardStack[2].inspectCard(threeCardStack[2].numCards-1)) - Card.cardValue(card)  == 1)
       {
          return "3";
       }
