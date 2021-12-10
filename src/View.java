@@ -12,13 +12,13 @@ import javax.swing.JPanel;
 import javax.swing.SwingConstants;
 import javax.swing.border.Border;
 
+/**
+ * Class View displays the GUI
+ */
 public class View extends JFrame
 {
       public int firstStackSpacing = 100, secondStackSpacing = 100, thirdStackSpacing = 100;
-      public JPanel pnlComputerHand;
-      public JPanel pnlHumanHand;
-      public JPanel pnlPlayArea;
-      public JPanel pnlTimerArea;
+
       public static Controller.TimerView clock;
 
       //JButtons
@@ -26,14 +26,17 @@ public class View extends JFrame
 
       //JPanels
       public JPanel addCardButtons, computerHand, playPanel, timerDisplay, timerButtons, cannotPlay;
+      public JPanel pnlComputerHand, pnlHumanHand, pnlPlayArea, pnlTimerArea;
 
       //JLabels
-      public JLabel  cardsOnDeck, computerWins, humanWins, winner, seconds, minutes, computerCP, humanCP, computer, human;
-
-      private Border border;
-
+      public JLabel  cardsOnDeck, computerWins, humanWins, winner, seconds;
+      public JLabel  minutes, computerCP, humanCP, computer, human;
       static JLabel[] computerLabels = new JLabel[7];
 
+      //Border
+      private Border border;
+
+      //JLayeredPane
       public JLayeredPane firstStack, secondStack, thirdStack;
 
 
@@ -85,7 +88,7 @@ public class View extends JFrame
       }
 
    /**
-    * Initializes JLabels JPanels and JButtons
+    * Initializes JLabels, JPanels, and JButtons on the JFrame
     */
    private void initialize()
       {
@@ -113,7 +116,7 @@ public class View extends JFrame
          cannotPlay = new JPanel();
 
 
-         //JBttons
+         //JButtons
          button2 = new JButton();
          button3 = new JButton();
          button5 = new JButton();
@@ -124,10 +127,9 @@ public class View extends JFrame
          timerToggleBtn = new JButton();
          cannotPlayButton = new JButton();
 
-         //JLayred Pane
+         //JLayeredPane
          firstStack = new JLayeredPane();
          firstStack.setBounds(0,0,5000,5000);
-
 
          secondStack = new JLayeredPane();
          secondStack.setBounds(400,0,5000,5000);
@@ -204,9 +206,15 @@ public class View extends JFrame
 
       }
 
+      /**
+       * initializePlayArea places 1 card in each stack before the game starts
+       *
+       * @param firstImage
+       * @param secondImage
+       * @param thirdImage
+       */
       public void initializePlayArea(Icon firstImage, Icon secondImage, Icon thirdImage)
       {
-
         JLabel firstCard = new JLabel();
         JLabel secondCard = new JLabel();
         JLabel thirdCard = new JLabel();
@@ -225,6 +233,12 @@ public class View extends JFrame
         thirdStack.add(thirdCard, Integer.valueOf(0));
 
       }
+      /**
+       * addCardToStack adds a card a stack
+       *
+       * @param stackNumber
+       * @param image
+       */
       public void addCardToStack(int stackNumber, Icon image)
       {
          JLabel card = new JLabel();
@@ -252,6 +266,11 @@ public class View extends JFrame
 
          }
       }
+      /**
+       * initializeButtons sets the image for each button the human will use
+       *
+       * @param controller
+       */
       public void initializeButtons(Controller controller)
       {
          button1.setActionCommand("1");
@@ -287,7 +306,12 @@ public class View extends JFrame
          cannotPlayButton.addActionListener(controller);
          cannotPlay.add(cannotPlayButton);
       }
-
+      /**
+       * initializeComputerCard sets the card images for the computer's hand.
+       *
+       * @param controller
+       * @param k
+       */
       public void initializeComputerCard(Icon image, int k)
       {
          computerLabels[k] = new JLabel(image);
@@ -296,7 +320,12 @@ public class View extends JFrame
 
          pnlComputerHand.add(computerHand);
       }
-
+      /**
+       * setIconButtons sets the card image in a button
+       *
+       * @param button
+       * @param image
+       */
       public void setIconButtons(JButton button, Icon image)
       {
          button.setIcon(image);
@@ -304,6 +333,11 @@ public class View extends JFrame
          button.revalidate();
          button.repaint();
       }
+      /**
+       * displayRemainingCards displays the number of cards remaining in the deck.
+       *
+       * @param numOfCards
+       */
       public void displayRemainingCards(int numOfCards)
       {
             cardsOnDeck.setText("Number of cards remaining: "+ String.valueOf(numOfCards));
@@ -312,6 +346,11 @@ public class View extends JFrame
             pnlPlayArea.add(cardsOnDeck, BorderLayout.SOUTH);
 
       }
+      /**
+       * displayWinner displays the winner of the game.
+       *
+       * @param winner
+       */
       public void displayWinner(String winner)
       {
          if (winner == "Human")
@@ -331,10 +370,20 @@ public class View extends JFrame
             pnlPlayArea.repaint();
          }
       }
+      /**
+       * emptyHumanHands returns true if human hands are empty or returns false if they're not empty.
+       *
+       * @return boolean
+       */
       public boolean emptyHumanHands()
       {
          return addCardButtons.getComponentCount() == 0;
       }
+      /**
+       * emptyComputerHands returns true if computer hands are empty or returns false if they're not empty.
+       *
+       * @return boolean
+       */
       public boolean emptyComputerHands()
       {
          if (computerHand.getComponentCount() == 0)
@@ -347,6 +396,12 @@ public class View extends JFrame
             return false;
          }
       }
+      /**
+       * displayCP displays the # of times each player uses "I cannot play" pass.
+       *
+       * @param player
+       * @param count
+       */
       public void displayCP(int player, int count)
       {
          if(player == 0)
@@ -358,12 +413,22 @@ public class View extends JFrame
             humanCP.setText(String.valueOf(count));
          }
       }
+      /**
+       * removeButton removes button.
+       *
+       * @param button
+       */
       public void removeButton(JButton button)
       {
          addCardButtons.remove(button);
          addCardButtons.revalidate();
          addCardButtons.repaint();
       }
+      /**
+       * removeComputerCard removes computer card.
+       *
+       * @param index
+       */
       public void removeComputerCard(int index)
       {
          computerHand.remove(computerHand.getComponent(index));
