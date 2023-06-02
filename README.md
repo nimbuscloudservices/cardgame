@@ -27,7 +27,7 @@ To get started with the Card Game, follow these steps:
 
 2. Navigate to the project directory.
    ```
-   cd cardgame
+   cd cardgame/src/
    ```
 
 3. Compile the GamePlay.java. 
